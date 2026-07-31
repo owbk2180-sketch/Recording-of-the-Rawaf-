@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>بوابة التسجيل الاحترافية | Promoter Ultra</title>
+    <title>بوابة التسجيل الاحترافية | Promoter VIP</title>
     <!-- خط Cairo عالي الدقة -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -158,10 +158,10 @@
             letter-spacing: 0.5px;
         }
 
-        /* ألوان شركات الاتصال المصححة والمضيئة */
-        .badge-zain { background: #8E44AD !important; border: 1px solid #9B59B6; box-shadow: 0 0 15px rgba(142, 68, 173, 0.6); opacity: 1; } /* بنفسجي */
-        .badge-asia { background: #E74C3C !important; border: 1px solid #FF6B6B; box-shadow: 0 0 15px rgba(231, 76, 60, 0.6); opacity: 1; } /* أحمر */
-        .badge-korek { background: #2980B9 !important; border: 1px solid #5DADE2; box-shadow: 0 0 15px rgba(41, 128, 185, 0.6); opacity: 1; } /* أزرق */
+        /* ألوان شركات الاتصال الدقيقة والمصححة */
+        .badge-zain { background: #8E44AD !important; border: 1px solid #9B59B6; box-shadow: 0 0 15px rgba(142, 68, 173, 0.6); opacity: 1; } /* زين: بنفسجي */
+        .badge-asia { background: #E74C3C !important; border: 1px solid #FF6B6B; box-shadow: 0 0 15px rgba(231, 76, 60, 0.6); opacity: 1; } /* آسياسيل: أحمر */
+        .badge-korek { background: #2980B9 !important; border: 1px solid #5DADE2; box-shadow: 0 0 15px rgba(41, 128, 185, 0.6); opacity: 1; } /* كورك: أزرق */
 
         /* تصميم قسم اختيار رقم الطلب (1، 2، 3) */
         .order-selector-container {
@@ -259,9 +259,9 @@
             <input type="text" id="customerName" class="input-control" placeholder="اكتب اسم الزبون..." required autocomplete="off">
         </div>
 
-        <!-- رقم الهاتف وزين/آسيا/كورك -->
+        <!-- رقم الهاتف (حقل واحد رئيسي) -->
         <div class="input-group phone-wrapper">
-            <label class="input-label">رقم الهاتف الأساسي</label>
+            <label class="input-label">رقم الهاتف</label>
             <input type="tel" id="phone" class="input-control phone-input" placeholder="07X XXXX XXXX" maxlength="13" required autocomplete="off">
             <div id="carrierBadge" class="carrier-badge"></div>
         </div>
@@ -389,7 +389,7 @@
         const orderNum = customOrderInput.value.trim();
 
         if (phone.length !== 11) { 
-            showToast("⚠️ الرجاء التأكد من كتابة 11 رقماً للرقم"); 
+            showToast("⚠️ الرجاء التأكد من كتابة 11 رقماً لرقم الهاتف"); 
             return; 
         }
 
@@ -397,8 +397,8 @@
 
         const targetWhatsAppNumber = "9647888988288"; 
         
-        // رسالة الواتساب الرسمية المنسقة بدقة
-        const messageText = `👤 الاسم الكامل:\n${name}\n📞 رقم الهاتف الأساسي:\n${phone}\n📍 العنوان بالتفصيل:\n(${gov} - ${region})\nرقم طلب : ${orderNum}`;
+        // رسالة الواتساب الاحترافية والقوية جداً
+        const messageText = `🚀 *طلب جديد عبر النظام الذكي* 🚀\n━━━━━━━━━━━━━━━━━━\n👤 *اسم الزبون:* ${name}\n📱 *رقم الهاتف:* ${phone}\n📍 *العنوان:* ${gov} - ${region}\n🔢 *رقم الطلب:* ${orderNum}\n━━━━━━━━━━━━━━━━━━\n✨ *حالة الطلب:* جاهز للتأكيد والمتابعة`;
         
         const waLink = `https://wa.me/${targetWhatsAppNumber}?text=${encodeURIComponent(messageText)}`;
 
