@@ -160,30 +160,29 @@
         .badge-korek { background: #2980B9 !important; border: 1px solid #5DADE2; opacity: 1; box-shadow: 0 0 15px rgba(41,128,185,0.6); }
 
         /* ========================================================
-           زر الواتساب الفخم والقوي جداً (تم التحديث بالكامل)
+           زر الإرسال بتصميم أنيق وأيقونة ناعمة وقوية
         ======================================================== */
         .btn-submit {
             width: 100%;
-            padding: 18px 24px;
-            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            padding: 16px 24px;
+            background: linear-gradient(135deg, #25D366 0%, #075E54 100%);
             color: #ffffff;
             border: none;
-            border-radius: 20px;
-            font-size: 19px;
-            font-weight: 900;
+            border-radius: 18px;
+            font-size: 18px;
+            font-weight: 800;
             cursor: pointer;
             margin-top: 22px;
-            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.35);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 14px;
+            gap: 10px;
             position: relative;
             overflow: hidden;
         }
 
-        /* لمعة ملفتة ومتحركة تدل على الضخامة والأناقة */
         .btn-submit::after {
             content: '';
             position: absolute;
@@ -194,7 +193,7 @@
             background: linear-gradient(
                 60deg,
                 transparent 30%,
-                rgba(255, 255, 255, 0.25) 50%,
+                rgba(255, 255, 255, 0.2) 50%,
                 transparent 70%
             );
             transform: rotate(30deg);
@@ -208,20 +207,25 @@
         }
 
         .btn-submit:hover { 
-            transform: translateY(-3px); 
-            box-shadow: 0 18px 45px rgba(37, 211, 102, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.4); 
-            background: linear-gradient(135deg, #28E06C 0%, #14A090 100%);
+            transform: translateY(-2px); 
+            box-shadow: 0 15px 38px rgba(37, 211, 102, 0.5); 
+            background: linear-gradient(135deg, #28E06C 0%, #097266 100%);
         }
 
         .btn-submit:active { transform: scale(0.98); }
 
-        /* أيقونة الواتساب الناصعة والمشرقة */
+        /* أيقونة الواتساب المصغرة والأنيقة */
         .wa-icon {
-            width: 30px;
-            height: 30px;
+            width: 21px;
+            height: 21px;
             fill: #ffffff;
-            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.25));
+            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
             flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-submit:hover .wa-icon {
+            transform: scale(1.15) rotate(-6deg);
         }
 
         /* رسالة التنبيه */
@@ -298,12 +302,12 @@
             <input type="number" id="orderNumber" class="input-control" placeholder="اكتب رقم الطلب هنا..." min="1" required autocomplete="off">
         </div>
 
-        <!-- زر الإرسال الفخم والمبهر -->
+        <!-- زر الإرسال -->
         <button type="submit" class="btn-submit">
             <svg class="wa-icon" viewBox="0 0 24 24">
                 <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.758.459 3.474 1.33 4.982L2 22l5.122-1.334c1.455.793 3.097 1.21 4.885 1.211h.005c5.507 0 9.99-4.478 9.99-9.985 0-2.667-1.039-5.174-2.928-7.062A9.917 9.917 0 0 0 12.012 2zm5.836 14.129c-.244.688-1.417 1.314-1.982 1.398-.506.076-1.148.107-1.853-.117-.427-.135-.975-.317-1.677-.621-2.951-1.275-4.88-4.246-5.027-4.442-.146-.196-1.196-1.595-1.196-3.044 0-1.448.762-2.158 1.03-2.453.27-.295.588-.368.784-.368.196 0 .392.001.564.01.18.009.423-.068.663.505.244.588.833 2.037.906 2.185.073.147.122.319.025.515-.098.196-.147.319-.294.491-.147.172-.31.385-.442.516-.147.147-.3.308-.129.602.172.294.762 1.251 1.636 2.03 1.123.998 2.07 1.308 2.364 1.455.294.147.466.123.637-.073.172-.196.735-.858.931-1.152.196-.295.392-.245.686-.147.294.098 1.861.877 2.18 1.036.319.159.53.235.603.358.073.123.073.712-.171 1.401z"/>
             </svg>
-            <span>تحويل الطلب إلى الواتساب</span>
+            <span>إرسال الطلب</span>
         </button>
     </form>
 </div>
