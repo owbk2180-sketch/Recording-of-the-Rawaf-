@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>بوابة التسجيل الاحترافية | Promoter VIP</title>
+    <title>بوابة التسجيل الاحترافية</title>
     <!-- خط Cairo عالي الدقة -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -29,7 +29,7 @@
             padding: 20px;
         }
 
-        /* الحاوية الجرافيكية الفخمة */
+        /* الحاوية الجرافيكية */
         .promoter-card {
             width: 100%;
             max-width: 440px;
@@ -54,7 +54,7 @@
             box-shadow: 0 2px 12px rgba(0, 230, 118, 0.5);
         }
 
-        /* الشعار والتيتل */
+        /* الشعار والعنوان */
         .logo-container {
             text-align: center;
             margin-bottom: 28px;
@@ -71,7 +71,7 @@
             transition: transform 0.4s ease;
         }
         
-        .brand-logo:hover { transform: scale(1.05) rotate(2deg); }
+        .brand-logo:hover { transform: scale(1.05); }
 
         .title {
             font-size: 26px;
@@ -128,7 +128,7 @@
 
         .input-control::placeholder { color: #444; font-weight: 600; }
 
-        /* القائمة المنسدلة الاحترافية للمحافظات */
+        /* القائمة المنسدلة للمحافظات */
         select.input-control {
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2300E676%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
             background-repeat: no-repeat;
@@ -158,52 +158,11 @@
             letter-spacing: 0.5px;
         }
 
-        /* ألوان شركات الاتصال الدقيقة والمصححة */
-        .badge-zain { background: #8E44AD !important; border: 1px solid #9B59B6; box-shadow: 0 0 15px rgba(142, 68, 173, 0.6); opacity: 1; } /* زين: بنفسجي */
-        .badge-asia { background: #E74C3C !important; border: 1px solid #FF6B6B; box-shadow: 0 0 15px rgba(231, 76, 60, 0.6); opacity: 1; } /* آسياسيل: أحمر */
-        .badge-korek { background: #2980B9 !important; border: 1px solid #5DADE2; box-shadow: 0 0 15px rgba(41, 128, 185, 0.6); opacity: 1; } /* كورك: أزرق */
+        .badge-zain { background: #8E44AD !important; border: 1px solid #9B59B6; box-shadow: 0 0 15px rgba(142, 68, 173, 0.6); opacity: 1; }
+        .badge-asia { background: #E74C3C !important; border: 1px solid #FF6B6B; box-shadow: 0 0 15px rgba(231, 76, 60, 0.6); opacity: 1; }
+        .badge-korek { background: #2980B9 !important; border: 1px solid #5DADE2; box-shadow: 0 0 15px rgba(41, 128, 185, 0.6); opacity: 1; }
 
-        /* تصميم قسم اختيار رقم الطلب (1، 2، 3) */
-        .order-selector-container {
-            display: flex;
-            gap: 10px;
-            margin-top: 8px;
-        }
-
-        .order-btn {
-            flex: 1;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1.5px solid rgba(255, 255, 255, 0.1);
-            color: #aaa;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            text-align: center;
-        }
-
-        .order-btn:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
-
-        .order-btn.active {
-            background: rgba(243, 156, 18, 0.15);
-            border-color: #F39C12;
-            color: #F39C12;
-            box-shadow: 0 0 15px rgba(243, 156, 18, 0.25);
-        }
-
-        .custom-order-input {
-            width: 100%;
-            margin-top: 10px;
-            border-color: rgba(243, 156, 18, 0.2);
-            color: #F39C12;
-            font-weight: 800;
-            text-align: center;
-            font-size: 16px;
-        }
-
-        /* زر الإرسال الجرافيكي الفاخر */
+        /* زر الإرسال مع أيقونة الواتساب الرسمية النظيفة */
         .btn-submit {
             width: 100%;
             padding: 18px;
@@ -220,7 +179,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
 
         .btn-submit:hover { 
@@ -229,6 +188,13 @@
             background: linear-gradient(135deg, #00FF84 0%, #00C8FF 100%);
         }
         .btn-submit:active { transform: scale(0.97); }
+
+        .wa-icon {
+            width: 26px;
+            height: 26px;
+            fill: #040406;
+            flex-shrink: 0;
+        }
 
         /* التنبيهات العائمة */
         #toast {
@@ -259,7 +225,7 @@
             <input type="text" id="customerName" class="input-control" placeholder="اكتب اسم الزبون..." required autocomplete="off">
         </div>
 
-        <!-- رقم الهاتف (حقل واحد رئيسي) -->
+        <!-- رقم الهاتف -->
         <div class="input-group phone-wrapper">
             <label class="input-label">رقم الهاتف</label>
             <input type="tel" id="phone" class="input-control phone-input" placeholder="07X XXXX XXXX" maxlength="13" required autocomplete="off">
@@ -297,21 +263,18 @@
             <input type="text" id="region" class="input-control" placeholder="مثال: العشار، المنصور..." required autocomplete="off">
         </div>
 
-        <!-- تحديد رقم الطلب (1، 2، 3 أو رقم مخصص) -->
+        <!-- رقم الطلب (يدوي فقط بدون أزرار) -->
         <div class="input-group">
-            <label class="input-label" style="color: #F39C12;">اختر رقم الطلب</label>
-            <div class="order-selector-container">
-                <button type="button" class="order-btn active" onclick="selectOrderNumber(1)">طلب 1</button>
-                <button type="button" class="order-btn" onclick="selectOrderNumber(2)">طلب 2</button>
-                <button type="button" class="order-btn" onclick="selectOrderNumber(3)">طلب 3</button>
-            </div>
-            <input type="number" id="customOrderNumber" class="input-control custom-order-input" value="1" min="1" placeholder="أو اكتب رقم الطلب هنا..." required autocomplete="off">
+            <label class="input-label">اختر رقم الطلب</label>
+            <input type="number" id="orderNumber" class="input-control" placeholder="اكتب رقم الطلب هنا..." min="1" required autocomplete="off">
         </div>
 
         <!-- زر الإرسال -->
         <button type="submit" class="btn-submit">
-            تحويل الطلب إلى الواتساب
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            <span>تحويل الطلب إلى الواتساب</span>
+            <svg class="wa-icon" viewBox="0 0 24 24">
+                <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.758.459 3.474 1.33 4.982L2 22l5.122-1.334c1.455.793 3.097 1.21 4.885 1.211h.005c5.507 0 9.99-4.478 9.99-9.985 0-2.667-1.039-5.174-2.928-7.062A9.917 9.917 0 0 0 12.012 2zm5.836 14.129c-.244.688-1.417 1.314-1.982 1.398-.506.076-1.148.107-1.853-.117-.427-.135-.975-.317-1.677-.621-2.951-1.275-4.88-4.246-5.027-4.442-.146-.196-1.196-1.595-1.196-3.044 0-1.448.762-2.158 1.03-2.453.27-.295.588-.368.784-.368.196 0 .392.001.564.01.18.009.423-.068.663.505.244.588.833 2.037.906 2.185.073.147.122.319.025.515-.098.196-.147.319-.294.491-.147.172-.31.385-.442.516-.147.147-.3.308-.129.602.172.294.762 1.251 1.636 2.03 1.123.998 2.07 1.308 2.364 1.455.294.147.466.123.637-.073.172-.196.735-.858.931-1.152.196-.295.392-.245.686-.147.294.098 1.861.877 2.18 1.036.319.159.53.235.603.358.073.123.073.712-.171 1.401z"/>
+            </svg>
         </button>
     </form>
 </div>
@@ -327,56 +290,29 @@
 
     const phoneInput = document.getElementById('phone');
     const carrierBadge = document.getElementById('carrierBadge');
-    const customOrderInput = document.getElementById('customOrderNumber');
-    const orderBtns = document.querySelectorAll('.order-btn');
 
-    // كشف شبكة الاتصال وتفعيل ألوان الشركات الدقيقة
+    // كشف شبكة الاتصال وتفعيل الألوان
     phoneInput.addEventListener('input', function() {
         let val = this.value.replace(/\D/g, ''); 
         carrierBadge.className = 'carrier-badge';
         
         if (val.startsWith('078') || val.startsWith('079')) {
             carrierBadge.innerText = 'زين'; 
-            carrierBadge.classList.add('badge-zain'); // بنفسجي
+            carrierBadge.classList.add('badge-zain');
         } else if (val.startsWith('077')) {
             carrierBadge.innerText = 'آسيا'; 
-            carrierBadge.classList.add('badge-asia'); // أحمر
+            carrierBadge.classList.add('badge-asia');
         } else if (val.startsWith('075')) {
             carrierBadge.innerText = 'كورك'; 
-            carrierBadge.classList.add('badge-korek'); // أزرق
+            carrierBadge.classList.add('badge-korek');
         } else {
             carrierBadge.innerText = '';
         }
 
-        // تنسيق مسافات الأرقام
         let formatted = val;
         if (val.length > 4) formatted = val.slice(0, 4) + ' ' + val.slice(4);
         if (val.length > 7) formatted = val.slice(0, 4) + ' ' + val.slice(4, 7) + ' ' + val.slice(7, 11);
         this.value = formatted;
-    });
-
-    // دالة التبديل بين أزرار أرقام الطلبات السريعة
-    function selectOrderNumber(num) {
-        customOrderInput.value = num;
-        orderBtns.forEach((btn, index) => {
-            if (index + 1 === num) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
-    }
-
-    // ربط تغيير كتابة رقم الطلب يدوياً بتنسيق الأزرار
-    customOrderInput.addEventListener('input', function() {
-        const val = parseInt(this.value);
-        orderBtns.forEach((btn, index) => {
-            if (index + 1 === val) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
     });
 
     document.getElementById('promoterForm').addEventListener('submit', function(e) {
@@ -386,7 +322,7 @@
         const phone = phoneInput.value.replace(/\s/g, ''); 
         const gov = document.getElementById('governorate').value;
         const region = document.getElementById('region').value.trim();
-        const orderNum = customOrderInput.value.trim();
+        const orderNum = document.getElementById('orderNumber').value.trim();
 
         if (phone.length !== 11) { 
             showToast("⚠️ الرجاء التأكد من كتابة 11 رقماً لرقم الهاتف"); 
@@ -397,22 +333,24 @@
 
         const targetWhatsAppNumber = "9647888988288"; 
         
-        // رسالة الواتساب الاحترافية والقوية جداً
-        const messageText = `🚀 *طلب جديد عبر النظام الذكي* 🚀\n━━━━━━━━━━━━━━━━━━\n👤 *اسم الزبون:* ${name}\n📱 *رقم الهاتف:* ${phone}\n📍 *العنوان:* ${gov} - ${region}\n🔢 *رقم الطلب:* ${orderNum}\n━━━━━━━━━━━━━━━━━━\n✨ *حالة الطلب:* جاهز للتأكيد والمتابعة`;
+        // رسالة الواتساب بالصيغة المطلوبة تماماً
+        const messageText = `👤 الاسم الكامل: ${name}\n\n📞 رقم الهاتف الأساسي: ${phone}\n\n📍 العنوان بالتفصيل:\n(${gov}  -  ${region})\n\nرقم طلب  : ${orderNum}`;
         
         const waLink = `https://wa.me/${targetWhatsAppNumber}?text=${encodeURIComponent(messageText)}`;
 
-        // التوجيه إلى واتساب
+        // فتح الواتساب
         window.location.href = waLink;
         
-        // تفريغ الحقول وإعادتها لوضع الاستعداد
+        // تفريغ الحقول
         setTimeout(() => {
             document.getElementById('customerName').value = '';
             document.getElementById('phone').value = '';
             document.getElementById('region').value = '';
+            document.getElementById('orderNumber').value = '';
             carrierBadge.className = 'carrier-badge';
         }, 1000);
     });
 </script>
 </body>
 </html>
+
