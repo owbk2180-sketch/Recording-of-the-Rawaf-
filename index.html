@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>بوابة Promoter VIP</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <title>بوابة التسجيل الاحترافية | Promoter Ultra</title>
+    <!-- خط Cairo عالي الدقة -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             -webkit-tap-highlight-color: transparent;
@@ -15,8 +16,11 @@
         }
 
         body {
-            background-color: #050505;
-            background-image: radial-gradient(circle at 50% 0%, #1a1a24 0%, #050505 70%);
+            background-color: #040406;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(0, 230, 118, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 0% 100%, rgba(142, 68, 173, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 100% 50%, rgba(41, 128, 185, 0.1) 0%, transparent 40%);
             color: #ffffff;
             display: flex;
             justify-content: center;
@@ -25,22 +29,35 @@
             padding: 20px;
         }
 
-        /* الحاوية الرئيسية - فخمة ومحفزة */
+        /* الحاوية الجرافيكية الفخمة */
         .promoter-card {
             width: 100%;
-            max-width: 450px;
-            background: rgba(15, 15, 20, 0.85);
+            max-width: 440px;
+            background: rgba(13, 14, 18, 0.85);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 35px 25px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            position: relative;
+        }
+
+        /* شريط الإضاءة العلوي متدرج الألوان */
+        .promoter-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 10%; right: 10%;
+            height: 3px;
+            background: linear-gradient(90deg, #8E44AD, #E74C3C, #00E676, #2980B9);
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 2px 12px rgba(0, 230, 118, 0.5);
         }
 
         /* الشعار والتيتل */
         .logo-container {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 28px;
         }
 
         .brand-logo {
@@ -48,24 +65,33 @@
             height: 110px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 0 30px rgba(0, 230, 118, 0.15);
+            border: 3px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 30px rgba(0, 230, 118, 0.25);
             margin-bottom: 12px;
-            transition: transform 0.3s;
+            transition: transform 0.4s ease;
         }
         
-        .brand-logo:hover { transform: scale(1.05); }
+        .brand-logo:hover { transform: scale(1.05) rotate(2deg); }
 
         .title {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 900;
-            background: linear-gradient(135deg, #ffffff, #888);
+            background: linear-gradient(135deg, #ffffff 30%, #a5a5a5 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             letter-spacing: 0.5px;
         }
 
-        /* الحقول */
+        .subtitle {
+            font-size: 12px;
+            color: #00E676;
+            font-weight: 800;
+            margin-top: 2px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* تنسيق الحقول */
         .input-group {
             margin-bottom: 20px;
             position: relative;
@@ -75,111 +101,144 @@
             display: block;
             font-size: 13px;
             font-weight: 800;
-            color: #999;
+            color: #9a9a9a;
             margin-bottom: 8px;
             transition: color 0.3s;
         }
 
         .input-control {
             width: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1.5px solid #222;
-            color: #fff;
+            background: rgba(0, 0, 0, 0.55);
+            border: 1.5px solid rgba(255, 255, 255, 0.08);
+            color: #ffffff;
             font-size: 15px;
             font-weight: 700;
             padding: 16px 18px;
-            border-radius: 14px;
+            border-radius: 16px;
             outline: none;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             appearance: none;
         }
 
         .input-control:focus {
             border-color: #00E676;
             background: rgba(0, 230, 118, 0.03);
-            box-shadow: 0 0 20px rgba(0, 230, 118, 0.1);
+            box-shadow: 0 0 20px rgba(0, 230, 118, 0.15);
         }
-        
-        .input-control:focus + .input-label,
-        .input-control:focus ~ .input-label { color: #00E676; }
 
         .input-control::placeholder { color: #444; font-weight: 600; }
 
-        /* سهم القائمة المنسدلة */
+        /* القائمة المنسدلة الاحترافية للمحافظات */
         select.input-control {
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23777%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2300E676%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
             background-repeat: no-repeat;
-            background-position: left 15px center;
-            background-size: 12px;
+            background-position: left 18px center;
+            background-size: 13px;
+            cursor: pointer;
         }
-        select.input-control option { background: #111; color: #fff; padding: 10px; }
+        select.input-control option { background: #121318; color: #fff; padding: 14px; font-weight: 700; }
 
         /* شارة شركات الاتصال */
         .phone-wrapper { position: relative; }
-        .phone-input { padding-left: 85px; text-align: left; direction: ltr; }
-        .phone-input::placeholder { text-align: left; }
+        .phone-input { padding-left: 95px; text-align: left; direction: ltr; font-size: 16px; letter-spacing: 1px; }
+        .phone-input::placeholder { text-align: left; letter-spacing: 0; }
         
         .carrier-badge {
             position: absolute;
             left: 10px;
-            top: 45px;
+            top: 43px;
             font-size: 12px;
             font-weight: 900;
             padding: 6px 14px;
-            border-radius: 8px;
+            border-radius: 10px;
             opacity: 0;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             pointer-events: none;
             color: #fff;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+            letter-spacing: 0.5px;
         }
 
-        /* الألوان المصححة والدقيقة */
-        .badge-zain { background: #8E44AD !important; border: 1px solid #9B59B6; box-shadow: 0 0 15px rgba(142, 68, 173, 0.5); opacity: 1; } /* بنفسجي */
-        .badge-asia { background: #E74C3C !important; border: 1px solid #E74C3C; box-shadow: 0 0 15px rgba(231, 76, 60, 0.5); opacity: 1; } /* أحمر */
-        .badge-korek { background: #2980B9 !important; border: 1px solid #3498DB; box-shadow: 0 0 15px rgba(41, 128, 185, 0.5); opacity: 1; } /* أزرق */
+        /* ألوان شركات الاتصال المصححة والمضيئة */
+        .badge-zain { background: #8E44AD !important; border: 1px solid #9B59B6; box-shadow: 0 0 15px rgba(142, 68, 173, 0.6); opacity: 1; } /* بنفسجي */
+        .badge-asia { background: #E74C3C !important; border: 1px solid #FF6B6B; box-shadow: 0 0 15px rgba(231, 76, 60, 0.6); opacity: 1; } /* أحمر */
+        .badge-korek { background: #2980B9 !important; border: 1px solid #5DADE2; box-shadow: 0 0 15px rgba(41, 128, 185, 0.6); opacity: 1; } /* أزرق */
 
-        /* حقل رقم الطلب المخصص (مائل للذهبي/الأصفر لتمييزه) */
-        .order-number-input {
-            border-color: rgba(243, 156, 18, 0.3);
-            color: #F39C12;
+        /* تصميم قسم اختيار رقم الطلب (1، 2، 3) */
+        .order-selector-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
         }
-        .order-number-input:focus {
+
+        .order-btn {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: center;
+        }
+
+        .order-btn:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+
+        .order-btn.active {
+            background: rgba(243, 156, 18, 0.15);
             border-color: #F39C12;
-            box-shadow: 0 0 20px rgba(243, 156, 18, 0.15);
+            color: #F39C12;
+            box-shadow: 0 0 15px rgba(243, 156, 18, 0.25);
         }
 
-        /* زر الإرسال الجذاب */
+        .custom-order-input {
+            width: 100%;
+            margin-top: 10px;
+            border-color: rgba(243, 156, 18, 0.2);
+            color: #F39C12;
+            font-weight: 800;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        /* زر الإرسال الجرافيكي الفاخر */
         .btn-submit {
             width: 100%;
             padding: 18px;
-            background: linear-gradient(135deg, #00b09b, #96c93d);
-            color: #000;
+            background: linear-gradient(135deg, #00E676 0%, #00B0FF 100%);
+            color: #040406;
             border: none;
-            border-radius: 14px;
+            border-radius: 16px;
             font-size: 18px;
             font-weight: 900;
             cursor: pointer;
-            margin-top: 10px;
-            box-shadow: 0 10px 25px rgba(0, 176, 155, 0.4);
-            transition: all 0.3s ease;
+            margin-top: 15px;
+            box-shadow: 0 12px 30px rgba(0, 230, 118, 0.35);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 10px;
         }
 
-        .btn-submit:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0, 176, 155, 0.6); }
-        .btn-submit:active { transform: scale(0.96); }
+        .btn-submit:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 18px 40px rgba(0, 230, 118, 0.5); 
+            background: linear-gradient(135deg, #00FF84 0%, #00C8FF 100%);
+        }
+        .btn-submit:active { transform: scale(0.97); }
 
-        /* التنبيهات */
+        /* التنبيهات العائمة */
         #toast {
             position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-            background: rgba(231, 76, 60, 0.95); color: #fff; padding: 12px 25px;
+            background: rgba(231, 76, 60, 0.95); color: #fff; padding: 12px 28px;
             border-radius: 30px; font-weight: 800; font-size: 14px; z-index: 999;
-            transition: 0.4s; text-align: center; box-shadow: 0 10px 30px rgba(231, 76, 60, 0.4);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: center;
+            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.4); backdrop-filter: blur(10px);
         }
-        #toast.show { top: 30px; }
+        #toast.show { top: 25px; }
     </style>
 </head>
 <body>
@@ -190,23 +249,24 @@
     <div class="logo-container">
         <img src="my-image.png" class="brand-logo" alt="Logo">
         <h1 class="title">تسجيل العملاء</h1>
+        <div class="subtitle">PROMOTER SYSTEM VIP</div>
     </div>
 
     <form id="promoterForm">
-        <!-- حقل الاسم -->
+        <!-- الاسم الكامل -->
         <div class="input-group">
-            <label class="input-label">الاسم الكامل</label>
+            <label class="input-label">الاسم الكامل للزبون</label>
             <input type="text" id="customerName" class="input-control" placeholder="اكتب اسم الزبون..." required autocomplete="off">
         </div>
 
-        <!-- حقل رقم الهاتف -->
+        <!-- رقم الهاتف وزين/آسيا/كورك -->
         <div class="input-group phone-wrapper">
             <label class="input-label">رقم الهاتف الأساسي</label>
             <input type="tel" id="phone" class="input-control phone-input" placeholder="07X XXXX XXXX" maxlength="13" required autocomplete="off">
             <div id="carrierBadge" class="carrier-badge"></div>
         </div>
 
-        <!-- قائمة المحافظات -->
+        <!-- المحافظة -->
         <div class="input-group">
             <label class="input-label">المحافظة</label>
             <select id="governorate" class="input-control" required>
@@ -231,28 +291,32 @@
             </select>
         </div>
 
-        <!-- حقل المنطقة -->
+        <!-- المنطقة -->
         <div class="input-group">
-            <label class="input-label">المنطقة / الحي</label>
-            <input type="text" id="region" class="input-control" placeholder="اكتب اسم المنطقة..." required autocomplete="off">
+            <label class="input-label">اسم المنطقة / الحي</label>
+            <input type="text" id="region" class="input-control" placeholder="مثال: العشار، المنصور..." required autocomplete="off">
         </div>
 
-        <!-- حقل رقم الطلب (متاح للتعديل اليدوي) -->
+        <!-- تحديد رقم الطلب (1، 2، 3 أو رقم مخصص) -->
         <div class="input-group">
-            <label class="input-label" style="color: #F39C12;">رقم الطلب (يمكنك تعديله يدوياً)</label>
-            <input type="number" id="orderNumber" class="input-control order-number-input" required autocomplete="off">
+            <label class="input-label" style="color: #F39C12;">اختر رقم الطلب</label>
+            <div class="order-selector-container">
+                <button type="button" class="order-btn active" onclick="selectOrderNumber(1)">طلب 1</button>
+                <button type="button" class="order-btn" onclick="selectOrderNumber(2)">طلب 2</button>
+                <button type="button" class="order-btn" onclick="selectOrderNumber(3)">طلب 3</button>
+            </div>
+            <input type="number" id="customOrderNumber" class="input-control custom-order-input" value="1" min="1" placeholder="أو اكتب رقم الطلب هنا..." required autocomplete="off">
         </div>
 
         <!-- زر الإرسال -->
         <button type="submit" class="btn-submit">
-            تحويل الطلب
+            تحويل الطلب إلى الواتساب
             <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
         </button>
     </form>
 </div>
 
 <script>
-    // نظام إظهار التنبيهات
     function showToast(message) {
         if(navigator.vibrate) navigator.vibrate(50);
         const toast = document.getElementById('toast');
@@ -263,16 +327,10 @@
 
     const phoneInput = document.getElementById('phone');
     const carrierBadge = document.getElementById('carrierBadge');
-    const orderInput = document.getElementById('orderNumber');
+    const customOrderInput = document.getElementById('customOrderNumber');
+    const orderBtns = document.querySelectorAll('.order-btn');
 
-    // تهيئة رقم الطلب عند فتح الصفحة
-    window.onload = function() {
-        let savedOrder = localStorage.getItem('current_order_number');
-        // إذا كان هناك رقم محفوظ مسبقاً، نضعه، وإلا نبدأ من 1
-        orderInput.value = savedOrder ? parseInt(savedOrder) : 1;
-    };
-
-    // كشف شبكات الاتصال بالألوان الدقيقة 100%
+    // كشف شبكة الاتصال وتفعيل ألوان الشركات الدقيقة
     phoneInput.addEventListener('input', function() {
         let val = this.value.replace(/\D/g, ''); 
         carrierBadge.className = 'carrier-badge';
@@ -290,11 +348,35 @@
             carrierBadge.innerText = '';
         }
 
-        // تنسيق الرقم بمسافات لسهولة القراءة
+        // تنسيق مسافات الأرقام
         let formatted = val;
         if (val.length > 4) formatted = val.slice(0, 4) + ' ' + val.slice(4);
         if (val.length > 7) formatted = val.slice(0, 4) + ' ' + val.slice(4, 7) + ' ' + val.slice(7, 11);
         this.value = formatted;
+    });
+
+    // دالة التبديل بين أزرار أرقام الطلبات السريعة
+    function selectOrderNumber(num) {
+        customOrderInput.value = num;
+        orderBtns.forEach((btn, index) => {
+            if (index + 1 === num) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    // ربط تغيير كتابة رقم الطلب يدوياً بتنسيق الأزرار
+    customOrderInput.addEventListener('input', function() {
+        const val = parseInt(this.value);
+        orderBtns.forEach((btn, index) => {
+            if (index + 1 === val) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
     });
 
     document.getElementById('promoterForm').addEventListener('submit', function(e) {
@@ -304,46 +386,33 @@
         const phone = phoneInput.value.replace(/\s/g, ''); 
         const gov = document.getElementById('governorate').value;
         const region = document.getElementById('region').value.trim();
-        const currentOrderNum = orderInput.value; // أخذ الرقم الذي كتبه الموظف
+        const orderNum = customOrderInput.value.trim();
 
-        // التحقق من صحة الرقم
         if (phone.length !== 11) { 
-            showToast("⚠️ الرجاء التأكد من كتابة 11 رقماً للهاتف"); 
+            showToast("⚠️ الرجاء التأكد من كتابة 11 رقماً للرقم"); 
             return; 
         }
 
-        if(navigator.vibrate) navigator.vibrate([40, 40]);
-        
+        if(navigator.vibrate) navigator.vibrate(40);
+
         const targetWhatsAppNumber = "9647888988288"; 
         
-        // بناء رسالة الواتساب بالترتيب الدقيق المطلوب
-        const messageText = `👤 الاسم الكامل:
-${name}
-📞 رقم الهاتف الأساسي:
-${phone}
-📍 العنوان بالتفصيل:
-(${gov} - ${region})
-رقم طلب : ${currentOrderNum}`;
+        // رسالة الواتساب الرسمية المنسقة بدقة
+        const messageText = `👤 الاسم الكامل:\n${name}\n📞 رقم الهاتف الأساسي:\n${phone}\n📍 العنوان بالتفصيل:\n(${gov} - ${region})\nرقم طلب : ${orderNum}`;
         
         const waLink = `https://wa.me/${targetWhatsAppNumber}?text=${encodeURIComponent(messageText)}`;
 
-        // حفظ الرقم الجديد (زيادة 1 للطلب القادم تلقائياً)
-        let nextOrder = parseInt(currentOrderNum) + 1;
-        localStorage.setItem('current_order_number', nextOrder);
-
-        // التوجه للواتساب
+        // التوجيه إلى واتساب
         window.location.href = waLink;
         
-        // تفريغ الحقول المطلوبة وتحديث رقم الطلب للرقم التالي
+        // تفريغ الحقول وإعادتها لوضع الاستعداد
         setTimeout(() => {
             document.getElementById('customerName').value = '';
             document.getElementById('phone').value = '';
             document.getElementById('region').value = '';
-            orderInput.value = nextOrder; // تحديث الخانة بالرقم الجديد
             carrierBadge.className = 'carrier-badge';
         }, 1000);
     });
 </script>
 </body>
 </html>
-
