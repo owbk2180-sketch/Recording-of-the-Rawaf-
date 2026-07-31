@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>بوابة تسجيل العملاء</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { -webkit-tap-highlight-color: transparent; -webkit-appearance: none; box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --primary: #00E676; --bg-dark: #070707; --surface: rgba(20, 20, 20, 0.75); --text: #ffffff; }
+        
+        body { background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, var(--bg-dark) 100%); color: var(--text); font-family: 'Cairo', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+
+        /* شاشة التحميل الأولية السريعة */
+        #splash-screen { position: fixed; inset: 0; background: #000; z-index: 99999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        .splash-logo { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary); box-shadow: 0 0 30px rgba(0, 230, 118, 0.2); animation: pulse 1.5s infinite alternate; }
+        @keyframes pulse { from { transform: scale(0.95); box-shadow: 0 0 15px rgba(0, 230, 118, 0.1); } to { transform: scale(1.05); box-shadow: 0 0 40px rgba(0, 230, 118, 0.4); } }
+
+        /* الإشعارات العلوية */
+        #toast { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); background: #E74C3C; color: #fff; padding: 14px 24px; border-radius: 20px; font-weight: 700; font-size: 14px; z-index: 999999; transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); backdrop-filter: blur(10px); display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3); }
+        #toast.show { top: 40px; }
+
+        /* الحاوية الرئيسية زجاجية وفخمة */
+        .app-container { width: 100%; max-width: 400px; background: var(--surface); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); padding: 40px 25px; border-radius: 35px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 30px 60px rgba(0,0,0,0.8); text-align: center; opacity: 0; transform: translateY(20px); animation: fadeUp 0.6s 1.2s forwards; }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        .header-logo { width: 75px; height: 75px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255,255,255,0.1); margin-bottom: 25px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .screen-title { font-size: 22px; font-weight: 900; margin-bottom: 30px; letter-spacing: -0.5px; color: #fff; }
+
+        /* الحقول */
+        .input-wrapper { position: relative; margin-bottom: 20px; text-align: right; }
+        .input-label { display: block; font-size: 13px; font-weight: 700; color: #aaa; margin-bottom: 8px; padding-right: 10px; }
+        .optional-badge { font-size: 11px; background: rgba(255,255,255,0.1); padding: 2px 8px; border-radius: 10px; color: #888; margin-right: 5px; }
+        
+        input { width: 100%; background: rgba(0,0,0,0.5); border: 1.5px solid rgba(255,255,255,0.12); color: #fff; font-family: 'Cairo', sans-serif; font-size: 16px; font-weight: 700; padding: 20px; border-radius: 16px; outline: none; transition: 0.3s; }
+        input:focus { border-color: var(--primary); background: rgba(0,230,118,0.03); box-shadow: 0 0 20px rgba(0, 230, 118, 0.1); }
+        input::placeholder { color: #555; font-weight: 600; }
+
+        /* شارة شركات الاتصال */
+        .carrier-badge { position: absolute; left: 15px; top: 52px; font-size: 11px; font-weight: 800; padding: 5px 12px; border-radius: 8px; opacity: 0; transition: 0.4s; box-shadow: 0 4px 10px rgba(0,0,0,0.3); letter-spacing: 0.5px; }
+        .badge-zain { background: linear-gradient(135deg, #1f1f1f, #000000); color: #00E5FF; border: 1px solid #00E5FF; opacity: 1; } /* ألوان زين (أسود وسماوي/بنفسجي) */
+        .badge-asia { background: linear-gradient(135deg, #E74C3C, #c0392b); color: #fff; opacity: 1; }
+        .badge-korek { background: linear-gradient(135deg, #F39C12, #d35400); color: #fff; opacity: 1; }
+
+        /* زر الإرسال */
+        .btn-submit { width: 100%; padding: 20px; background: linear-gradient(135deg, #25D366, #1DA851); color: #fff; border: none; border-radius: 16px; font-family: 'Cairo', sans-serif; font-size: 18px; font-weight: 900; cursor: pointer; margin-top: 15px; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3); transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .btn-submit:active { transform: scale(0.96); }
+
+        /* شاشة المعالجة السريعة */
+        #security-modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); z-index: 100000; display: none; flex-direction: column; justify-content: center; align-items: center; backdrop-filter: blur(10px); }
+        .spinner { width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.1); border-top-color: #25D366; border-radius: 50%; animation: spin 0.6s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .security-text { color: #fff; font-size: 16px; font-weight: 800; }
+    </style>
+</head>
+<body>
+
+<!-- رسائل التنبيه -->
+<div id="toast">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+    <span id="toast-msg"></span>
+</div>
+
+<!-- شاشة الدخول السريعة -->
+<div id="splash-screen">
+    <img src="my-image.png" class="splash-logo" alt="Logo">
+</div>
+
+<!-- الواجهة الرئيسية -->
+<div class="app-container">
+    <img src="my-image.png" class="header-logo" alt="Logo">
+    <div class="screen-title">تسجيل بيانات الزبون</div>
+
+    <form id="appForm">
+        <!-- حقل الاسم (اختياري) -->
+        <div class="input-wrapper">
+            <label class="input-label">اسم الزبون <span class="optional-badge">اختياري</span></label>
+            <input type="text" id="name" placeholder="أدخل اسم الزبون هنا..." autocomplete="off">
+        </div>
+
+        <!-- حقل رقم الهاتف (إجباري) -->
+        <div class="input-wrapper">
+            <label class="input-label">رقم الهاتف الاثاثي</label>
+            <input type="tel" id="phone" placeholder="07X XXXX XXXX" maxlength="13" required autocomplete="off" dir="ltr" style="text-align: right;">
+            <span id="carrierBadge" class="carrier-badge"></span>
+        </div>
+
+        <!-- زر الإرسال المباشر لواتساب -->
+        <button type="submit" class="btn-submit">
+            إرسال إلى واتساب
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        </button>
+    </form>
+</div>
+
+<!-- شاشة معالجة الإرسال -->
+<div id="security-modal">
+    <div class="spinner"></div>
+    <div class="security-text">جاري التحويل للواتساب...</div>
+</div>
+
+<script>
+    // إخفاء شاشة البداية بسرعة لتوفير الوقت
+    window.onload = () => {
+        setTimeout(() => {
+            const splash = document.getElementById('splash-screen');
+            splash.style.opacity = '0';
+            setTimeout(() => { splash.style.display = 'none'; }, 500);
+        }, 1000); // تظهر لثانية واحدة فقط
+    };
+
+    function showToast(message) {
+        if(navigator.vibrate) navigator.vibrate([50, 50, 50]);
+        const toast = document.getElementById('toast');
+        document.getElementById('toast-msg').innerText = message;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    const phoneInput = document.getElementById('phone');
+    const carrierBadge = document.getElementById('carrierBadge');
+
+    // خوارزمية تنسيق رقم الهاتف ومعرفة الشبكة
+    phoneInput.addEventListener('input', function() {
+        let val = this.value.replace(/\D/g, ''); 
+        carrierBadge.className = 'carrier-badge';
+        
+        if (val.startsWith('078') || val.startsWith('079')) {
+            carrierBadge.innerText = 'زين العراق'; 
+            carrierBadge.classList.add('badge-zain');
+        } else if (val.startsWith('077')) {
+            carrierBadge.innerText = 'آسيا سيل'; 
+            carrierBadge.classList.add('badge-asia');
+        } else if (val.startsWith('075')) {
+            carrierBadge.innerText = 'كورك'; 
+            carrierBadge.classList.add('badge-korek');
+        } else {
+            carrierBadge.innerText = '';
+        }
+
+        // تنسيق الرقم بمسافات ليكون مقروءاً (07XX XXX XXXX)
+        let formatted = val;
+        if (val.length > 4) formatted = val.slice(0, 4) + ' ' + val.slice(4);
+        if (val.length > 7) formatted = val.slice(0, 4) + ' ' + val.slice(4, 7) + ' ' + val.slice(7, 11);
+        this.value = formatted;
+    });
+
+    // الإرسال والتحويل المباشر لواتساب
+    document.getElementById('appForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let name = document.getElementById('name').value.trim();
+        let phone = phoneInput.value.replace(/\s/g, ''); // أخذ الرقم بدون مسافات
+
+        // إذا ترك الموظف حقل الاسم فارغاً
+        if (name === "") {
+            name = "غير محدد";
+        }
+
+        // التأكد من صحة رقم الهاتف
+        if (phone.length !== 11) { 
+            showToast("يرجى التأكد من كتابة الـ 11 رقماً بشكل صحيح."); 
+            return; 
+        }
+
+        if(navigator.vibrate) navigator.vibrate(40);
+        
+        // إظهار شاشة التحميل
+        document.getElementById('security-modal').style.display = 'flex';
+
+        // تجهيز بيانات الواتساب المستهدفة
+        const targetWhatsAppNumber = "9647888988288"; 
+        
+        // تجهيز الرسالة التي ستصلك
+        const messageText = `مرحباً، تفاصيل الزبون الجديد:\n\n👤 الاسم: ${name}\n📱 رقم الهاتف: ${phone}`;
+        
+        // رابط التحويل التلقائي
+        const waLink = `https://wa.me/${targetWhatsAppNumber}?text=${encodeURIComponent(messageText)}`;
+
+        // الانتظار نصف ثانية (لإعطاء شعور بالاستجابة) ثم الانتقال لواتساب
+        setTimeout(() => {
+            window.location.href = waLink;
+            
+            // إعادة ضبط النموذج بعد الإرسال
+            setTimeout(() => {
+                document.getElementById('security-modal').style.display = 'none';
+                document.getElementById('appForm').reset();
+                carrierBadge.className = 'carrier-badge';
+            }, 1000);
+        }, 600);
+    });
+</script>
+</body>
+</html>
+
