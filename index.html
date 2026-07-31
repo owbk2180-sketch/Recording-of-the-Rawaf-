@@ -159,54 +159,26 @@
         .badge-asia { background: #E74C3C !important; border: 1px solid #FF6B6B; opacity: 1; box-shadow: 0 0 15px rgba(231,76,60,0.6); }
         .badge-korek { background: #2980B9 !important; border: 1px solid #5DADE2; opacity: 1; box-shadow: 0 0 15px rgba(41,128,185,0.6); }
 
-        /* ========================================================
-           منطقة أزرار اختيار الواتساب (عادي / أعمال)
-        ======================================================== */
-        .wa-options-label {
-            display: block;
-            font-size: 13px;
-            font-weight: 800;
-            color: #25D366;
-            margin-top: 22px;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 12px;
-            width: 100%;
-        }
-
+        /* زر الإرسال الرئيسي */
         .btn-submit {
-            flex: 1;
-            padding: 14px 12px;
+            width: 100%;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, #25D366 0%, #075E54 100%);
             color: #ffffff;
             border: none;
-            border-radius: 16px;
-            font-size: 14px;
+            border-radius: 18px;
+            font-size: 18px;
             font-weight: 800;
             cursor: pointer;
+            margin-top: 22px;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.35);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             position: relative;
             overflow: hidden;
-        }
-
-        /* زر واتساب العادي */
-        .btn-wa-normal {
-            background: linear-gradient(135deg, #25D366 0%, #075E54 100%);
-            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
-        }
-
-        /* زر واتساب الأعمال */
-        .btn-wa-business {
-            background: linear-gradient(135deg, #128C7E 0%, #043927 100%);
-            box-shadow: 0 8px 25px rgba(18, 140, 126, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         .btn-submit::after {
@@ -234,20 +206,23 @@
 
         .btn-submit:hover { 
             transform: translateY(-2px); 
+            box-shadow: 0 15px 38px rgba(37, 211, 102, 0.5); 
+            background: linear-gradient(135deg, #28E06C 0%, #097266 100%);
         }
 
-        .btn-wa-normal:hover { box-shadow: 0 12px 30px rgba(37, 211, 102, 0.5); }
-        .btn-wa-business:hover { box-shadow: 0 12px 30px rgba(18, 140, 126, 0.5); }
+        .btn-submit:active { transform: scale(0.98); }
 
-        .btn-submit:active { transform: scale(0.97); }
-
-        /* أيقونات الواتساب المصغرة */
         .wa-icon {
-            width: 19px;
-            height: 19px;
+            width: 21px;
+            height: 21px;
             fill: #ffffff;
-            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
             flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-submit:hover .wa-icon {
+            transform: scale(1.15) rotate(-6deg);
         }
 
         /* رسالة التنبيه */
@@ -324,25 +299,13 @@
             <input type="number" id="orderNumber" class="input-control" placeholder="اكتب رقم الطلب هنا..." min="1" required autocomplete="off">
         </div>
 
-        <!-- اختيار طريقة الإرسال -->
-        <span class="wa-options-label">اختر التطبيق لإرسال الطلب:</span>
-        <div class="btn-group">
-            <!-- زر واتساب العادي -->
-            <button type="submit" name="appType" value="normal" class="btn-submit btn-wa-normal">
-                <svg class="wa-icon" viewBox="0 0 24 24">
-                    <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.758.459 3.474 1.33 4.982L2 22l5.122-1.334c1.455.793 3.097 1.21 4.885 1.211h.005c5.507 0 9.99-4.478 9.99-9.985 0-2.667-1.039-5.174-2.928-7.062A9.917 9.917 0 0 0 12.012 2zm5.836 14.129c-.244.688-1.417 1.314-1.982 1.398-.506.076-1.148.107-1.853-.117-.427-.135-.975-.317-1.677-.621-2.951-1.275-4.88-4.246-5.027-4.442-.146-.196-1.196-1.595-1.196-3.044 0-1.448.762-2.158 1.03-2.453.27-.295.588-.368.784-.368.196 0 .392.001.564.01.18.009.423-.068.663.505.244.588.833 2.037.906 2.185.073.147.122.319.025.515-.098.196-.147.319-.294.491-.147.172-.31.385-.442.516-.147.147-.3.308-.129.602.172.294.762 1.251 1.636 2.03 1.123.998 2.07 1.308 2.364 1.455.294.147.466.123.637-.073.172-.196.735-.858.931-1.152.196-.295.392-.245.686-.147.294.098 1.861.877 2.18 1.036.319.159.53.235.603.358.073.123.073.712-.171 1.401z"/>
-                </svg>
-                <span>واتساب العادي</span>
-            </button>
-
-            <!-- زر واتساب الأعمال -->
-            <button type="submit" name="appType" value="business" class="btn-submit btn-wa-business">
-                <svg class="wa-icon" viewBox="0 0 24 24">
-                    <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.758.459 3.474 1.33 4.982L2 22l5.122-1.334c1.455.793 3.097 1.21 4.885 1.211h.005c5.507 0 9.99-4.478 9.99-9.985 0-2.667-1.039-5.174-2.928-7.062A9.917 9.917 0 0 0 12.012 2zm5.836 14.129c-.244.688-1.417 1.314-1.982 1.398-.506.076-1.148.107-1.853-.117-.427-.135-.975-.317-1.677-.621-2.951-1.275-4.88-4.246-5.027-4.442-.146-.196-1.196-1.595-1.196-3.044 0-1.448.762-2.158 1.03-2.453.27-.295.588-.368.784-.368.196 0 .392.001.564.01.18.009.423-.068.663.505.244.588.833 2.037.906 2.185.073.147.122.319.025.515-.098.196-.147.319-.294.491-.147.172-.31.385-.442.516-.147.147-.3.308-.129.602.172.294.762 1.251 1.636 2.03 1.123.998 2.07 1.308 2.364 1.455.294.147.466.123.637-.073.172-.196.735-.858.931-1.152.196-.295.392-.245.686-.147.294.098 1.861.877 2.18 1.036.319.159.53.235.603.358.073.123.073.712-.171 1.401z"/>
-                </svg>
-                <span>واتساب أعمال</span>
-            </button>
-        </div>
+        <!-- زر الإرسال -->
+        <button type="submit" class="btn-submit">
+            <svg class="wa-icon" viewBox="0 0 24 24">
+                <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.758.459 3.474 1.33 4.982L2 22l5.122-1.334c1.455.793 3.097 1.21 4.885 1.211h.005c5.507 0 9.99-4.478 9.99-9.985 0-2.667-1.039-5.174-2.928-7.062A9.917 9.917 0 0 0 12.012 2zm5.836 14.129c-.244.688-1.417 1.314-1.982 1.398-.506.076-1.148.107-1.853-.117-.427-.135-.975-.317-1.677-.621-2.951-1.275-4.88-4.246-5.027-4.442-.146-.196-1.196-1.595-1.196-3.044 0-1.448.762-2.158 1.03-2.453.27-.295.588-.368.784-.368.196 0 .392.001.564.01.18.009.423-.068.663.505.244.588.833 2.037.906 2.185.073.147.122.319.025.515-.098.196-.147.319-.294.491-.147.172-.31.385-.442.516-.147.147-.3.308-.129.602.172.294.762 1.251 1.636 2.03 1.123.998 2.07 1.308 2.364 1.455.294.147.466.123.637-.073.172-.196.735-.858.931-1.152.196-.295.392-.245.686-.147.294.098 1.861.877 2.18 1.036.319.159.53.235.603.358.073.123.073.712-.171 1.401z"/>
+            </svg>
+            <span>إرسال الطلب</span>
+        </button>
     </form>
 </div>
 
@@ -401,22 +364,14 @@
         const messageText = `👤 الاسم الكامل: ${name}\n\n📞 رقم الهاتف الأساسي: ${phone}\n\n📍 العنوان بالتفصيل:\n(${gov}  -  ${region})\n\nرقم طلب  : ${orderNum}`;
         const encodedMsg = encodeURIComponent(messageText);
 
-        // تحديد الخيار الذي اضغط عليه الزبون
-        const chosenApp = e.submitter ? e.submitter.value : 'normal';
+        /* 
+           استخدام بروتوكول (whatsapp://send) الذي تجبر نظام التشغيل (الأندرويد أو iOS)
+           على إظهار نافذة التخيير المنبثقة من الهاتف نفسه بين (واتساب العادي) و(واتساب الأعمال)
+        */
+        const nativeUrl = `whatsapp://send?phone=${targetWhatsAppNumber}&text=${encodedMsg}`;
 
-        if (chosenApp === 'business') {
-            // توجيه خاص بـ WhatsApp Business للنظام
-            const isAndroid = /Android/i.test(navigator.userAgent);
-            if (isAndroid) {
-                window.location.href = `intent://send?phone=${targetWhatsAppNumber}&text=${encodedMsg}#Intent;package=com.whatsapp.w4b;scheme=whatsapp;end;`;
-            } else {
-                window.location.href = `whatsapp-business://send?phone=${targetWhatsAppNumber}&text=${encodedMsg}`;
-            }
-        } else {
-            // توجيه الواتساب العادي
-            window.location.href = `https://wa.me/${targetWhatsAppNumber}?text=${encodedMsg}`;
-        }
-        
+        window.location.href = nativeUrl;
+
         setTimeout(() => {
             document.getElementById('customerName').value = '';
             document.getElementById('phone').value = '';
@@ -428,4 +383,3 @@
 </script>
 </body>
 </html>
-
