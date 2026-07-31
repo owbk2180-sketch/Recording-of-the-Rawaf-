@@ -361,13 +361,11 @@
         if(navigator.vibrate) navigator.vibrate(40);
 
         const targetWhatsAppNumber = "9647888988288"; 
-        const messageText = `👤 الاسم الكامل: ${name}\n\n📞 رقم الهاتف الأساسي: ${phone}\n\n📍 العنوان بالتفصيل:\n(${gov}  -  ${region})\n\nرقم طلب  : ${orderNum}`;
+
+        /* هيكلية الرسالة الجديدة المطابقة للطلب */
+        const messageText = `👤 الاسم الكامل: ${name}\n\n📞 رقم الهاتف  :  ${phone}\n\n📍 العنوان بالتفصيل: \n${gov} - ${region}\n\n✅ رقم الطلب  :  ${orderNum}`;
         const encodedMsg = encodeURIComponent(messageText);
 
-        /* 
-           استخدام بروتوكول (whatsapp://send) الذي تجبر نظام التشغيل (الأندرويد أو iOS)
-           على إظهار نافذة التخيير المنبثقة من الهاتف نفسه بين (واتساب العادي) و(واتساب الأعمال)
-        */
         const nativeUrl = `whatsapp://send?phone=${targetWhatsAppNumber}&text=${encodedMsg}`;
 
         window.location.href = nativeUrl;
@@ -383,3 +381,4 @@
 </script>
 </body>
 </html>
+
