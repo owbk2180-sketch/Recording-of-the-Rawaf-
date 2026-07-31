@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>بوابة التسجيل الاحترافية | VIP</title>
+    <title>بوابة التسجيل الرسمية | VIP Portal</title>
     <!-- خط Cairo عالي الدقة -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -13,228 +13,276 @@
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
-            background-color: #040406;
+            background-color: #07080a;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(37, 211, 102, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 0% 100%, rgba(142, 68, 173, 0.15) 0%, transparent 40%),
-                radial-gradient(circle at 100% 50%, rgba(41, 128, 185, 0.12) 0%, transparent 40%);
-            color: #ffffff;
+                radial-gradient(circle at 50% -10%, rgba(37, 211, 102, 0.08) 0%, transparent 60%),
+                radial-gradient(circle at 100% 100%, rgba(20, 25, 35, 0.8) 0%, transparent 50%);
+            color: #f1f5f9;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 24px 16px;
+            overflow-x: hidden;
         }
 
-        /* الحاوية الرئيسية الفاخرة */
+        /* الحاوية الرئيسية - تصميم رسمي فاخر وصارم */
         .promoter-card {
             width: 100%;
             max-width: 440px;
-            background: rgba(13, 14, 18, 0.92);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            padding: 38px 26px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 35px 80px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+            background: rgba(13, 16, 23, 0.85);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            padding: 40px 28px;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 
+                0 30px 60px -12px rgba(0, 0, 0, 0.85),
+                0 18px 36px -18px rgba(0, 0, 0, 0.9),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             position: relative;
+            transform: translateZ(0);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* شريط الإضاءة العلوي */
+        /* لمسة علوية رسمية موحدة بدلاً من قزح القزح */
         .promoter-card::before {
             content: '';
             position: absolute;
-            top: 0; left: 15%; right: 15%;
-            height: 3px;
-            background: linear-gradient(90deg, #8E44AD, #E74C3C, #25D366, #2980B9);
-            border-radius: 0 0 6px 6px;
-            box-shadow: 0 0 15px rgba(37, 211, 102, 0.8);
+            top: 0; 
+            left: 20%; 
+            right: 20%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(37, 211, 102, 0.6), transparent);
+            border-radius: 50%;
         }
 
         /* الشعار والعنوان */
         .logo-container {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
 
         .brand-logo {
-            width: 110px;
-            height: 110px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid rgba(37, 211, 102, 0.4);
-            box-shadow: 0 0 35px rgba(37, 211, 102, 0.3);
-            margin-bottom: 14px;
-            transition: transform 0.4s ease;
+            border: 2px solid rgba(37, 211, 102, 0.3);
+            box-shadow: 0 0 25px rgba(37, 211, 102, 0.15);
+            margin-bottom: 16px;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s ease;
+            will-change: transform;
         }
-        .brand-logo:hover { transform: scale(1.05); }
+        
+        .promoter-card:hover .brand-logo { 
+            transform: scale(1.03); 
+            border-color: rgba(37, 211, 102, 0.6);
+        }
 
         .title {
-            font-size: 27px;
+            font-size: 26px;
             font-weight: 900;
-            background: linear-gradient(135deg, #ffffff 20%, #b0b0b0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+            color: #ffffff;
         }
 
         .subtitle {
-            font-size: 12px;
+            font-size: 11px;
             color: #25D366;
             font-weight: 800;
             margin-top: 4px;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(37, 211, 102, 0.4);
+            opacity: 0.9;
         }
 
-        /* تنسيق الحقول */
+        /* تنسيق الحقول وسلاستها */
         .input-group {
-            margin-bottom: 22px;
+            margin-bottom: 20px;
             position: relative;
         }
 
         .input-label {
             display: block;
             font-size: 13px;
-            font-weight: 800;
-            color: #b5b5b5;
+            font-weight: 700;
+            color: #94a3b8;
             margin-bottom: 8px;
+            transition: color 0.3s ease;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .input-control {
             width: 100%;
-            background: rgba(0, 0, 0, 0.65);
-            border: 1.5px solid rgba(255, 255, 255, 0.09);
+            background: rgba(6, 9, 14, 0.7);
+            border: 1.5px solid rgba(255, 255, 255, 0.07);
             color: #ffffff;
             font-size: 15px;
             font-weight: 700;
             padding: 16px 18px;
-            border-radius: 16px;
+            border-radius: 14px;
             outline: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             appearance: none;
+            will-change: border-color, box-shadow, transform;
+        }
+
+        .input-control:hover {
+            border-color: rgba(255, 255, 255, 0.18);
+            background: rgba(8, 12, 18, 0.85);
         }
 
         .input-control:focus {
             border-color: #25D366;
-            background: rgba(37, 211, 102, 0.04);
-            box-shadow: 0 0 25px rgba(37, 211, 102, 0.25);
+            background: rgba(10, 15, 22, 0.95);
+            box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.12), 0 10px 20px -5px rgba(0, 0, 0, 0.5);
+            transform: translateY(-1px);
         }
 
-        .input-control::placeholder { color: #555; font-weight: 600; }
+        .input-group:focus-within .input-label {
+            color: #25D366;
+        }
 
-        /* القائمة المنسدلة للمحافظات */
+        .input-control::placeholder { 
+            color: #475569; 
+            font-weight: 600; 
+        }
+
+        /* القائمة المنسدلة */
         select.input-control {
             background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2325D366%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
             background-repeat: no-repeat;
             background-position: left 18px center;
-            background-size: 13px;
+            background-size: 12px;
             cursor: pointer;
         }
-        select.input-control option { background: #121318; color: #fff; padding: 14px; font-weight: 700; }
+        select.input-control option { 
+            background: #0f141c; 
+            color: #f1f5f9; 
+            padding: 14px; 
+            font-weight: 700; 
+        }
 
-        /* شارة شركات الاتصال */
+        /* شارة شركات الاتصال السلسة */
         .phone-wrapper { position: relative; }
-        .phone-input { padding-left: 95px; text-align: left; direction: ltr; font-size: 16px; letter-spacing: 1px; }
+        .phone-input { 
+            padding-left: 95px; 
+            text-align: left; 
+            direction: ltr; 
+            font-size: 16px; 
+            letter-spacing: 1px; 
+        }
         .phone-input::placeholder { text-align: left; letter-spacing: 0; }
         
         .carrier-badge {
             position: absolute;
             left: 10px;
-            top: 43px;
-            font-size: 12px;
+            top: 50%;
+            transform: translateY(-50%) scale(0.9);
+            font-size: 11px;
             font-weight: 900;
-            padding: 6px 14px;
-            border-radius: 10px;
+            padding: 5px 12px;
+            border-radius: 8px;
             opacity: 0;
-            transition: all 0.3s ease;
             pointer-events: none;
             color: #fff;
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
         }
 
-        .badge-zain { background: #8E44AD !important; border: 1px solid #9B59B6; opacity: 1; box-shadow: 0 0 15px rgba(142,68,173,0.6); }
-        .badge-asia { background: #E74C3C !important; border: 1px solid #FF6B6B; opacity: 1; box-shadow: 0 0 15px rgba(231,76,60,0.6); }
-        .badge-korek { background: #2980B9 !important; border: 1px solid #5DADE2; opacity: 1; box-shadow: 0 0 15px rgba(41,128,185,0.6); }
+        .carrier-badge.active {
+            opacity: 1;
+            transform: translateY(-50%) scale(1);
+        }
 
-        /* زر الإرسال الرئيسي */
+        .badge-zain { background: #7c3aed; border: 1px solid #8b5cf6; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3); }
+        .badge-asia { background: #dc2626; border: 1px solid #ef4444; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3); }
+        .badge-korek { background: #0284c7; border: 1px solid #38bdf8; box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3); }
+
+        /* زر الإرسال الرئيسي - قوي ورسمي وسلس جداً */
         .btn-submit {
             width: 100%;
-            padding: 16px 24px;
-            background: linear-gradient(135deg, #25D366 0%, #075E54 100%);
-            color: #ffffff;
+            padding: 17px 24px;
+            background: #25D366;
+            color: #041208;
             border: none;
-            border-radius: 18px;
-            font-size: 18px;
-            font-weight: 800;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: 900;
             cursor: pointer;
-            margin-top: 22px;
-            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.35);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 26px;
+            box-shadow: 0 8px 25px -4px rgba(37, 211, 102, 0.4);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 10px;
             position: relative;
             overflow: hidden;
-        }
-
-        .btn-submit::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                60deg,
-                transparent 30%,
-                rgba(255, 255, 255, 0.2) 50%,
-                transparent 70%
-            );
-            transform: rotate(30deg);
-            animation: shine 4s infinite;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%) rotate(30deg); }
-            20% { transform: translateX(100%) rotate(30deg); }
-            100% { transform: translateX(100%) rotate(30deg); }
+            will-change: transform, box-shadow, background-color;
         }
 
         .btn-submit:hover { 
+            background: #22c55e;
             transform: translateY(-2px); 
-            box-shadow: 0 15px 38px rgba(37, 211, 102, 0.5); 
-            background: linear-gradient(135deg, #28E06C 0%, #097266 100%);
+            box-shadow: 0 14px 30px -4px rgba(37, 211, 102, 0.5); 
         }
 
-        .btn-submit:active { transform: scale(0.98); }
+        .btn-submit:active { 
+            transform: translateY(0) scale(0.98); 
+            box-shadow: 0 4px 15px -2px rgba(37, 211, 102, 0.4);
+        }
 
         .wa-icon {
-            width: 21px;
-            height: 21px;
-            fill: #ffffff;
-            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.5));
+            width: 22px;
+            height: 22px;
+            fill: #041208;
             flex-shrink: 0;
-            transition: transform 0.3s ease;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .btn-submit:hover .wa-icon {
-            transform: scale(1.15) rotate(-6deg);
+            transform: scale(1.15) rotate(-5deg);
         }
 
-        /* رسالة التنبيه */
+        /* رسالة التنبيه السلسة */
         #toast {
-            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-            background: rgba(231, 76, 60, 0.95); color: #fff; padding: 12px 28px;
-            border-radius: 30px; font-weight: 800; font-size: 14px; z-index: 999;
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-align: center;
-            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.4);
-            backdrop-filter: blur(10px);
+            position: fixed; 
+            top: -100px; 
+            left: 50%; 
+            transform: translateX(-50%) scale(0.95);
+            background: rgba(220, 38, 38, 0.95); 
+            color: #fff; 
+            padding: 14px 28px;
+            border-radius: 50px; 
+            font-weight: 800; 
+            font-size: 14px; 
+            z-index: 999;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(220, 38, 38, 0.35);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            pointer-events: none;
         }
-        #toast.show { top: 25px; }
+
+        #toast.show { 
+            top: 30px; 
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
     </style>
 </head>
 <body>
@@ -248,7 +296,7 @@
         <div class="subtitle">PROMOTER SYSTEM VIP</div>
     </div>
 
-    <form id="promoterForm">
+    <form id="promoterForm" novalidate>
         <!-- الاسم الكامل -->
         <div class="input-group">
             <label class="input-label">الاسم الكامل للزبون</label>
@@ -256,10 +304,12 @@
         </div>
 
         <!-- رقم الهاتف -->
-        <div class="input-group phone-wrapper">
+        <div class="input-group">
             <label class="input-label">رقم الهاتف</label>
-            <input type="tel" id="phone" class="input-control phone-input" placeholder="07X XXXX XXXX" maxlength="13" required autocomplete="off">
-            <div id="carrierBadge" class="carrier-badge"></div>
+            <div class="input-wrapper phone-wrapper">
+                <input type="tel" id="phone" class="input-control phone-input" placeholder="07X XXXX XXXX" maxlength="13" required autocomplete="off">
+                <div id="carrierBadge" class="carrier-badge"></div>
+            </div>
         </div>
 
         <!-- المحافظة -->
@@ -311,11 +361,11 @@
 
 <script>
     function showToast(message) {
-        if(navigator.vibrate) navigator.vibrate(50);
+        if (navigator.vibrate) navigator.vibrate(50);
         const toast = document.getElementById('toast');
         document.getElementById('toast-msg').innerText = message;
         toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 3000);
+        setTimeout(() => toast.classList.remove('show'), 3200);
     }
 
     const phoneInput = document.getElementById('phone');
@@ -327,15 +377,15 @@
         
         if (val.startsWith('078') || val.startsWith('079')) {
             carrierBadge.innerText = 'زين'; 
-            carrierBadge.classList.add('badge-zain');
+            carrierBadge.classList.add('badge-zain', 'active');
         } else if (val.startsWith('077')) {
             carrierBadge.innerText = 'آسيا'; 
-            carrierBadge.classList.add('badge-asia');
+            carrierBadge.classList.add('badge-asia', 'active');
         } else if (val.startsWith('075')) {
             carrierBadge.innerText = 'كورك'; 
-            carrierBadge.classList.add('badge-korek');
+            carrierBadge.classList.add('badge-korek', 'active');
         } else {
-            carrierBadge.innerText = '';
+            carrierBadge.classList.remove('active');
         }
 
         let formatted = val;
@@ -353,16 +403,29 @@
         const region = document.getElementById('region').value.trim();
         const orderNum = document.getElementById('orderNumber').value.trim();
 
+        if (!name) {
+            showToast("⚠️ يرجى كتابة اسم الزبون كاملًا");
+            return;
+        }
+
         if (phone.length !== 11) { 
             showToast("⚠️ الرجاء التأكد من كتابة 11 رقماً لرقم الهاتف"); 
             return; 
         }
 
-        if(navigator.vibrate) navigator.vibrate(40);
+        if (!region) {
+            showToast("⚠️ يرجى كتابة اسم المنطقة أو الحي");
+            return;
+        }
+
+        if (!orderNum) {
+            showToast("⚠️ يرجى أدخال رقم الطلب");
+            return;
+        }
+
+        if (navigator.vibrate) navigator.vibrate(40);
 
         const targetWhatsAppNumber = "9647888988288"; 
-
-        /* هيكلية الرسالة الجديدة المطابقة للطلب */
         const messageText = `👤 الاسم الكامل: ${name}\n\n📞 رقم الهاتف  :  ${phone}\n\n📍 العنوان بالتفصيل: \n${gov} - ${region}\n\n✅ رقم الطلب  :  ${orderNum}`;
         const encodedMsg = encodeURIComponent(messageText);
 
@@ -376,9 +439,8 @@
             document.getElementById('region').value = '';
             document.getElementById('orderNumber').value = '';
             carrierBadge.className = 'carrier-badge';
-        }, 1000);
+        }, 1200);
     });
 </script>
 </body>
 </html>
-
