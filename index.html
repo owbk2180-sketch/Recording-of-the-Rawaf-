@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>بوابة تسجيل العملاء | Promoter PRO</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <title>بوابة Promoter الاحترافية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             -webkit-tap-highlight-color: transparent;
@@ -14,146 +14,98 @@
             font-family: 'Cairo', sans-serif;
         }
 
-        :root {
-            --primary: #00E676;
-            --primary-glow: rgba(0, 230, 118, 0.4);
-            --bg-dark: #050505;
-            --surface: rgba(20, 20, 22, 0.85);
-            --text-main: #ffffff;
-            --text-muted: #a0a0a0;
-            --border-color: rgba(255, 255, 255, 0.08);
-        }
-
+        /* التصميم الأسود الملكي */
         body {
-            background-color: var(--bg-dark);
-            background-image: 
-                radial-gradient(circle at 15% 50%, rgba(0, 230, 118, 0.05), transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(0, 150, 255, 0.05), transparent 25%);
-            color: var(--text-main);
+            background-color: #000000;
+            color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden;
             padding: 20px;
         }
 
-        /* حاوية الفورما الرئيسية (Glassmorphism) */
         .promoter-card {
             width: 100%;
-            max-width: 420px;
-            background: var(--surface);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 35px 25px;
-            border-radius: 28px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.1);
-            position: relative;
-            z-index: 10;
+            max-width: 450px;
+            background: #0a0a0a;
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
         }
 
-        /* الشعار والتيتل */
-        .header-section {
+        /* الشعار البارز */
+        .logo-container {
             text-align: center;
             margin-bottom: 35px;
         }
 
         .brand-logo {
-            width: 85px;
-            height: 85px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid rgba(255,255,255,0.1);
-            padding: 3px;
-            background: #000;
-            box-shadow: 0 0 25px var(--primary-glow);
+            border: 3px solid #333;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.05);
             margin-bottom: 15px;
-            transition: transform 0.3s ease;
-        }
-
-        .brand-logo:hover {
-            transform: scale(1.05);
         }
 
         .title {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #fff, #aaa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #fff;
+            letter-spacing: 1px;
         }
 
-        .subtitle {
-            font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 600;
-            margin-top: 5px;
-        }
-
-        /* تنسيق الحقول المتقدم */
+        /* الحقول */
         .input-group {
-            margin-bottom: 22px;
+            margin-bottom: 25px;
             position: relative;
         }
 
         .input-label {
             display: block;
             font-size: 13px;
-            font-weight: 700;
-            color: var(--text-muted);
+            font-weight: 800;
+            color: #777;
             margin-bottom: 8px;
-            padding-right: 5px;
-            transition: color 0.3s;
         }
 
         .input-control {
             width: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1.5px solid var(--border-color);
+            background: #000000;
+            border: 1px solid #222;
             color: #fff;
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
-            padding: 16px 18px;
-            border-radius: 16px;
+            padding: 18px 20px;
+            border-radius: 12px;
             outline: none;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
             appearance: none;
         }
 
         .input-control:focus {
-            border-color: var(--primary);
-            background: rgba(0, 230, 118, 0.02);
-            box-shadow: 0 0 15px rgba(0, 230, 118, 0.15);
-        }
-
-        .input-control:focus + .input-label,
-        .input-control:focus ~ .input-label {
-            color: var(--primary);
+            border-color: #555;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
         }
 
         .input-control::placeholder {
-            color: #444;
-            font-weight: 600;
+            color: #333;
         }
 
-        /* تخصيص القائمة المنسدلة (المحافظات) */
+        /* سهم القائمة المنسدلة */
         select.input-control {
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23a0a0a0%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23555%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
             background-repeat: no-repeat;
-            background-position: left 18px center;
+            background-position: left 20px center;
             background-size: 12px;
-            padding-left: 40px;
         }
         
-        select.input-control option {
-            background: #111;
-            color: #fff;
-            padding: 10px;
-        }
+        select.input-control option { background: #111; color: #fff; }
 
-        /* شارة شبكة الاتصال */
+        /* شارة شركات الاتصال */
         .phone-wrapper { position: relative; }
         .phone-input { padding-left: 90px; text-align: left; direction: ltr; }
         .phone-input::placeholder { text-align: left; }
@@ -161,101 +113,85 @@
         .carrier-badge {
             position: absolute;
             left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 11px;
-            font-weight: 800;
-            padding: 6px 12px;
-            border-radius: 10px;
+            top: 48px;
+            font-size: 12px;
+            font-weight: 900;
+            padding: 6px 14px;
+            border-radius: 8px;
             opacity: 0;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.3s;
             pointer-events: none;
-            letter-spacing: 0.5px;
+            color: #fff;
         }
 
-        .badge-zain { background: linear-gradient(135deg, #111, #000); color: #00E5FF; border: 1px solid #00E5FF; opacity: 1; box-shadow: 0 0 10px rgba(0, 229, 255, 0.2); }
-        .badge-asia { background: linear-gradient(135deg, #E74C3C, #900C3F); color: #fff; opacity: 1; box-shadow: 0 0 10px rgba(231, 76, 60, 0.2); }
-        .badge-korek { background: linear-gradient(135deg, #F39C12, #D35400); color: #fff; opacity: 1; box-shadow: 0 0 10px rgba(243, 156, 18, 0.2); }
+        /* الألوان التي طلبتها لشركات الاتصال */
+        .badge-zain { background: #8E44AD; opacity: 1; box-shadow: 0 0 15px rgba(142, 68, 173, 0.4); } /* بنفسجي */
+        .badge-asia { background: #E74C3C; opacity: 1; box-shadow: 0 0 15px rgba(231, 76, 60, 0.4); } /* أحمر */
+        .badge-korek { background: #2980B9; opacity: 1; box-shadow: 0 0 15px rgba(41, 128, 185, 0.4); } /* أزرق */
 
         /* زر الإرسال */
         .btn-submit {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #25D366, #128C7E);
-            color: #fff;
+            padding: 20px;
+            background: #ffffff;
+            color: #000000;
             border: none;
-            border-radius: 16px;
-            font-size: 17px;
+            border-radius: 12px;
+            font-size: 18px;
             font-weight: 900;
             cursor: pointer;
-            margin-top: 10px;
-            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.25);
-            transition: all 0.3s ease;
+            margin-top: 15px;
+            transition: all 0.3s;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
-        .btn-submit:hover {
-            box-shadow: 0 12px 25px rgba(37, 211, 102, 0.4);
-            transform: translateY(-2px);
-        }
+        .btn-submit:hover { background: #e0e0e0; transform: translateY(-2px); }
+        .btn-submit:active { transform: scale(0.97); }
 
-        .btn-submit:active {
-            transform: scale(0.97);
-        }
-
-        /* رسائل التنبيه والتحميل */
+        /* التنبيهات */
         #toast {
             position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-            background: rgba(231, 76, 60, 0.95); color: #fff; padding: 12px 24px;
-            border-radius: 30px; font-weight: 700; font-size: 14px; z-index: 999999;
-            transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.4);
+            background: #E74C3C; color: #fff; padding: 15px 30px;
+            border-radius: 10px; font-weight: 800; font-size: 14px; z-index: 999;
+            transition: 0.4s; text-align: center; width: 90%; max-width: 400px;
         }
         #toast.show { top: 30px; }
-
-        .loader-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(15px);
-            z-index: 100000; display: none; flex-direction: column; justify-content: center; align-items: center;
-        }
-        .spinner {
-            width: 45px; height: 45px; border: 3px solid rgba(255,255,255,0.1);
-            border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 20px;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
 <div id="toast"><span id="toast-msg"></span></div>
 
-<div class="loader-overlay" id="loader">
-    <div class="spinner"></div>
-    <div style="color:#fff; font-weight:800; font-size:15px; letter-spacing:1px;">جاري توثيق البيانات...</div>
-</div>
-
 <div class="promoter-card">
-    <div class="header-section">
+    <div class="logo-container">
         <img src="my-image.png" class="brand-logo" alt="Logo">
-        <h1 class="title">تسجيل العملاء</h1>
-        <div class="subtitle">بوابة إدخال البيانات المعتمدة</div>
+        <div class="title">PROMOTER PORTAL</div>
     </div>
 
     <form id="promoterForm">
         <!-- حقل الاسم -->
         <div class="input-group">
-            <label class="input-label">اسم الزبون الكامل</label>
-            <input type="text" id="customerName" class="input-control" placeholder="أدخل اسم الزبون هنا..." required autocomplete="off">
+            <label class="input-label">الاسم الكامل</label>
+            <input type="text" id="customerName" class="input-control" placeholder="اكتب اسم الزبون..." required autocomplete="off">
         </div>
 
-        <!-- حقل المحافظة -->
+        <!-- حقل رقم الهاتف -->
+        <div class="input-group phone-wrapper">
+            <label class="input-label">رقم الهاتف الأساسي</label>
+            <input type="tel" id="phone" class="input-control phone-input" placeholder="07X XXXX XXXX" maxlength="13" required autocomplete="off">
+            <div id="carrierBadge" class="carrier-badge"></div>
+        </div>
+
+        <!-- قائمة المحافظات -->
         <div class="input-group">
             <label class="input-label">المحافظة</label>
             <select id="governorate" class="input-control" required>
-                <option value="البصرة" selected>البصرة</option>
+                <option value="" disabled selected>اختر المحافظة...</option>
                 <option value="بغداد">بغداد</option>
+                <option value="البصرة">البصرة</option>
                 <option value="نينوى">نينوى</option>
                 <option value="أربيل">أربيل</option>
                 <option value="النجف">النجف</option>
@@ -277,21 +213,14 @@
 
         <!-- حقل المنطقة -->
         <div class="input-group">
-            <label class="input-label">اسم المنطقة / الحي</label>
-            <input type="text" id="region" class="input-control" placeholder="مثال: العشار، المنصور..." required autocomplete="off">
-        </div>
-
-        <!-- حقل رقم الهاتف -->
-        <div class="input-group phone-wrapper">
-            <label class="input-label">رقم الهاتف</label>
-            <input type="tel" id="phone" class="input-control phone-input" placeholder="07X XXXX XXXX" maxlength="13" required autocomplete="off">
-            <div id="carrierBadge" class="carrier-badge"></div>
+            <label class="input-label">المنطقة / الحي</label>
+            <input type="text" id="region" class="input-control" placeholder="اكتب اسم المنطقة..." required autocomplete="off">
         </div>
 
         <!-- زر الإرسال -->
         <button type="submit" class="btn-submit">
-            <span>تحويل الطلب</span>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            إرسال الطلب
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
         </button>
     </form>
 </div>
@@ -302,73 +231,109 @@
         const toast = document.getElementById('toast');
         document.getElementById('toast-msg').innerText = message;
         toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 3500);
+        setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
     const phoneInput = document.getElementById('phone');
     const carrierBadge = document.getElementById('carrierBadge');
 
-    // خوارزمية ذكية لتنسيق الرقم واستخراج الشبكة
+    // كشف شبكات الاتصال بالألوان المطلوبة
     phoneInput.addEventListener('input', function() {
         let val = this.value.replace(/\D/g, ''); 
         carrierBadge.className = 'carrier-badge';
         
         if (val.startsWith('078') || val.startsWith('079')) {
             carrierBadge.innerText = 'زين'; 
-            carrierBadge.classList.add('badge-zain');
+            carrierBadge.classList.add('badge-zain'); // بنفسجي
         } else if (val.startsWith('077')) {
             carrierBadge.innerText = 'آسيا'; 
-            carrierBadge.classList.add('badge-asia');
+            carrierBadge.classList.add('badge-asia'); // أحمر
         } else if (val.startsWith('075')) {
             carrierBadge.innerText = 'كورك'; 
-            carrierBadge.classList.add('badge-korek');
+            carrierBadge.classList.add('badge-korek'); // أزرق
         } else {
             carrierBadge.innerText = '';
         }
 
-        // تنسيق عالمي للفراغات
+        // تنسيق الرقم
         let formatted = val;
         if (val.length > 4) formatted = val.slice(0, 4) + ' ' + val.slice(4);
         if (val.length > 7) formatted = val.slice(0, 4) + ' ' + val.slice(4, 7) + ' ' + val.slice(7, 11);
         this.value = formatted;
     });
 
+    // دالة الحصول على رقم الطلب بناءً على الوقت (بعد الـ 8:30 ليلاً بتوقيت بغداد)
+    function getSmartOrderNumber() {
+        // جلب الوقت الحالي بتوقيت العراق
+        const now = new Date(new Date().toLocaleString("en-US", {timeZone: "Asia/Baghdad"}));
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const timeDecimal = hours + (minutes / 60); 
+
+        // تحديد ما إذا كان الوقت قد تجاوز 8:30 ليلاً (20.5 بنظام الـ 24 ساعة)
+        let shiftDate = new Date(now);
+        if (timeDecimal < 20.5) {
+            // إذا كان قبل 8:30 ليلاً، نعتبره تابعاً لشيفت يوم أمس
+            shiftDate.setDate(shiftDate.getDate() - 1);
+        }
+        
+        // استخراج معرف الشيفت (تاريخ اليوم أو الأمس)
+        const currentShiftId = shiftDate.toISOString().split('T')[0];
+        
+        // قراءة البيانات من المتصفح
+        let storedShiftId = localStorage.getItem('shift_id');
+        let orderCount = parseInt(localStorage.getItem('order_count')) || 0;
+
+        // إذا بدأ شيفت جديد (بعد 8:30 ليلاً بيوم جديد)، قم بتصفير العداد
+        if (storedShiftId !== currentShiftId) {
+            orderCount = 1;
+            localStorage.setItem('shift_id', currentShiftId);
+        } else {
+            orderCount++;
+        }
+        
+        // حفظ الرقم الجديد
+        localStorage.setItem('order_count', orderCount);
+        return orderCount;
+    }
+
     document.getElementById('promoterForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
         const name = document.getElementById('customerName').value.trim();
+        const phone = phoneInput.value.replace(/\s/g, ''); 
         const gov = document.getElementById('governorate').value;
         const region = document.getElementById('region').value.trim();
-        const phone = phoneInput.value.replace(/\s/g, ''); 
 
         if (phone.length !== 11) { 
-            showToast("⚠️ تأكد من إدخال 11 رقماً بشكل صحيح"); 
+            showToast("الرجاء التأكد من كتابة 11 رقم للهاتف"); 
             return; 
         }
 
-        if(navigator.vibrate) navigator.vibrate([40, 40]);
-        document.getElementById('loader').style.display = 'flex';
+        if(navigator.vibrate) navigator.vibrate(40);
 
-        // رقم الواتساب المستهدف
+        // جلب رقم الطلب الذكي
+        const orderNum = getSmartOrderNumber();
+        
         const targetWhatsAppNumber = "9647888988288"; 
         
-        // قالب الرسالة المنسق والجاهز
-        const messageText = `مرحباً، طلب تسجيل جديد:\n\n👤 الاسم: ${name}\n📍 المحافظة: ${gov}\n🏘️ المنطقة: ${region}\n📱 الهاتف: ${phone}`;
+        // تنسيق الرسالة بالضبط كما طلبت
+        const messageText = `👤 الاسم الكامل:\n${name}\n📞 رقم الهاتف الأساسي:\n${phone}\n📍 العنوان بالتفصيل:\n(المحافظة - المنطقة)\n(${gov} - ${region})\nرقم طلب : ${orderNum}`;
         
         const waLink = `https://wa.me/${targetWhatsAppNumber}?text=${encodeURIComponent(messageText)}`;
 
-        // محاكاة معالجة سريعة ثم التحويل
+        // التوجه للواتساب
+        window.location.href = waLink;
+        
+        // تفريغ الحقول باستثناء المحافظة لتسريع عمل الموظف
         setTimeout(() => {
-            window.location.href = waLink;
-            setTimeout(() => {
-                document.getElementById('loader').style.display = 'none';
-                document.getElementById('promoterForm').reset();
-                carrierBadge.className = 'carrier-badge';
-                // إرجاع البصرة كافتراضي بعد الإرسال
-                document.getElementById('governorate').value = 'البصرة';
-            }, 1000);
-        }, 800);
+            document.getElementById('customerName').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('region').value = '';
+            carrierBadge.className = 'carrier-badge';
+        }, 1000);
     });
 </script>
 </body>
 </html>
+
