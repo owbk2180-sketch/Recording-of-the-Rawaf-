@@ -7,27 +7,6 @@
     <!-- خط Cairo عالي الدقة -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* 9. تخصيص لون التحديد (Selection) */
-        ::selection {
-            background: #22c55e;
-            color: #041208;
-        }
-
-        /* 14. أشرطة التمرير المخصصة الفاخرة */
-        ::-webkit-scrollbar {
-            width: 5px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #06080d;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #22c55e;
-        }
-
         * {
             -webkit-tap-highlight-color: transparent;
             box-sizing: border-box;
@@ -39,80 +18,40 @@
 
         body {
             background-color: #06080d;
+            background-image: 
+                radial-gradient(circle at 50% -10%, rgba(37, 211, 102, 0.07) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(15, 20, 30, 0.9) 0%, transparent 50%);
             color: #f1f5f9;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px 16px;
-            position: relative;
-            overflow-x: hidden;
         }
 
-        /* 11. كرات الإضاءة الخلفية الناعمة المتذبذبة (Ambient Background Orbs) */
-        .ambient-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: -1;
-        }
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(90px);
-            opacity: 0.12;
-            animation: floatOrb 16s infinite alternate ease-in-out;
-        }
-        .orb-1 { width: 350px; height: 350px; background: #22c55e; top: -100px; right: -100px; }
-        .orb-2 { width: 450px; height: 450px; background: #3b82f6; bottom: -150px; left: -150px; animation-delay: -6s; }
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(50px, 60px) scale(1.15); }
-        }
-
-        /* الحاوية الرئيسية مع 1. تأثير الإضاءة المتبعة للتحويم و 8. طبقات الزجاج */
         .promoter-card {
             width: 100%;
             max-width: 440px;
             background: rgba(11, 14, 20, 0.88);
-            backdrop-filter: blur(35px);
-            -webkit-backdrop-filter: blur(35px);
-            padding: 38px 24px 28px 24px;
-            border-radius: 28px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            padding: 34px 24px;
+            border-radius: 26px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
             box-shadow: 
-                0 30px 70px -15px rgba(0, 0, 0, 0.95),
-                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+                0 30px 60px -15px rgba(0, 0, 0, 0.9),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
             position: relative;
-            overflow: hidden;
             transform: translateZ(0);
         }
 
-        /* 1. تأثير إضاءة الماوس الخلفية (Spotlight Cursor Glow) */
-        .card-spotlight {
+        /* شريط علوي رسمي دقيق */
+        .promoter-card::before {
+            content: '';
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            border-radius: 28px;
-            z-index: 1;
-            background: radial-gradient(700px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(34, 197, 94, 0.09), transparent 40%);
-        }
-
-        /* 3. شريط التقدم اللحظي العلوي (Live Progress Bar) */
-        .progress-container {
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 3px;
-            background: rgba(255, 255, 255, 0.05);
-            z-index: 5;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #22c55e, #10b981);
-            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 0 12px #22c55e;
+            top: 0; left: 25%; right: 25%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(37, 211, 102, 0.5), transparent);
         }
 
         /* مؤشر حالة النظام المباشر */
@@ -120,18 +59,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 7px;
             font-size: 11px;
             font-weight: 800;
             color: #94a3b8;
             background: rgba(255, 255, 255, 0.03);
-            padding: 6px 14px;
+            padding: 6px 12px;
             border-radius: 20px;
             width: fit-content;
             margin: 0 auto 20px auto;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            z-index: 2;
         }
 
         .status-dot {
@@ -152,11 +89,8 @@
         .logo-container {
             text-align: center;
             margin-bottom: 24px;
-            position: relative;
-            z-index: 2;
         }
 
-        /* 13. توهج خفيف للشعار عند التحويم */
         .brand-logo {
             width: 90px;
             height: 90px;
@@ -165,12 +99,9 @@
             border: 2px solid rgba(37, 211, 102, 0.3);
             box-shadow: 0 0 20px rgba(37, 211, 102, 0.15);
             margin-bottom: 12px;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .promoter-card:hover .brand-logo { 
-            transform: scale(1.04); 
-            box-shadow: 0 0 30px rgba(34, 197, 94, 0.4);
-        }
+        .promoter-card:hover .brand-logo { transform: scale(1.03); }
 
         .title {
             font-size: 24px;
@@ -178,13 +109,12 @@
             color: #ffffff;
         }
 
-        /* 7. تباعد الحروف العناوين الكبرى (Typography Kerning) */
         .subtitle {
             font-size: 10px;
             color: #25D366;
             font-weight: 800;
-            margin-top: 3px;
-            letter-spacing: 2.5px;
+            margin-top: 2px;
+            letter-spacing: 2px;
             text-transform: uppercase;
         }
 
@@ -192,7 +122,6 @@
         .input-group {
             margin-bottom: 18px;
             position: relative;
-            z-index: 2;
         }
 
         .input-label {
@@ -210,18 +139,6 @@
             align-items: center;
         }
 
-        /* 2. الأيقونات الداخلية الخافتة للحقول و 15. الحواف الداخلية العميقة */
-        .input-inner-icon {
-            position: absolute;
-            right: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 15px;
-            opacity: 0.4;
-            pointer-events: none;
-            transition: opacity 0.3s ease, color 0.3s ease;
-        }
-
         .input-control {
             width: 100%;
             background: rgba(5, 7, 11, 0.75);
@@ -229,31 +146,28 @@
             color: #ffffff;
             font-size: 14px;
             font-weight: 700;
-            padding: 15px 44px 15px 18px;
+            padding: 15px 18px;
             border-radius: 14px;
             outline: none;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6);
             transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
             appearance: none;
         }
 
         .input-control:hover {
-            border-color: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.15);
             background: rgba(7, 10, 15, 0.9);
         }
 
-        /* 12. تأثير تدرج الحدود والتركيز */
         .input-control:focus {
-            border-color: #22c55e;
+            border-color: #25D366;
             background: rgba(8, 12, 18, 0.95);
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6), 0 0 0 4px rgba(34, 197, 94, 0.12);
+            box-shadow: 0 0 0 4px rgba(37, 211, 102, 0.12);
         }
 
-        .input-group:focus-within .input-label { color: #22c55e; }
-        .input-group:focus-within .input-inner-icon { opacity: 1; color: #22c55e; }
+        .input-group:focus-within .input-label { color: #25D366; }
         .input-control::placeholder { color: #475569; font-weight: 600; }
 
-        /* علامة الصح التفاعلية داخل الحقل */
+        /* علامة الصح التفاعلية داخل الحقل عند الصحة */
         .field-check {
             position: absolute;
             left: 15px;
@@ -271,24 +185,12 @@
         }
         .field-check::after {
             content: '✓';
-            color: #041208;
+            color: #000;
             font-size: 10px;
             font-weight: 900;
         }
         .input-group.valid .field-check {
             transform: translateY(-50%) scale(1);
-        }
-
-        /* 4. أنيميشن اهتزاز الخطأ الذكي (Input Error Shake) */
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-6px); }
-            40%, 80% { transform: translateX(6px); }
-        }
-        .input-group.shake-error .input-control {
-            animation: shake 0.4s ease-in-out;
-            border-color: #ef4444 !important;
-            background: rgba(239, 68, 68, 0.05) !important;
         }
 
         /* القائمة المنسدلة */
@@ -303,7 +205,7 @@
 
         /* شارة الشركات السلسة */
         .phone-wrapper { position: relative; }
-        .phone-input { padding-left: 95px !important; text-align: left; direction: ltr; font-size: 15px; letter-spacing: 1px; }
+        .phone-input { padding-left: 90px; text-align: left; direction: ltr; font-size: 15px; letter-spacing: 1px; }
         .phone-input::placeholder { text-align: left; letter-spacing: 0; }
         
         .carrier-badge {
@@ -325,19 +227,16 @@
         .badge-asia { background: #dc2626; }
         .badge-korek { background: #0284c7; }
 
-        /* 8. طبقات الزجاج المتعددة (Multi-layered Glass Depth) لعلبة المعاينة */
+        /* بطاقة المعاينة المباشرة (Live Preview Box) */
         .preview-box {
-            background: rgba(4, 6, 10, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 12px;
             margin-bottom: 20px;
             font-size: 11px;
             color: #94a3b8;
             line-height: 1.5;
-            position: relative;
-            z-index: 2;
         }
         .preview-title {
             font-size: 10px;
@@ -353,13 +252,11 @@
             font-size: 12px;
         }
 
-        /* الأزرار مع 5. تأثير اللمعان المتحرك (Shimmer) و 10. تأثير الموجة (Ripple) */
+        /* الأزرار (إرسال + نسخ) */
         .actions-container {
             display: flex;
             gap: 10px;
             margin-top: 22px;
-            position: relative;
-            z-index: 2;
         }
 
         .btn-submit {
@@ -378,34 +275,16 @@
             justify-content: center;
             align-items: center;
             gap: 8px;
-            position: relative;
-            overflow: hidden;
         }
-
-        /* 5. تأثير اللمعان المتحرك على زر الإرسال */
-        .btn-submit::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(60deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
-            transform: rotate(30deg) translateX(-100%);
-            animation: shimmer 4s infinite;
-        }
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) rotate(30deg); }
-            20% { transform: translateX(100%) rotate(30deg); }
-            100% { transform: translateX(100%) rotate(30deg); }
-        }
-
-        .btn-submit:hover { background: #22c55e; transform: translateY(-1px); box-shadow: 0 10px 25px -3px rgba(37, 211, 102, 0.6); }
+        .btn-submit:hover { background: #22c55e; transform: translateY(-1px); }
         .btn-submit:active { transform: scale(0.98); }
 
         .btn-copy {
             flex: 1;
             padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.06);
             color: #f1f5f9;
-            border: 1px solid rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 13px;
             font-size: 13px;
             font-weight: 800;
@@ -415,58 +294,28 @@
             justify-content: center;
             align-items: center;
             gap: 5px;
-            position: relative;
-            overflow: hidden;
         }
-        .btn-copy:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.2); }
-
-        /* 10. تأثير الموجة عند النقر (Ripple Effect) */
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(0);
-            animation: ripple-effect 0.5s linear;
-            pointer-events: none;
-        }
-        @keyframes ripple-effect {
-            to { transform: scale(4); opacity: 0; }
-        }
+        .btn-copy:hover { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.2); }
 
         .wa-icon { width: 18px; height: 18px; fill: #041208; }
 
         /* رسالة التنبيه العائمة */
         #toast {
             position: fixed; top: -80px; left: 50%; transform: translateX(-50%) scale(0.95);
-            background: rgba(239, 68, 68, 0.95); color: #fff; padding: 12px 24px;
+            background: rgba(220, 38, 38, 0.95); color: #fff; padding: 12px 24px;
             border-radius: 30px; font-weight: 800; font-size: 13px; z-index: 999;
             opacity: 0; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2); pointer-events: none;
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3); backdrop-filter: blur(10px);
         }
         #toast.show { top: 25px; opacity: 1; transform: translateX(-50%) scale(1); }
-        #toast.success { background: rgba(34, 197, 94, 0.95); box-shadow: 0 10px 25px rgba(34, 197, 94, 0.4); }
+        #toast.success { background: rgba(34, 197, 94, 0.95); box-shadow: 0 10px 25px rgba(34, 197, 94, 0.3); }
     </style>
 </head>
 <body>
 
-<!-- الخلفية الحية مع الكرات المتذبذبة -->
-<div class="ambient-bg">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-</div>
-
 <div id="toast"><span id="toast-msg"></span></div>
 
-<div class="promoter-card" id="promoterCard">
-    <!-- 1. تأثير إضاءة الماوس -->
-    <div class="card-spotlight" id="cardSpotlight"></div>
-    
-    <!-- 3. شريط التقدم اللحظي -->
-    <div class="progress-container">
-        <div class="progress-bar-fill" id="progressBarFill"></div>
-    </div>
-
+<div class="promoter-card">
     <!-- مؤشر الحالة -->
     <div class="system-status">
         <div class="status-dot"></div>
@@ -476,25 +325,23 @@
     <div class="logo-container">
         <img src="my-image.png" class="brand-logo" alt="Logo">
         <h1 class="title">تسجيل العملاء</h1>
-        <div class="subtitle">VIP • SECURE • PORTAL</div>
+        <div class="subtitle">VIP SECURE PORTAL</div>
     </div>
 
     <form id="promoterForm" novalidate>
-        <!-- الاسم مع الأيقونة الداخلية -->
+        <!-- الاسم -->
         <div class="input-group" id="groupName">
             <label class="input-label">الاسم الكامل للزبون</label>
             <div class="input-wrapper">
-                <span class="input-inner-icon">👤</span>
                 <input type="text" id="customerName" class="input-control" placeholder="اكتب اسم الزبون..." required autocomplete="off">
                 <div class="field-check"></div>
             </div>
         </div>
 
-        <!-- الهاتف مع الأيقونة -->
+        <!-- الهاتف -->
         <div class="input-group" id="groupPhone">
             <label class="input-label">رقم الهاتف</label>
             <div class="input-wrapper phone-wrapper">
-                <span class="input-inner-icon">📞</span>
                 <input type="tel" id="phone" class="input-control phone-input" placeholder="07X XXXX XXXX" maxlength="13" required autocomplete="off">
                 <div id="carrierBadge" class="carrier-badge"></div>
                 <div class="field-check"></div>
@@ -502,39 +349,34 @@
         </div>
 
         <!-- المحافظة -->
-        <div class="input-group" id="groupGov">
+        <div class="input-group">
             <label class="input-label">المحافظة</label>
-            <div class="input-wrapper">
-                <span class="input-inner-icon">📍</span>
-                <select id="governorate" class="input-control" required>
-                    <option value="البصرة" selected>البصرة</option>
-                    <option value="بغداد">بغداد</option>
-                    <option value="نينوى">نينوى</option>
-                    <option value="أربيل">أربيل</option>
-                    <option value="النجف">النجف</option>
-                    <option value="كربلاء">كربلاء</option>
-                    <option value="كركوك">كركوك</option>
-                    <option value="الأنبار">الأنبار</option>
-                    <option value="ديالى">ديالى</option>
-                    <option value="ميسان">ميسان</option>
-                    <option value="بابل">بابل</option>
-                    <option value="ذي قار">ذي قار</option>
-                    <option value="السليمانية">السليمانية</option>
-                    <option value="دهوك">دهوك</option>
-                    <option value="المثنى">المثنى</option>
-                    <option value="القادسية">القادسية</option>
-                    <option value="واسط">واسط</option>
-                    <option value="حلبجة">حلبجة</option>
-                </select>
-                <div class="field-check" style="left: 35px;"></div>
-            </div>
+            <select id="governorate" class="input-control" required>
+                <option value="البصرة" selected>البصرة</option>
+                <option value="بغداد">بغداد</option>
+                <option value="نينوى">نينوى</option>
+                <option value="أربيل">أربيل</option>
+                <option value="النجف">النجف</option>
+                <option value="كربلاء">كربلاء</option>
+                <option value="كركوك">كركوك</option>
+                <option value="الأنبار">الأنبار</option>
+                <option value="ديالى">ديالى</option>
+                <option value="ميسان">ميسان</option>
+                <option value="بابل">بابل</option>
+                <option value="ذي قار">ذي قار</option>
+                <option value="السليمانية">السليمانية</option>
+                <option value="دهوك">دهوك</option>
+                <option value="المثنى">المثنى</option>
+                <option value="القادسية">القادسية</option>
+                <option value="واسط">واسط</option>
+                <option value="حلبجة">حلبجة</option>
+            </select>
         </div>
 
         <!-- المنطقة -->
         <div class="input-group" id="groupRegion">
             <label class="input-label">اسم المنطقة / الحي</label>
             <div class="input-wrapper">
-                <span class="input-inner-icon">🏠</span>
                 <input type="text" id="region" class="input-control" placeholder="مثال: العشار، المنصور..." required autocomplete="off">
                 <div class="field-check"></div>
             </div>
@@ -544,13 +386,12 @@
         <div class="input-group" id="groupOrder">
             <label class="input-label">رقم الطلب</label>
             <div class="input-wrapper">
-                <span class="input-inner-icon">#</span>
                 <input type="number" id="orderNumber" class="input-control" placeholder="اكتب رقم الطلب هنا..." min="1" required autocomplete="off">
                 <div class="field-check"></div>
             </div>
         </div>
 
-        <!-- معاينة الرسالة اللحظية -->
+        <!-- نافذة المعاينة المباشرة للرسالة -->
         <div class="preview-box">
             <div class="preview-title">معاينة الرسالة اللحظية:</div>
             <div class="preview-content" id="livePreview">👤 الاسم الكامل: ...
@@ -577,32 +418,6 @@
 </div>
 
 <script>
-    // 1. تأثير إضاءة التحويم (Spotlight) حسب موقع الماوس أو اللمس
-    const card = document.getElementById('promoterCard');
-    card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
-    });
-
-    // 10. تأثير الموجة عند النقر (Ripple Effect)
-    document.querySelectorAll('button').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            const circle = document.createElement('span');
-            const diameter = Math.max(this.clientWidth, this.clientHeight);
-            const radius = diameter / 2;
-            circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${e.clientX - this.getBoundingClientRect().left - radius}px`;
-            circle.style.top = `${e.clientY - this.getBoundingClientRect().top - radius}px`;
-            circle.classList.add('ripple');
-            const existingRipple = this.getElementsByClassName('ripple')[0];
-            if (existingRipple) existingRipple.remove();
-            this.appendChild(circle);
-        });
-    });
-
     function showToast(message, isSuccess = false) {
         if (navigator.vibrate) navigator.vibrate(40);
         const toast = document.getElementById('toast');
@@ -610,14 +425,6 @@
         msg.innerText = message;
         toast.className = isSuccess ? 'show success' : 'show';
         setTimeout(() => toast.className = '', 3000);
-    }
-
-    // 4. دالة اهتزاز الخطأ الذكي (Shake)
-    function triggerShake(elementId) {
-        const group = document.getElementById(elementId);
-        group.classList.add('shake-error');
-        if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
-        setTimeout(() => group.classList.remove('shake-error'), 400);
     }
 
     const nameInput = document.getElementById('customerName');
@@ -628,7 +435,7 @@
     const carrierBadge = document.getElementById('carrierBadge');
     const livePreview = document.getElementById('livePreview');
 
-    // استرجاع المسودة (حفظ تلقائي)
+    // استرجاع البيانات المحفوظة (الحفظ التلقائي للمسودة)
     window.addEventListener('DOMContentLoaded', () => {
         if(localStorage.getItem('draft_name')) nameInput.value = localStorage.getItem('draft_name');
         if(localStorage.getItem('draft_phone')) phoneInput.value = localStorage.getItem('draft_phone');
@@ -648,27 +455,19 @@
         // تحديث الصح والتحقق
         document.getElementById('groupName').classList.toggle('valid', name.length > 1);
         document.getElementById('groupPhone').classList.toggle('valid', phone.length === 11);
-        document.getElementById('groupGov').classList.toggle('valid', gov.length > 0);
         document.getElementById('groupRegion').classList.toggle('valid', region.length > 1);
         document.getElementById('groupOrder').classList.toggle('valid', orderNum.length > 0);
 
-        // 3. تحديث شريط التقدم اللحظي العلوي
-        let filledCount = 0;
-        if (name.length > 1) filledCount++;
-        if (phone.length === 11) filledCount++;
-        if (region.length > 1) filledCount++;
-        if (orderNum.length > 0) filledCount++;
-        document.getElementById('progressBarFill').style.width = `${(filledCount / 4) * 100}%`;
-
-        // الحفظ التلقائي
+        // حفظ تلقائي
         localStorage.setItem('draft_name', name);
         localStorage.setItem('draft_phone', phoneInput.value);
         localStorage.setItem('draft_gov', gov);
         localStorage.setItem('draft_region', region);
         localStorage.setItem('draft_order', orderNum);
 
-        // المعاينة الحية
-        livePreview.innerText = `👤 الاسم الكامل: ${name || '...'}\n\n📞 رقم الهاتف  :  ${phoneInput.value || '...'}\n\n📍 العنوان بالتفصيل: \n${gov} - ${region || '...'}\n\n✅ رقم الطلب  :  ${orderNum || '...'}`;
+        // تحديث المعاينة الحية
+        const formatText = `👤 الاسم الكامل: ${name || '...'}\n\n📞 رقم الهاتف  :  ${phoneInput.value || '...'}\n\n📍 العنوان بالتفصيل: \n${gov} - ${region || '...'}\n\n✅ رقم الطلب  :  ${orderNum || '...'}`;
+        livePreview.innerText = formatText;
     }
 
     // تفاعل الهاتف وشركاته
@@ -709,7 +508,7 @@
         });
     });
 
-    // إرسال الطلب
+    // الإرسال للواتساب
     document.getElementById('promoterForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -719,26 +518,12 @@
         const region = regionInput.value.trim();
         const orderNum = orderInput.value.trim();
 
-        if (!name) { 
-            triggerShake('groupName');
-            showToast("⚠️ يرجى كتابة اسم الزبون"); 
-            return; 
-        }
-        if (phone.length !== 11) { 
-            triggerShake('groupPhone');
-            showToast("⚠️ رقم الهاتف يجب أن يتكون من 11 رقماً"); 
-            return; 
-        }
-        if (!region) { 
-            triggerShake('groupRegion');
-            showToast("⚠️ يرجى كتابة اسم المنطقة أو الحي"); 
-            return; 
-        }
-        if (!orderNum) { 
-            triggerShake('groupOrder');
-            showToast("⚠️ يرجى إدخال رقم الطلب"); 
-            return; 
-        }
+        if (!name) { showToast("⚠️ يرجى كتابة اسم الزبون"); return; }
+        if (phone.length !== 11) { showToast("⚠️ يرجى التأكد من كتابة 11 رقماً لرقم الهاتف"); return; }
+        if (!region) { showToast("⚠️ يرجى كتابة اسم المنطقة"); return; }
+        if (!orderNum) { showToast("⚠️ يرجى كتابة رقم الطلب"); return; }
+
+        if (navigator.vibrate) navigator.vibrate(30);
 
         const targetWhatsAppNumber = "9647888988288"; 
         const messageText = `👤 الاسم الكامل: ${name}\n\n📞 رقم الهاتف  :  ${phone}\n\n📍 العنوان بالتفصيل: \n${gov} - ${region}\n\n✅ رقم الطلب  :  ${orderNum}`;
@@ -746,14 +531,14 @@
 
         window.location.href = `whatsapp://send?phone=${targetWhatsAppNumber}&text=${encodedMsg}`;
 
+        // تفريغ المسطرة وحذف التخزين المؤقت بعد الإرسال الناجح
         setTimeout(() => {
             localStorage.clear();
             document.getElementById('promoterForm').reset();
             carrierBadge.className = 'carrier-badge';
             updateFormState();
-        }, 1200);
+        }, 1000);
     });
 </script>
 </body>
 </html>
-
