@@ -7,24 +7,11 @@
     <!-- خط Cairo عالي الدقة -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        ::selection {
-            background: #22c55e;
-            color: #041208;
-        }
-
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #05070a;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #22c55e;
-        }
+        ::selection { background: #22c55e; color: #041208; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #05070a; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #22c55e; }
 
         * {
             -webkit-tap-highlight-color: transparent;
@@ -47,19 +34,14 @@
             overflow-x: hidden;
         }
 
+        /* الخلفية المتحركة */
         .ambient-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: -1;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; pointer-events: none; z-index: -1;
         }
         .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.1;
-            animation: floatOrb 18s infinite alternate ease-in-out;
+            position: absolute; border-radius: 50%; filter: blur(100px);
+            opacity: 0.1; animation: floatOrb 18s infinite alternate ease-in-out;
         }
         .orb-1 { width: 400px; height: 400px; background: #22c55e; top: -120px; right: -120px; }
         .orb-2 { width: 500px; height: 500px; background: #0284c7; bottom: -180px; left: -180px; animation-delay: -7s; }
@@ -68,195 +50,117 @@
             100% { transform: translate(40px, 50px) scale(1.1); }
         }
 
+        /* البطاقة الرئيسية */
         .promoter-card {
-            width: 100%;
-            max-width: 440px;
+            width: 100%; max-width: 440px;
             background: rgba(10, 14, 22, 0.9);
-            backdrop-filter: blur(35px);
-            -webkit-backdrop-filter: blur(35px);
+            backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px);
             padding: 36px 24px 26px 24px;
             border-radius: 24px;
             border: 1px solid rgba(255, 255, 255, 0.07);
-            box-shadow: 
-                0 30px 60px -15px rgba(0, 0, 0, 0.95),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-            transform: translateZ(0);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative; overflow: hidden; transform: translateZ(0);
         }
 
         .card-spotlight {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            border-radius: 24px;
-            z-index: 1;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; border-radius: 24px; z-index: 1;
             background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(34, 197, 94, 0.08), transparent 40%);
         }
 
+        /* شريط التقدم */
         .progress-container {
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.04);
-            z-index: 5;
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: rgba(255, 255, 255, 0.04); z-index: 5;
         }
         .progress-bar-fill {
-            height: 100%;
-            width: 0%;
-            background: #22c55e;
+            height: 100%; width: 0%; background: #22c55e;
             transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow: 0 0 10px #22c55e;
         }
 
+        /* حالة النظام */
         .system-status {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            font-size: 11px;
-            font-weight: 800;
-            color: #94a3b8;
-            background: rgba(255, 255, 255, 0.02);
-            padding: 5px 12px;
-            border-radius: 16px;
-            width: fit-content;
-            margin: 0 auto 20px auto;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            position: relative;
-            z-index: 2;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            font-size: 11px; font-weight: 800; color: #94a3b8;
+            background: rgba(255, 255, 255, 0.02); padding: 5px 12px;
+            border-radius: 16px; width: fit-content; margin: 0 auto 20px auto;
+            border: 1px solid rgba(255, 255, 255, 0.04); position: relative; z-index: 2;
             letter-spacing: 0.5px;
         }
-
         .status-dot {
-            width: 6px;
-            height: 6px;
-            background-color: #22c55e;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #22c55e;
-            animation: pulse-dot 2s infinite;
+            width: 6px; height: 6px; background-color: #22c55e; border-radius: 50%;
+            box-shadow: 0 0 8px #22c55e; animation: pulse-dot 2s infinite;
         }
-
         @keyframes pulse-dot {
             0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
             70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(34, 197, 94, 0); }
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
         }
 
-        .logo-container {
-            text-align: center;
-            margin-bottom: 22px;
-            position: relative;
-            z-index: 2;
-        }
+        /* الشعار والنصوص */
+        .logo-container { text-align: center; margin-bottom: 22px; position: relative; z-index: 2; }
+        .title { font-size: 22px; font-weight: 900; color: #ffffff; letter-spacing: -0.5px; }
+        .subtitle { font-size: 10px; color: #22c55e; font-weight: 800; margin-top: 4px; letter-spacing: 3px; text-transform: uppercase; }
 
-        .brand-logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 1.5px solid rgba(34, 197, 94, 0.3);
-            box-shadow: 0 0 15px rgba(34, 197, 94, 0.1);
-            margin-bottom: 10px;
-            transition: transform 0.3s ease;
-        }
-        .promoter-card:hover .brand-logo { transform: scale(1.03); }
-
-        .title {
-            font-size: 22px;
-            font-weight: 900;
-            color: #ffffff;
-            letter-spacing: -0.5px;
-        }
-
-        .subtitle {
-            font-size: 10px;
-            color: #22c55e;
-            font-weight: 800;
-            margin-top: 4px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        .input-group {
-            margin-bottom: 16px;
-            position: relative;
-            z-index: 2;
-        }
-
+        /* الحقول */
+        .input-group { margin-bottom: 16px; position: relative; z-index: 2; }
         .input-label {
-            display: block;
-            font-size: 11px;
-            font-weight: 700;
-            color: #94a3b8;
-            margin-bottom: 5px;
-            transition: color 0.3s ease;
-            letter-spacing: 0.3px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 5px;
+            transition: color 0.3s ease; letter-spacing: 0.3px;
         }
-
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
+        .badge-official {
+            font-size: 8px; background: rgba(34, 197, 94, 0.1); color: #22c55e;
+            padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(34, 197, 94, 0.2);
+            letter-spacing: 0.5px; font-weight: 800;
         }
-
+        
+        .input-wrapper { position: relative; display: flex; align-items: center; }
         .input-control {
-            width: 100%;
-            background: rgba(4, 6, 10, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            color: #ffffff;
-            font-size: 13px;
-            font-weight: 700;
-            padding: 14px 16px;
-            border-radius: 12px;
-            outline: none;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            appearance: none;
+            width: 100%; background: rgba(4, 6, 10, 0.8); border: 1px solid rgba(255, 255, 255, 0.07);
+            color: #ffffff; font-size: 13px; font-weight: 700; padding: 14px 16px;
+            border-radius: 12px; outline: none; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); appearance: none;
         }
-
-        .input-control:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-            background: rgba(6, 9, 14, 0.9);
-        }
-
+        .input-control:hover { border-color: rgba(255, 255, 255, 0.15); background: rgba(6, 9, 14, 0.9); }
         .input-control:focus {
-            border-color: #22c55e;
-            background: rgba(7, 10, 16, 0.95);
+            border-color: #22c55e; background: rgba(7, 10, 16, 0.95);
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 0 3px rgba(34, 197, 94, 0.1);
         }
-
         .input-group:focus-within .input-label { color: #22c55e; }
         .input-control::placeholder { color: #475569; font-weight: 600; }
 
+        /* علامة الصح للحقول الصالحة */
         .field-check {
-            position: absolute;
-            left: 14px;
-            top: 50%;
-            transform: translateY(-50%) scale(0);
-            width: 16px;
-            height: 16px;
-            background: #22c55e;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            pointer-events: none;
+            position: absolute; left: 14px; top: 50%; transform: translateY(-50%) scale(0);
+            width: 16px; height: 16px; background: #22c55e; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none;
         }
         .field-check::after {
-            content: '';
-            width: 4px;
-            height: 8px;
-            border: solid #041208;
-            border-width: 0 2px 2px 0;
-            transform: rotate(45deg);
-            margin-bottom: 2px;
+            content: ''; width: 4px; height: 8px; border: solid #041208;
+            border-width: 0 2px 2px 0; transform: rotate(45deg); margin-bottom: 2px;
         }
-        .input-group.valid .field-check {
-            transform: translateY(-50%) scale(1);
-        }
+        .input-group.valid .field-check { transform: translateY(-50%) scale(1); }
 
+        /* قائمة المحافظات المخصصة */
+        .custom-promoter-select {
+            padding-left: 60px !important; /* مساحة للسهم وعلامة الصح */
+            cursor: pointer; font-weight: 700;
+        }
+        .select-arrow {
+            position: absolute; left: 38px; top: 50%; transform: translateY(-50%);
+            pointer-events: none; transition: transform 0.3s ease;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .custom-promoter-select:focus + .select-arrow { transform: translateY(-50%) rotate(180deg); }
+        select.custom-promoter-select optgroup { background: #090d14; color: #22c55e; font-weight: 800; font-size: 12px; padding: 8px 0; }
+        select.custom-promoter-select option { background: #05070a; color: #cbd5e1; padding: 10px 14px; font-weight: 600; font-size: 13px; }
+        select.custom-promoter-select option:hover, select.custom-promoter-select option:checked { background: #16a34a !important; color: #ffffff !important; }
+        .placeholder-option { color: #64748b !important; }
+
+        /* اهتزاز الخطأ */
         @keyframes structuralShake {
             0%, 100% { transform: translateX(0); }
             20%, 60% { transform: translateX(-4px); }
@@ -264,154 +168,68 @@
         }
         .input-group.shake-error .input-control {
             animation: structuralShake 0.35s ease-in-out;
-            border-color: #ef4444 !important;
-            background: rgba(239, 68, 68, 0.05) !important;
+            border-color: #ef4444 !important; background: rgba(239, 68, 68, 0.05) !important;
         }
 
-        select.input-control {
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2322c55e%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-            background-repeat: no-repeat;
-            background-position: left 16px center;
-            background-size: 10px;
-            cursor: pointer;
-            padding-left: 36px;
-        }
-        select.input-control option { background: #0a0e16; color: #f1f5f9; padding: 10px; }
-
+        /* حقل الهاتف وشعارات الشركات */
         .phone-wrapper { position: relative; }
         .phone-input { padding-left: 80px !important; text-align: left; direction: ltr; font-size: 14px; letter-spacing: 0.8px; }
         .phone-input::placeholder { text-align: left; letter-spacing: 0; }
-        
         .carrier-badge {
-            position: absolute;
-            left: 38px;
-            top: 50%;
-            transform: translateY(-50%) scale(0.85);
-            font-size: 10px;
-            font-weight: 900;
-            padding: 3px 8px;
-            border-radius: 4px;
-            opacity: 0;
-            pointer-events: none;
-            color: #fff;
-            letter-spacing: 0.5px;
+            position: absolute; left: 38px; top: 50%; transform: translateY(-50%) scale(0.85);
+            font-size: 10px; font-weight: 900; padding: 3px 8px; border-radius: 4px;
+            opacity: 0; pointer-events: none; color: #fff; letter-spacing: 0.5px;
             transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .carrier-badge.active { opacity: 1; transform: translateY(-50%) scale(1); }
-        .badge-zain { background: #7c3aed; } /* بنفسجي */
-        .badge-asia { background: #dc2626; } /* أحمر */
-        .badge-korek { background: #0284c7; } /* أزرق */
+        .badge-zain { background: #7c3aed; } /* زين بنفسجي */
+        .badge-asia { background: #dc2626; } /* آسيا أحمر */
+        .badge-korek { background: #0284c7; } /* كورك أزرق */
 
+        /* المعاينة المباشرة */
         .preview-box {
-            background: rgba(3, 5, 8, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4);
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 18px;
-            font-size: 11px;
-            color: #94a3b8;
-            line-height: 1.5;
-            position: relative;
-            z-index: 2;
+            background: rgba(3, 5, 8, 0.7); border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4); border-radius: 10px;
+            padding: 12px; margin-bottom: 18px; font-size: 11px; color: #94a3b8;
+            line-height: 1.5; position: relative; z-index: 2;
         }
-        .preview-title {
-            font-size: 9px;
-            color: #22c55e;
-            font-weight: 800;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .preview-content {
-            white-space: pre-wrap;
-            font-family: 'Cairo', sans-serif;
-            color: #cbd5e1;
-            font-size: 11px;
-            line-height: 1.6;
-        }
+        .preview-title { font-size: 9px; color: #22c55e; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
+        .preview-content { white-space: pre-wrap; font-family: 'Cairo', sans-serif; color: #cbd5e1; font-size: 11px; line-height: 1.6; }
 
-        .actions-container {
-            display: flex;
-            gap: 8px;
-            margin-top: 18px;
-            position: relative;
-            z-index: 2;
-        }
-
+        /* الأزرار */
+        .actions-container { display: flex; gap: 8px; margin-top: 18px; position: relative; z-index: 2; }
         .btn-submit {
-            flex: 2;
-            padding: 14px;
-            background: #22c55e;
-            color: #041208;
-            border: none;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: 0 4px 15px -2px rgba(34, 197, 94, 0.35);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 0.3px;
+            flex: 2; padding: 14px; background: #22c55e; color: #041208; border: none;
+            border-radius: 12px; font-size: 14px; font-weight: 900; cursor: pointer;
+            box-shadow: 0 4px 15px -2px rgba(34, 197, 94, 0.35); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex; justify-content: center; align-items: center; gap: 8px; position: relative; overflow: hidden;
         }
-
         .btn-submit::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%; width: 200%; height: 200%;
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
             background: linear-gradient(60deg, transparent 30%, rgba(255, 255, 255, 0.25) 50%, transparent 70%);
-            transform: rotate(30deg) translateX(-100%);
-            animation: shimmer 4s infinite;
+            transform: rotate(30deg) translateX(-100%); animation: shimmer 4s infinite;
         }
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) rotate(30deg); }
-            20% { transform: translateX(100%) rotate(30deg); }
-            100% { transform: translateX(100%) rotate(30deg); }
-        }
-
+        @keyframes shimmer { 0% { transform: translateX(-100%) rotate(30deg); } 20%, 100% { transform: translateX(100%) rotate(30deg); } }
         .btn-submit:hover { background: #16a34a; transform: translateY(-1px); }
         .btn-submit:active { transform: scale(0.98); }
 
         .btn-copy {
-            flex: 1;
-            padding: 14px;
-            background: rgba(255, 255, 255, 0.04);
-            color: #f1f5f9;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            position: relative;
-            overflow: hidden;
-            letter-spacing: 0.3px;
+            flex: 1; padding: 14px; background: rgba(255, 255, 255, 0.04); color: #f1f5f9;
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; font-size: 12px;
+            font-weight: 800; cursor: pointer; transition: all 0.25s ease;
+            display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden;
         }
         .btn-copy:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.15); }
 
         .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.25);
-            transform: scale(0);
-            animation: ripple-effect 0.4s linear;
-            pointer-events: none;
+            position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.25);
+            transform: scale(0); animation: ripple-effect 0.4s linear; pointer-events: none;
         }
-        @keyframes ripple-effect {
-            to { transform: scale(4); opacity: 0; }
-        }
+        @keyframes ripple-effect { to { transform: scale(4); opacity: 0; } }
 
         .wa-icon { width: 16px; height: 16px; fill: #041208; }
 
+        /* الإشعارات Toast */
         #toast {
             position: fixed; top: -70px; left: 50%; transform: translateX(-50%) scale(0.95);
             background: rgba(239, 68, 68, 0.95); color: #fff; padding: 10px 20px;
@@ -419,7 +237,6 @@
             opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3); backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.15); pointer-events: none;
-            letter-spacing: 0.3px;
         }
         #toast.show { top: 20px; opacity: 1; transform: translateX(-50%) scale(1); }
         #toast.success { background: rgba(34, 197, 94, 0.95); box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3); }
@@ -447,22 +264,21 @@
     </div>
 
     <div class="logo-container">
-        <img src="my-image.png" class="brand-logo" alt="Logo">
         <h1 class="title">بوابة تسجيل البيانات</h1>
         <div class="subtitle">ENTERPRISE PORTAL</div>
     </div>
 
     <form id="promoterForm" novalidate>
         <div class="input-group" id="groupName">
-            <label class="input-label">الاسم الكامل للعميل</label>
+            <label class="input-label"><span>الاسم الكامل للعميل</span></label>
             <div class="input-wrapper">
-                <input type="text" id="customerName" class="input-control" placeholder="أسم الزبون ..." required autocomplete="off">
+                <input type="text" id="customerName" class="input-control" placeholder="أدخل اسم العميل كاملاً..." required autocomplete="off">
                 <div class="field-check"></div>
             </div>
         </div>
 
         <div class="input-group" id="groupPhone">
-            <label class="input-label">رقم الهاتف المحمول</label>
+            <label class="input-label"><span>رقم الهاتف المحمول</span></label>
             <div class="input-wrapper phone-wrapper">
                 <input type="tel" id="phone" class="input-control phone-input" placeholder="07X XXXX XXXX" maxlength="13" required autocomplete="off">
                 <div id="carrierBadge" class="carrier-badge"></div>
@@ -471,33 +287,56 @@
         </div>
 
         <div class="input-group" id="groupGov">
-            <label class="input-label">المحافظة</label>
-            <div class="input-wrapper">
-                <select id="governorate" class="input-control" required>
-                    <option value="البصرة" selected>البصرة</option>
-                    <option value="بغداد">بغداد</option>
-                    <option value="نينوى">نينوى</option>
-                    <option value="أربيل">أربيل</option>
-                    <option value="النجف">النجف</option>
-                    <option value="كربلاء">كربلاء</option>
-                    <option value="كركوك">كركوك</option>
-                    <option value="الأنبار">الأنبار</option>
-                    <option value="ديالى">ديالى</option>
-                    <option value="ميسان">ميسان</option>
-                    <option value="بابل">بابل</option>
-                    <option value="ذي قار">ذي قار</option>
-                    <option value="السليمانية">السليمانية</option>
-                    <option value="دهوك">دهوك</option>
-                    <option value="المثنى">المثنى</option>
-                    <option value="القادسية">القادسية</option>
-                    <option value="واسط">واسط</option>
-                    <option value="حلبجة">حلبجة</option>
+            <label class="input-label">
+                <span>المحافظة المستهدفة</span>
+                <span class="badge-official">تحديد إقليمي</span>
+            </label>
+            <div class="input-wrapper select-container">
+                <select id="governorate" class="input-control custom-promoter-select" required>
+                    <option value="" disabled selected class="placeholder-option">-- اختر المحافظة --</option>
+                    
+                    <optgroup label="📍 الوسط والعاصمة">
+                        <option value="بغداد">بغداد</option>
+                        <option value="ديالى">ديالى</option>
+                        <option value="الأنبار">الأنبار</option>
+                    </optgroup>
+
+                    <optgroup label="🏛️ الفرات الأوسط">
+                        <option value="بابل">بابل</option>
+                        <option value="كربلاء">كربلاء</option>
+                        <option value="النجف">النجف</option>
+                        <option value="القادسية">القادسية</option>
+                        <option value="واسط">واسط</option>
+                    </optgroup>
+
+                    <optgroup label="🌊 الجنوب">
+                        <option value="البصرة">البصرة</option>
+                        <option value="ذي قار">ذي قار</option>
+                        <option value="ميسان">ميسان</option>
+                        <option value="المثنى">المثنى</option>
+                    </optgroup>
+
+                    <optgroup label="🏔️ الشمال وإقليم كردستان">
+                        <option value="نينوى">نينوى</option>
+                        <option value="كركوك">كركوك</option>
+                        <option value="صلاح الدين">صلاح الدين</option>
+                        <option value="أربيل">أربيل</option>
+                        <option value="السليمانية">السليمانية</option>
+                        <option value="دهوك">دهوك</option>
+                        <option value="حلبجة">حلبجة</option>
+                    </optgroup>
                 </select>
+                <div class="select-arrow">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+                <div class="field-check"></div>
             </div>
         </div>
 
         <div class="input-group" id="groupRegion">
-            <label class="input-label">المنطقة أو الحي السكني</label>
+            <label class="input-label"><span>المنطقة أو الحي السكني</span></label>
             <div class="input-wrapper">
                 <input type="text" id="region" class="input-control" placeholder="مثال: العشار، المنصور..." required autocomplete="off">
                 <div class="field-check"></div>
@@ -505,7 +344,7 @@
         </div>
 
         <div class="input-group" id="groupOrder">
-            <label class="input-label">رقم الطلب المرجعي</label>
+            <label class="input-label"><span>رقم الطلب المرجعي</span></label>
             <div class="input-wrapper">
                 <input type="number" id="orderNumber" class="input-control" placeholder="أدخل رقم الطلب..." min="1" required autocomplete="off">
                 <div class="field-check"></div>
@@ -514,10 +353,10 @@
 
         <div class="preview-box">
             <div class="preview-title">معاينة رسالة الواتساب</div>
-            <div class="preview-content" id="livePreview">👤 الاسم الكامل: [...]
-📞 رقم الهاتف  : [...]
-📍 العنوان بالتفصيل: البصرة - [...]
-✅ رقم الطلب  : [...]</div>
+            <div class="preview-content" id="livePreview">👤 الاسم الكامل: 
+📞 رقم الهاتف  : 
+📍 العنوان بالتفصيل: 
+✅ رقم الطلب  : </div>
         </div>
 
         <div class="actions-container">
@@ -533,15 +372,15 @@
 </div>
 
 <script>
+    // تأثير الإضاءة للماوس
     const card = document.getElementById('promoterCard');
     card.addEventListener('mousemove', e => {
         const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        card.style.setProperty('--mouse-x', `${x}px`);
-        card.style.setProperty('--mouse-y', `${y}px`);
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
     });
 
+    // تأثير الموجة (Ripple) للأزرار
     document.querySelectorAll('button').forEach(btn => {
         btn.addEventListener('click', function(e) {
             const circle = document.createElement('span');
@@ -557,6 +396,7 @@
         });
     });
 
+    // نظام التنبيهات (Toast)
     function showToast(message, isSuccess = false) {
         if (navigator.vibrate) navigator.vibrate(30);
         const toast = document.getElementById('toast');
@@ -566,6 +406,7 @@
         setTimeout(() => toast.className = '', 2800);
     }
 
+    // تأثير اهتزاز الخطأ
     function triggerStructuralShake(elementId) {
         const group = document.getElementById(elementId);
         group.classList.add('shake-error');
@@ -573,6 +414,7 @@
         setTimeout(() => group.classList.remove('shake-error'), 350);
     }
 
+    // تعريف المتغيرات
     const nameInput = document.getElementById('customerName');
     const phoneInput = document.getElementById('phone');
     const govSelect = document.getElementById('governorate');
@@ -581,19 +423,24 @@
     const carrierBadge = document.getElementById('carrierBadge');
     const livePreview = document.getElementById('livePreview');
 
+    // استرجاع البيانات المحفوظة
     window.addEventListener('DOMContentLoaded', () => {
         if(localStorage.getItem('ent_name')) nameInput.value = localStorage.getItem('ent_name');
         if(localStorage.getItem('ent_phone')) phoneInput.value = localStorage.getItem('ent_phone');
         if(localStorage.getItem('ent_gov')) govSelect.value = localStorage.getItem('ent_gov');
         if(localStorage.getItem('ent_region')) regionInput.value = localStorage.getItem('ent_region');
         if(localStorage.getItem('ent_order')) orderInput.value = localStorage.getItem('ent_order');
+        
+        // إعادة فحص الشركة للرقم المسترجع
+        phoneInput.dispatchEvent(new Event('input')); 
         updateSystemState();
     });
 
+    // تحديث الحالة وشريط التقدم والمعاينة
     function updateSystemState() {
         const name = nameInput.value.trim();
         const phone = phoneInput.value.replace(/\s/g, '');
-        const gov = govSelect.value;
+        const gov = govSelect.value || "";
         const region = regionInput.value.trim();
         const orderNum = orderInput.value.trim();
 
@@ -606,9 +453,11 @@
         let filledCount = 0;
         if (name.length > 1) filledCount++;
         if (phone.length === 11) filledCount++;
+        if (gov.length > 0) filledCount++;
         if (region.length > 1) filledCount++;
         if (orderNum.length > 0) filledCount++;
-        document.getElementById('progressBarFill').style.width = `${(filledCount / 4) * 100}%`;
+        
+        document.getElementById('progressBarFill').style.width = `${(filledCount / 5) * 100}%`;
 
         localStorage.setItem('ent_name', name);
         localStorage.setItem('ent_phone', phoneInput.value);
@@ -616,9 +465,11 @@
         localStorage.setItem('ent_region', region);
         localStorage.setItem('ent_order', orderNum);
 
-        livePreview.innerText = `👤 الاسم الكامل: ${name || '[...]'}\n📞 رقم الهاتف  : ${phoneInput.value || '[...]'}\n📍 العنوان بالتفصيل: ${gov} - ${region || '[...]'}\n✅ رقم الطلب  : ${orderNum || '[...]'}`;
+        // صياغة رسالة الواتساب المطلوبة
+        livePreview.innerText = `👤 الاسم الكامل: ${name}\n📞 رقم الهاتف  : ${phoneInput.value}\n📍 العنوان بالتفصيل: ${gov ? gov + ' - ' : ''}${region}\n✅ رقم الطلب  : ${orderNum}`;
     }
 
+    // تنسيق رقم الهاتف واكتشاف شركة الاتصال بالألوان المحددة
     phoneInput.addEventListener('input', function() {
         let val = this.value.replace(/\D/g, ''); 
         carrierBadge.className = 'carrier-badge';
@@ -643,11 +494,13 @@
         updateSystemState();
     });
 
+    // مستمعات التحديث
     [nameInput, govSelect, regionInput, orderInput].forEach(el => {
         el.addEventListener('input', updateSystemState);
         el.addEventListener('change', updateSystemState);
     });
 
+    // زر النسخ
     document.getElementById('copyBtn').addEventListener('click', function() {
         const textToCopy = livePreview.innerText;
         navigator.clipboard.writeText(textToCopy).then(() => {
@@ -655,6 +508,7 @@
         });
     });
 
+    // زر الإرسال عبر الواتساب
     document.getElementById('promoterForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
@@ -664,33 +518,21 @@
         const region = regionInput.value.trim();
         const orderNum = orderInput.value.trim();
 
-        if (!name) { 
-            triggerStructuralShake('groupName');
-            showToast("خطأ: يرجى إدخال اسم العميل"); 
-            return; 
-        }
-        if (phone.length !== 11) { 
-            triggerStructuralShake('groupPhone');
-            showToast("خطأ: رقم الهاتف غير متكامل (11 رقماً مطلوب)"); 
-            return; 
-        }
-        if (!region) { 
-            triggerStructuralShake('groupRegion');
-            showToast("خطأ: يرجى تحديد المنطقة أو الحي السكني"); 
-            return; 
-        }
-        if (!orderNum) { 
-            triggerStructuralShake('groupOrder');
-            showToast("خطأ: يرجى إدخال رقم الطلب المرجعي"); 
-            return; 
-        }
+        if (!name) { triggerStructuralShake('groupName'); showToast("خطأ: يرجى إدخال اسم العميل"); return; }
+        if (phone.length !== 11) { triggerStructuralShake('groupPhone'); showToast("خطأ: رقم الهاتف غير متكامل"); return; }
+        if (!gov) { triggerStructuralShake('groupGov'); showToast("خطأ: يرجى اختيار المحافظة"); return; }
+        if (!region) { triggerStructuralShake('groupRegion'); showToast("خطأ: يرجى تحديد المنطقة"); return; }
+        if (!orderNum) { triggerStructuralShake('groupOrder'); showToast("خطأ: يرجى إدخال رقم الطلب"); return; }
 
+        // رقم الواتساب الذي سيستلم الطلبات
         const targetWhatsAppNumber = "9647888988288"; 
+        
         const messageText = `👤 الاسم الكامل: ${name}\n📞 رقم الهاتف  : ${phoneInput.value}\n📍 العنوان بالتفصيل: ${gov} - ${region}\n✅ رقم الطلب  : ${orderNum}`;
         const encodedMsg = encodeURIComponent(messageText);
 
         window.location.href = `whatsapp://send?phone=${targetWhatsAppNumber}&text=${encodedMsg}`;
 
+        // تفريغ الحقول بعد الإرسال بثانية
         setTimeout(() => {
             localStorage.clear();
             document.getElementById('promoterForm').reset();
