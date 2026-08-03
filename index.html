@@ -144,21 +144,82 @@
         }
         .input-group.valid .field-check { transform: translateY(-50%) scale(1); }
 
-        /* قائمة المحافظات المخصصة */
-        .custom-promoter-select {
-            padding-left: 60px !important; /* مساحة للسهم وعلامة الصح */
-            cursor: pointer; font-weight: 700;
+        /* قائمة المحافظات المخصصة التفاعلية (Trigger) */
+        .custom-select-trigger {
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            user-select: none;
         }
-        .select-arrow {
-            position: absolute; left: 38px; top: 50%; transform: translateY(-50%);
-            pointer-events: none; transition: transform 0.3s ease;
+        .select-trigger-text { color: #f1f5f9; font-weight: 700; }
+        .select-trigger-text.placeholder { color: #475569; font-weight: 600; }
+        .select-arrow-icon {
             display: flex; align-items: center; justify-content: center;
+            transition: transform 0.3s ease;
         }
-        .custom-promoter-select:focus + .select-arrow { transform: translateY(-50%) rotate(180deg); }
-        select.custom-promoter-select optgroup { background: #090d14; color: #22c55e; font-weight: 800; font-size: 12px; padding: 8px 0; }
-        select.custom-promoter-select option { background: #05070a; color: #cbd5e1; padding: 10px 14px; font-weight: 600; font-size: 13px; }
-        select.custom-promoter-select option:hover, select.custom-promoter-select option:checked { background: #16a34a !important; color: #ffffff !important; }
-        .placeholder-option { color: #64748b !important; }
+
+        /* ---------------------------------------------------- */
+        /* تصميم نافذة المحافظات الخرافية (VIP GOVERNORATES MODAL) */
+        /* ---------------------------------------------------- */
+        .gov-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(3, 5, 9, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            z-index: 9999; display: flex; justify-content: center; align-items: center;
+            padding: 16px; opacity: 0; pointer-events: none; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .gov-modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .gov-modal-card {
+            width: 100%; max-width: 460px; max-height: 85vh;
+            background: rgba(12, 17, 26, 0.95); border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 28px; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(34, 197, 94, 0.15);
+            display: flex; flex-direction: column; overflow: hidden;
+            transform: scale(0.92) translateY(20px); transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .gov-modal-overlay.active .gov-modal-card { transform: scale(1) translateY(0); }
+
+        .gov-modal-header {
+            padding: 20px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.01);
+        }
+        .gov-modal-title { font-size: 16px; font-weight: 900; color: #ffffff; display: flex; align-items: center; gap: 8px; }
+        .gov-modal-close {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8; width: 32px; height: 32px; border-radius: 50%; font-size: 18px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;
+        }
+        .gov-modal-close:hover { background: rgba(239, 68, 68, 0.2); color: #ef4444; border-color: rgba(239, 68, 68, 0.4); }
+
+        .gov-modal-body { padding: 18px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
+        
+        .gov-region-group { display: flex; flex-direction: column; gap: 10px; }
+        .gov-region-title {
+            font-size: 11px; font-weight: 800; color: #22c55e;
+            letter-spacing: 1px; display: flex; align-items: center; gap: 6px;
+            padding-bottom: 4px; border-bottom: 1px dashed rgba(34, 197, 94, 0.2);
+        }
+
+        .gov-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        
+        .gov-item-card {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 12px 14px; border-radius: 14px; cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .gov-item-card:hover {
+            background: rgba(34, 197, 94, 0.08); border-color: rgba(34, 197, 94, 0.4);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(34, 197, 94, 0.15);
+        }
+        .gov-item-card.selected {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(34, 197, 94, 0.08));
+            border-color: #22c55e; box-shadow: 0 0 15px rgba(34, 197, 94, 0.25);
+        }
+        .gov-item-name { font-size: 13px; font-weight: 800; color: #f1f5f9; }
+        .gov-item-dot {
+            width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.2s;
+        }
+        .gov-item-card.selected .gov-item-dot { background: #22c55e; border-color: #22c55e; box-shadow: 0 0 8px #22c55e; }
 
         /* اهتزاز الخطأ */
         @keyframes structuralShake {
@@ -233,7 +294,7 @@
         #toast {
             position: fixed; top: -70px; left: 50%; transform: translateX(-50%) scale(0.95);
             background: rgba(239, 68, 68, 0.95); color: #fff; padding: 10px 20px;
-            border-radius: 20px; font-weight: 800; font-size: 12px; z-index: 999;
+            border-radius: 20px; font-weight: 800; font-size: 12px; z-index: 99999;
             opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3); backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.15); pointer-events: none;
@@ -286,51 +347,22 @@
             </div>
         </div>
 
+        <!-- حقل اختيار المحافظة الفخم (Trigger) -->
         <div class="input-group" id="groupGov">
             <label class="input-label">
                 <span>المحافظة المستهدفة</span>
                 <span class="badge-official">تحديد إقليمي</span>
             </label>
-            <div class="input-wrapper select-container">
-                <select id="governorate" class="input-control custom-promoter-select" required>
-                    <option value="" disabled selected class="placeholder-option">-- اختر المحافظة --</option>
-                    
-                    <optgroup label="📍 الوسط والعاصمة">
-                        <option value="بغداد">بغداد</option>
-                        <option value="ديالى">ديالى</option>
-                        <option value="الأنبار">الأنبار</option>
-                    </optgroup>
-
-                    <optgroup label="🏛️ الفرات الأوسط">
-                        <option value="بابل">بابل</option>
-                        <option value="كربلاء">كربلاء</option>
-                        <option value="النجف">النجف</option>
-                        <option value="القادسية">القادسية</option>
-                        <option value="واسط">واسط</option>
-                    </optgroup>
-
-                    <optgroup label="🌊 الجنوب">
-                        <option value="البصرة">البصرة</option>
-                        <option value="ذي قار">ذي قار</option>
-                        <option value="ميسان">ميسان</option>
-                        <option value="المثنى">المثنى</option>
-                    </optgroup>
-
-                    <optgroup label="🏔️ الشمال وإقليم كردستان">
-                        <option value="نينوى">نينوى</option>
-                        <option value="كركوك">كركوك</option>
-                        <option value="صلاح الدين">صلاح الدين</option>
-                        <option value="أربيل">أربيل</option>
-                        <option value="السليمانية">السليمانية</option>
-                        <option value="دهوك">دهوك</option>
-                        <option value="حلبجة">حلبجة</option>
-                    </optgroup>
-                </select>
-                <div class="select-arrow">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
+            <div class="input-wrapper">
+                <div id="govSelectTrigger" class="input-control custom-select-trigger">
+                    <span id="govSelectText" class="select-trigger-text placeholder">-- انقر لاختيار المحافظة --</span>
+                    <div class="select-arrow-icon">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
                 </div>
+                <input type="hidden" id="governorate" value="">
                 <div class="field-check"></div>
             </div>
         </div>
@@ -369,6 +401,65 @@
             </button>
         </div>
     </form>
+</div>
+
+<!-- النافذة المنبثقة الخرافية للمحافظات -->
+<div class="gov-modal-overlay" id="govModal">
+    <div class="gov-modal-card">
+        <div class="gov-modal-header">
+            <div class="gov-modal-title">
+                <span>📍</span>
+                <span>اختر المحافظة المستهدفة</span>
+            </div>
+            <button type="button" class="gov-modal-close" id="closeGovModal">✕</button>
+        </div>
+        <div class="gov-modal-body">
+            
+            <div class="gov-region-group">
+                <div class="gov-region-title">📍 الوسط والعاصمة</div>
+                <div class="gov-grid">
+                    <div class="gov-item-card" data-value="بغداد"><span class="gov-item-name">بغداد</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="ديالى"><span class="gov-item-name">ديالى</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="الأنبار"><span class="gov-item-name">الأنبار</span><div class="gov-item-dot"></div></div>
+                </div>
+            </div>
+
+            <div class="gov-region-group">
+                <div class="gov-region-title">🏛️ الفرات الأوسط</div>
+                <div class="gov-grid">
+                    <div class="gov-item-card" data-value="بابل"><span class="gov-item-name">بابل</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="كربلاء"><span class="gov-item-name">كربلاء المقدسة</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="النجف"><span class="gov-item-name">النجف الأشرف</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="القادسية"><span class="gov-item-name">القادسية (الديوانية)</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="واسط"><span class="gov-item-name">واسط</span><div class="gov-item-dot"></div></div>
+                </div>
+            </div>
+
+            <div class="gov-region-group">
+                <div class="gov-region-title">🌊 الجنوب</div>
+                <div class="gov-grid">
+                    <div class="gov-item-card" data-value="البصرة"><span class="gov-item-name">البصرة</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="ذي قار"><span class="gov-item-name">ذي قار</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="ميسان"><span class="gov-item-name">ميسان</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="المثنى"><span class="gov-item-name">المثنى</span><div class="gov-item-dot"></div></div>
+                </div>
+            </div>
+
+            <div class="gov-region-group">
+                <div class="gov-region-title">🏔️ الشمال وإقليم كردستان</div>
+                <div class="gov-grid">
+                    <div class="gov-item-card" data-value="نينوى"><span class="gov-item-name">نينوى</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="كركوك"><span class="gov-item-name">كركوك</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="صلاح الدين"><span class="gov-item-name">صلاح الدين</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="أربيل"><span class="gov-item-name">أربيل</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="السليمانية"><span class="gov-item-name">السليمانية</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="دهوك"><span class="gov-item-name">دهوك</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="حلبجة"><span class="gov-item-name">حلبجة</span><div class="gov-item-dot"></div></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 <script>
@@ -417,21 +508,62 @@
     // تعريف المتغيرات
     const nameInput = document.getElementById('customerName');
     const phoneInput = document.getElementById('phone');
-    const govSelect = document.getElementById('governorate');
+    const govInput = document.getElementById('governorate');
+    const govSelectTrigger = document.getElementById('govSelectTrigger');
+    const govSelectText = document.getElementById('govSelectText');
     const regionInput = document.getElementById('region');
     const orderInput = document.getElementById('orderNumber');
     const carrierBadge = document.getElementById('carrierBadge');
     const livePreview = document.getElementById('livePreview');
 
+    // التحكم بالنافذة المنبثقة للمحافظات
+    const govModal = document.getElementById('govModal');
+    const closeGovModal = document.getElementById('closeGovModal');
+    const govItemCards = document.querySelectorAll('.gov-item-card');
+
+    govSelectTrigger.addEventListener('click', () => {
+        govModal.classList.add('active');
+    });
+
+    closeGovModal.addEventListener('click', () => {
+        govModal.classList.remove('active');
+    });
+
+    govModal.addEventListener('click', (e) => {
+        if (e.target === govModal) govModal.classList.remove('active');
+    });
+
+    govItemCards.forEach(item => {
+        item.addEventListener('click', function() {
+            const val = this.getAttribute('data-value');
+            govInput.value = val;
+            govSelectText.innerText = val;
+            govSelectText.classList.remove('placeholder');
+
+            govItemCards.forEach(c => c.classList.remove('selected'));
+            this.classList.add('selected');
+
+            govModal.classList.remove('active');
+            updateSystemState();
+        });
+    });
+
     // استرجاع البيانات المحفوظة
     window.addEventListener('DOMContentLoaded', () => {
         if(localStorage.getItem('ent_name')) nameInput.value = localStorage.getItem('ent_name');
         if(localStorage.getItem('ent_phone')) phoneInput.value = localStorage.getItem('ent_phone');
-        if(localStorage.getItem('ent_gov')) govSelect.value = localStorage.getItem('ent_gov');
+        if(localStorage.getItem('ent_gov')) {
+            const savedGov = localStorage.getItem('ent_gov');
+            govInput.value = savedGov;
+            govSelectText.innerText = savedGov;
+            govSelectText.classList.remove('placeholder');
+            govItemCards.forEach(c => {
+                if(c.getAttribute('data-value') === savedGov) c.classList.add('selected');
+            });
+        }
         if(localStorage.getItem('ent_region')) regionInput.value = localStorage.getItem('ent_region');
         if(localStorage.getItem('ent_order')) orderInput.value = localStorage.getItem('ent_order');
         
-        // إعادة فحص الشركة للرقم المسترجع
         phoneInput.dispatchEvent(new Event('input')); 
         updateSystemState();
     });
@@ -440,7 +572,7 @@
     function updateSystemState() {
         const name = nameInput.value.trim();
         const phone = phoneInput.value.replace(/\s/g, '');
-        const gov = govSelect.value || "";
+        const gov = govInput.value || "";
         const region = regionInput.value.trim();
         const orderNum = orderInput.value.trim();
 
@@ -465,7 +597,7 @@
         localStorage.setItem('ent_region', region);
         localStorage.setItem('ent_order', orderNum);
 
-        // صياغة رسالة الواتساب المطلوبة
+        // صياغة رسالة الواتساب المطابقة لطلبك
         livePreview.innerText = `👤 الاسم الكامل: ${name}\n📞 رقم الهاتف  : ${phoneInput.value}\n📍 العنوان بالتفصيل: ${gov ? gov + ' - ' : ''}${region}\n✅ رقم الطلب  : ${orderNum}`;
     }
 
@@ -476,13 +608,13 @@
         
         if (val.startsWith('078') || val.startsWith('079')) {
             carrierBadge.innerText = 'زين'; 
-            carrierBadge.classList.add('badge-zain', 'active'); // بنفسجي
+            carrierBadge.classList.add('badge-zain', 'active');
         } else if (val.startsWith('077')) {
             carrierBadge.innerText = 'آسيا'; 
-            carrierBadge.classList.add('badge-asia', 'active'); // أحمر
+            carrierBadge.classList.add('badge-asia', 'active');
         } else if (val.startsWith('075')) {
             carrierBadge.innerText = 'كورك'; 
-            carrierBadge.classList.add('badge-korek', 'active'); // أزرق
+            carrierBadge.classList.add('badge-korek', 'active');
         } else {
             carrierBadge.classList.remove('active');
         }
@@ -495,9 +627,8 @@
     });
 
     // مستمعات التحديث
-    [nameInput, govSelect, regionInput, orderInput].forEach(el => {
+    [nameInput, regionInput, orderInput].forEach(el => {
         el.addEventListener('input', updateSystemState);
-        el.addEventListener('change', updateSystemState);
     });
 
     // زر النسخ
@@ -514,7 +645,7 @@
         
         const name = nameInput.value.trim();
         const phone = phoneInput.value.replace(/\s/g, ''); 
-        const gov = govSelect.value;
+        const gov = govInput.value;
         const region = regionInput.value.trim();
         const orderNum = orderInput.value.trim();
 
@@ -524,18 +655,19 @@
         if (!region) { triggerStructuralShake('groupRegion'); showToast("خطأ: يرجى تحديد المنطقة"); return; }
         if (!orderNum) { triggerStructuralShake('groupOrder'); showToast("خطأ: يرجى إدخال رقم الطلب"); return; }
 
-        // رقم الواتساب الذي سيستلم الطلبات
         const targetWhatsAppNumber = "9647888988288"; 
-        
         const messageText = `👤 الاسم الكامل: ${name}\n📞 رقم الهاتف  : ${phoneInput.value}\n📍 العنوان بالتفصيل: ${gov} - ${region}\n✅ رقم الطلب  : ${orderNum}`;
         const encodedMsg = encodeURIComponent(messageText);
 
         window.location.href = `whatsapp://send?phone=${targetWhatsAppNumber}&text=${encodedMsg}`;
 
-        // تفريغ الحقول بعد الإرسال بثانية
         setTimeout(() => {
             localStorage.clear();
             document.getElementById('promoterForm').reset();
+            govInput.value = "";
+            govSelectText.innerText = "-- انقر لاختيار المحافظة --";
+            govSelectText.classList.add('placeholder');
+            govItemCards.forEach(c => c.classList.remove('selected'));
             carrierBadge.className = 'carrier-badge';
             updateSystemState();
         }, 1000);
