@@ -2,665 +2,677 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>واجهة الحجز الفاخرة VIP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>منصة العمليات المركزية | Enterprise VIP Portal</title>
+    <!-- خط Cairo عالي الدقة -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* ==========================================
-           1. الثيم الرئيسي والترسيم الأولي (Variables)
-           ========================================== */
-        :root {
-            --bg-obsidian: #03060d;
-            --card-glass: rgba(13, 20, 36, 0.65);
-            --neon-emerald: #00ff9d;
-            --neon-cyan: #00f0ff;
-            --neon-purple: #a855f7;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --carrier-glow: var(--neon-emerald);
-        }
+        ::selection { background: #22c55e; color: #041208; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #05070a; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #22c55e; }
 
         * {
+            -webkit-tap-highlight-color: transparent;
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            user-select: none;
+            font-family: 'Cairo', sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            background-color: var(--bg-obsidian);
-            color: var(--text-main);
-            min-height: 100vh;
+            background-color: #05070a;
+            color: #f1f5f9;
             display: flex;
             justify-content: center;
             align-items: center;
+            min-height: 100vh;
+            padding: 20px 16px;
+            position: relative;
             overflow-x: hidden;
-            padding: 20px;
-            position: relative;
         }
 
-        /* ==========================================
-           2. الخلفية الشبكية التفاعلية (Canvas)
-           ========================================== */
-        #particleCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
+        /* الخلفية المتحركة */
+        .ambient-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden; pointer-events: none; z-index: -1;
+        }
+        .orb {
+            position: absolute; border-radius: 50%; filter: blur(100px);
+            opacity: 0.1; animation: floatOrb 18s infinite alternate ease-in-out;
+        }
+        .orb-1 { width: 400px; height: 400px; background: #22c55e; top: -120px; right: -120px; }
+        .orb-2 { width: 500px; height: 500px; background: #0284c7; bottom: -180px; left: -180px; animation-delay: -7s; }
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, 50px) scale(1.1); }
         }
 
-        /* ==========================================
-           3. الحاوية الرئيسية وتأثير الإطار الدوار
-           ========================================== */
-        .container-wrapper {
-            position: relative;
-            z-index: 1;
-            width: 100%;
-            max-width: 520px;
-            perspective: 1000px;
-        }
-
-        /* شريط الإنجاز الهولوغرافي */
-        .progress-bar-container {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 4px 4px 0 0;
-            overflow: hidden;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 10;
-        }
-
-        .progress-bar-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-emerald));
-            box-shadow: 0 0 12px var(--neon-emerald);
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* البطاقة الرئيسية الزجاجية */
-        .vip-card {
-            position: relative;
-            background: var(--card-glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+        /* البطاقة الرئيسية */
+        .promoter-card {
+            width: 100%; max-width: 440px;
+            background: rgba(10, 14, 22, 0.9);
+            backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px);
+            padding: 36px 24px 26px 24px;
             border-radius: 24px;
-            padding: 35px 30px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8),
-                        inset 0 1px 1px rgba(255, 255, 255, 0.15);
-            border: 1px solid var(--border-glass);
-            transition: transform 0.2s ease-out, box-shadow 0.3s ease;
-            transform-style: preserve-3d;
-            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative; overflow: hidden; transform: translateZ(0);
         }
 
-        /* حواف التدرج اللوني الدوار */
-        .vip-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(transparent, var(--neon-emerald), transparent, var(--neon-cyan), transparent);
-            animation: rotateBorder 8s linear infinite;
-            z-index: -2;
-            opacity: 0.25;
+        .card-spotlight {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; border-radius: 24px; z-index: 1;
+            background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(34, 197, 94, 0.08), transparent 40%);
         }
 
-        .vip-card::after {
-            content: '';
-            position: absolute;
-            inset: 2px;
-            background: rgba(5, 9, 20, 0.92);
-            border-radius: 22px;
-            z-index: -1;
+        /* شريط التقدم */
+        .progress-container {
+            position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: rgba(255, 255, 255, 0.04); z-index: 5;
+        }
+        .progress-bar-fill {
+            height: 100%; width: 0%; background: #22c55e;
+            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 10px #22c55e;
         }
 
-        @keyframes rotateBorder {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* ==========================================
-           4. الهيدر ورأس الواجهة
-           ========================================== */
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .brand-title {
-            font-size: 1.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffffff 30%, var(--neon-cyan));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
-            text-shadow: 0 0 20px rgba(0, 240, 255, 0.2);
-        }
-
-        .status-badge {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(0, 255, 157, 0.08);
-            border: 1px solid rgba(0, 255, 157, 0.2);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            color: var(--neon-emerald);
-            font-weight: 600;
-        }
-
-        .status-pulse {
-            width: 8px;
-            height: 8px;
-            background-color: var(--neon-emerald);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--neon-emerald);
-            animation: pulseGlow 1.8s infinite;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.75); }
-        }
-
-        /* ==========================================
-           5. حقول الإدخال المحسنة والذكية
-           ========================================== */
-        .input-group {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .input-label {
-            display: block;
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .input-wrapper {
-            position: relative;
-            display: flex;
-            align-items: center;
-        }
-
-        .custom-input, .custom-select {
-            width: 100%;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 14px 16px;
-            padding-left: 45px;
-            border-radius: 12px;
-            color: var(--text-main);
-            font-size: 0.95rem;
-            outline: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .custom-select {
-            appearance: none;
-            cursor: pointer;
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 14px;
-            width: 20px;
-            height: 20px;
-            fill: none;
-            stroke: var(--text-muted);
-            stroke-width: 2;
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-
-        /* الشعاع الليزري للحقل النشط وتحديد الشركة */
-        .custom-input:focus, .custom-select:focus {
-            border-color: var(--carrier-glow);
-            box-shadow: 0 0 20px rgba(0, 255, 157, 0.15),
-                        inset 0 0 10px rgba(0, 255, 157, 0.05);
-            background: rgba(15, 23, 42, 0.85);
-        }
-
-        .custom-input:focus ~ .input-icon, .custom-select:focus ~ .input-icon {
-            stroke: var(--carrier-glow);
-            filter: drop-shadow(0 0 5px var(--carrier-glow));
-        }
-
-        .input-group:focus-within .input-label {
-            color: var(--neon-cyan);
-        }
-
-        /* أيقونة التحقق الذكية */
-        .valid-checkmark {
-            position: absolute;
-            right: 14px;
-            width: 18px;
-            height: 18px;
-            stroke: var(--neon-emerald);
-            stroke-width: 3;
-            fill: none;
-            opacity: 0;
-            transform: scale(0.5);
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-
-        .input-group.is-valid .valid-checkmark {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        /* ==========================================
-           6. صندوق معاينة الواتساب الهولوغرافي
-           ========================================== */
-        .preview-box {
-            background: rgba(5, 15, 25, 0.7);
-            border: 1px dashed rgba(0, 240, 255, 0.3);
-            border-radius: 14px;
-            padding: 15px;
-            margin-top: 10px;
-            margin-bottom: 25px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .preview-title {
-            font-size: 0.75rem;
-            color: var(--neon-cyan);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            text-transform: uppercase;
+        /* حالة النظام */
+        .system-status {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            font-size: 11px; font-weight: 800; color: #94a3b8;
+            background: rgba(255, 255, 255, 0.02); padding: 5px 12px;
+            border-radius: 16px; width: fit-content; margin: 0 auto 20px auto;
+            border: 1px solid rgba(255, 255, 255, 0.04); position: relative; z-index: 2;
             letter-spacing: 0.5px;
         }
-
-        .preview-content {
-            font-size: 0.85rem;
-            color: #cbd5e1;
-            line-height: 1.6;
-            white-space: pre-line;
-            font-family: monospace;
+        .status-dot {
+            width: 6px; height: 6px; background-color: #22c55e; border-radius: 50%;
+            box-shadow: 0 0 8px #22c55e; animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
+            70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(34, 197, 94, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
         }
 
-        /* ==========================================
-           7. زر الإرسال مع السائل المتدفق والتأثيرات
-           ========================================== */
-        .submit-btn {
-            position: relative;
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, rgba(0, 255, 157, 0.1), rgba(0, 240, 255, 0.1));
-            border: 1px solid var(--neon-emerald);
-            border-radius: 14px;
-            color: #ffffff;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 0 15px rgba(0, 255, 157, 0.2);
+        /* الشعار والنصوص */
+        .logo-container { text-align: center; margin-bottom: 22px; position: relative; z-index: 2; }
+        .title { font-size: 22px; font-weight: 900; color: #ffffff; letter-spacing: -0.5px; }
+        .subtitle { font-size: 10px; color: #22c55e; font-weight: 800; margin-top: 4px; letter-spacing: 3px; text-transform: uppercase; }
+
+        /* الحقول */
+        .input-group { margin-bottom: 16px; position: relative; z-index: 2; }
+        .input-label {
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 5px;
+            transition: color 0.3s ease; letter-spacing: 0.3px;
+        }
+        .badge-official {
+            font-size: 8px; background: rgba(34, 197, 94, 0.1); color: #22c55e;
+            padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(34, 197, 94, 0.2);
+            letter-spacing: 0.5px; font-weight: 800;
+        }
+        
+        .input-wrapper { position: relative; display: flex; align-items: center; }
+        .input-control {
+            width: 100%; background: rgba(4, 6, 10, 0.8); border: 1px solid rgba(255, 255, 255, 0.07);
+            color: #ffffff; font-size: 13px; font-weight: 700; padding: 14px 16px;
+            border-radius: 12px; outline: none; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); appearance: none;
+        }
+        .input-control:hover { border-color: rgba(255, 255, 255, 0.15); background: rgba(6, 9, 14, 0.9); }
+        .input-control:focus {
+            border-color: #22c55e; background: rgba(7, 10, 16, 0.95);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+        .input-group:focus-within .input-label { color: #22c55e; }
+        .input-control::placeholder { color: #475569; font-weight: 600; }
+
+        /* علامة الصح للحقول الصالحة */
+        .field-check {
+            position: absolute; left: 14px; top: 50%; transform: translateY(-50%) scale(0);
+            width: 16px; height: 16px; background: #22c55e; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none;
+        }
+        .field-check::after {
+            content: ''; width: 4px; height: 8px; border: solid #041208;
+            border-width: 0 2px 2px 0; transform: rotate(45deg); margin-bottom: 2px;
+        }
+        .input-group.valid .field-check { transform: translateY(-50%) scale(1); }
+
+        /* قائمة المحافظات المخصصة التفاعلية (Trigger) */
+        .custom-select-trigger {
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            user-select: none;
+        }
+        .select-trigger-text { color: #f1f5f9; font-weight: 700; }
+        .select-trigger-text.placeholder { color: #475569; font-weight: 600; }
+        .select-arrow-icon {
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.3s ease;
         }
 
-        .submit-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-            transition: left 0.6s ease;
+        /* ---------------------------------------------------- */
+        /* تصميم نافذة المحافظات الخرافية (VIP GOVERNORATES MODAL) */
+        /* ---------------------------------------------------- */
+        .gov-modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(3, 5, 9, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            z-index: 9999; display: flex; justify-content: center; align-items: center;
+            padding: 16px; opacity: 0; pointer-events: none; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .gov-modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .gov-modal-card {
+            width: 100%; max-width: 460px; max-height: 85vh;
+            background: rgba(12, 17, 26, 0.95); border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 28px; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(34, 197, 94, 0.15);
+            display: flex; flex-direction: column; overflow: hidden;
+            transform: scale(0.92) translateY(20px); transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .gov-modal-overlay.active .gov-modal-card { transform: scale(1) translateY(0); }
+
+        .gov-modal-header {
+            padding: 20px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.01);
+        }
+        .gov-modal-title { font-size: 16px; font-weight: 900; color: #ffffff; display: flex; align-items: center; gap: 8px; }
+        .gov-modal-close {
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8; width: 32px; height: 32px; border-radius: 50%; font-size: 18px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;
+        }
+        .gov-modal-close:hover { background: rgba(239, 68, 68, 0.2); color: #ef4444; border-color: rgba(239, 68, 68, 0.4); }
+
+        .gov-modal-body { padding: 18px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
+        
+        .gov-region-group { display: flex; flex-direction: column; gap: 10px; }
+        .gov-region-title {
+            font-size: 11px; font-weight: 800; color: #22c55e;
+            letter-spacing: 1px; display: flex; align-items: center; gap: 6px;
+            padding-bottom: 4px; border-bottom: 1px dashed rgba(34, 197, 94, 0.2);
         }
 
-        .submit-btn:hover {
-            background: linear-gradient(135deg, var(--neon-emerald), var(--neon-cyan));
-            color: #03060d;
-            box-shadow: 0 0 30px rgba(0, 255, 157, 0.6);
-            transform: translateY(-2px);
+        .gov-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        
+        .gov-item-card {
+            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 12px 14px; border-radius: 14px; cursor: pointer;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        .submit-btn:hover::before {
-            left: 100%;
+        .gov-item-card:hover {
+            background: rgba(34, 197, 94, 0.08); border-color: rgba(34, 197, 94, 0.4);
+            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(34, 197, 94, 0.15);
         }
-
-        .submit-btn:active {
-            transform: translateY(1px);
+        .gov-item-card.selected {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(34, 197, 94, 0.08));
+            border-color: #22c55e; box-shadow: 0 0 15px rgba(34, 197, 94, 0.25);
         }
+        .gov-item-name { font-size: 13px; font-weight: 800; color: #f1f5f9; }
+        .gov-item-dot {
+            width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.2s;
+        }
+        .gov-item-card.selected .gov-item-dot { background: #22c55e; border-color: #22c55e; box-shadow: 0 0 8px #22c55e; }
 
-        /* تأثير التوجيه والاهتزاز للمدخلات الخاطئة */
-        @keyframes shakeError {
+        /* اهتزاز الخطأ */
+        @keyframes structuralShake {
             0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-8px); }
-            40%, 80% { transform: translateX(8px); }
+            20%, 60% { transform: translateX(-4px); }
+            40%, 80% { transform: translateX(4px); }
+        }
+        .input-group.shake-error .input-control {
+            animation: structuralShake 0.35s ease-in-out;
+            border-color: #ef4444 !important; background: rgba(239, 68, 68, 0.05) !important;
         }
 
-        .shake {
-            animation: shakeError 0.4s ease-in-out;
-            border-color: #ff3366 !important;
-            box-shadow: 0 0 15px rgba(255, 51, 102, 0.4) !important;
+        /* حقل الهاتف وشعارات الشركات */
+        .phone-wrapper { position: relative; }
+        .phone-input { padding-left: 80px !important; text-align: left; direction: ltr; font-size: 14px; letter-spacing: 0.8px; }
+        .phone-input::placeholder { text-align: left; letter-spacing: 0; }
+        .carrier-badge {
+            position: absolute; left: 38px; top: 50%; transform: translateY(-50%) scale(0.85);
+            font-size: 10px; font-weight: 900; padding: 3px 8px; border-radius: 4px;
+            opacity: 0; pointer-events: none; color: #fff; letter-spacing: 0.5px;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
+        .carrier-badge.active { opacity: 1; transform: translateY(-50%) scale(1); }
+        .badge-zain { background: #7c3aed; } /* زين بنفسجي */
+        .badge-asia { background: #dc2626; } /* آسيا أحمر */
+        .badge-korek { background: #0284c7; } /* كورك أزرق */
+
+        /* المعاينة المباشرة */
+        .preview-box {
+            background: rgba(3, 5, 8, 0.7); border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4); border-radius: 10px;
+            padding: 12px; margin-bottom: 18px; font-size: 11px; color: #94a3b8;
+            line-height: 1.5; position: relative; z-index: 2;
+        }
+        .preview-title { font-size: 9px; color: #22c55e; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
+        .preview-content { white-space: pre-wrap; font-family: 'Cairo', sans-serif; color: #cbd5e1; font-size: 11px; line-height: 1.6; }
+
+        /* الأزرار */
+        .actions-container { display: flex; gap: 8px; margin-top: 18px; position: relative; z-index: 2; }
+        .btn-submit {
+            flex: 2; padding: 14px; background: #22c55e; color: #041208; border: none;
+            border-radius: 12px; font-size: 14px; font-weight: 900; cursor: pointer;
+            box-shadow: 0 4px 15px -2px rgba(34, 197, 94, 0.35); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex; justify-content: center; align-items: center; gap: 8px; position: relative; overflow: hidden;
+        }
+        .btn-submit::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: linear-gradient(60deg, transparent 30%, rgba(255, 255, 255, 0.25) 50%, transparent 70%);
+            transform: rotate(30deg) translateX(-100%); animation: shimmer 4s infinite;
+        }
+        @keyframes shimmer { 0% { transform: translateX(-100%) rotate(30deg); } 20%, 100% { transform: translateX(100%) rotate(30deg); } }
+        .btn-submit:hover { background: #16a34a; transform: translateY(-1px); }
+        .btn-submit:active { transform: scale(0.98); }
+
+        .btn-copy {
+            flex: 1; padding: 14px; background: rgba(255, 255, 255, 0.04); color: #f1f5f9;
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; font-size: 12px;
+            font-weight: 800; cursor: pointer; transition: all 0.25s ease;
+            display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden;
+        }
+        .btn-copy:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.15); }
+
+        .ripple {
+            position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.25);
+            transform: scale(0); animation: ripple-effect 0.4s linear; pointer-events: none;
+        }
+        @keyframes ripple-effect { to { transform: scale(4); opacity: 0; } }
+
+        .wa-icon { width: 16px; height: 16px; fill: #041208; }
+
+        /* الإشعارات Toast */
+        #toast {
+            position: fixed; top: -70px; left: 50%; transform: translateX(-50%) scale(0.95);
+            background: rgba(239, 68, 68, 0.95); color: #fff; padding: 10px 20px;
+            border-radius: 20px; font-weight: 800; font-size: 12px; z-index: 99999;
+            opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15); pointer-events: none;
+        }
+        #toast.show { top: 20px; opacity: 1; transform: translateX(-50%) scale(1); }
+        #toast.success { background: rgba(34, 197, 94, 0.95); box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3); }
     </style>
 </head>
 <body>
 
-    <!-- الخلفية التفاعلية -->
-    <canvas id="particleCanvas"></canvas>
+<div class="ambient-bg">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+</div>
 
-    <!-- الحاوية والبطاقة الرئيسية -->
-    <div class="container-wrapper" id="cardWrapper">
-        <div class="vip-card" id="vipCard">
-            
-            <!-- شريط التقدم العلوي -->
-            <div class="progress-bar-container">
-                <div class="progress-bar-fill" id="progressBar"></div>
-            </div>
+<div id="toast"><span id="toast-msg"></span></div>
 
-            <!-- رأس الواجهة -->
-            <div class="card-header">
-                <div class="brand-title">منصة التجهيز الرفيعة</div>
-                <div class="status-badge">
-                    <span class="status-pulse"></span>
-                    النظام متصل
-                </div>
-            </div>
-
-            <!-- نموذج الطلب -->
-            <form id="bookingForm" onsubmit="event.preventDefault(); handleSubmit();">
-                
-                <!-- حقل الاسم الكامل -->
-                <div class="input-group" id="groupName">
-                    <label class="input-label">الاسم الكامل للعميل</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="custName" class="custom-input" placeholder="أدخل اسمك الثلاثي..." required oninput="validateForm()">
-                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <svg class="valid-checkmark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                </div>
-
-                <!-- حقل رقم الهاتف وتحديد خط الاتصال -->
-                <div class="input-group" id="groupPhone">
-                    <label class="input-label" id="phoneLabel">رقم الهاتف (العراق)</label>
-                    <div class="input-wrapper">
-                        <input type="tel" id="custPhone" class="custom-input" placeholder="078X XXX XXXX" required oninput="handlePhoneInput(this)">
-                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                        <svg class="valid-checkmark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                </div>
-
-                <!-- حقل اختيار المحافظة -->
-                <div class="input-group" id="groupCity">
-                    <label class="input-label">المحافظة / الإقليم</label>
-                    <div class="input-wrapper">
-                        <select id="custCity" class="custom-select" required onchange="validateForm()">
-                            <option value="" disabled selected>اختر المحافظة...</option>
-                            <option value="البصرة">البصرة</option>
-                            <option value="بغداد">بغداد</option>
-                            <option value="أربيل">أربيل</option>
-                            <option value="النجف الأشرف">النجف الأشرف</option>
-                            <option value="كربلاء المقدسة">كربلاء المقدسة</option>
-                            <option value="ذار قار">ذي قار</option>
-                            <option value="باقي المحافظات">باقي المحافظات</option>
-                        </select>
-                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                        <svg class="valid-checkmark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                </div>
-
-                <!-- حقل البكج والملاحظات -->
-                <div class="input-group" id="groupPackage">
-                    <label class="input-label">تفاصيل الطلب والباكج</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="custPackage" class="custom-input" placeholder="مثال: بكج عطور الملكي..." required oninput="validateForm()">
-                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
-                        <svg class="valid-checkmark" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                    </div>
-                </div>
-
-                <!-- صندوق المعاينة الحية للرسالة -->
-                <div class="preview-box">
-                    <div class="preview-title">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                        معاينة التجهيز المباشرة
-                    </div>
-                    <div class="preview-content" id="previewText">في انتظار إدخال البيانات...</div>
-                </div>
-
-                <!-- زر الإرسال الفاخر -->
-                <button type="submit" class="submit-btn" id="submitBtn">
-                    <span>تأكيد وإرسال الطلب</span>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                </button>
-
-            </form>
-        </div>
+<div class="promoter-card" id="promoterCard">
+    <div class="card-spotlight" id="cardSpotlight"></div>
+    
+    <div class="progress-container">
+        <div class="progress-bar-fill" id="progressBarFill"></div>
     </div>
 
-    <!-- Script والآليات التفاعلية -->
-    <script>
-        /* ==========================================
-           1. محرك خلفية النقاط الشبكية التفاعلية
-           ========================================== */
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
-        let particlesArray = [];
-        let mouse = { x: null, y: null, radius: 120 };
+    <div class="system-status">
+        <div class="status-dot"></div>
+        <span>SYSTEM ONLINE</span>
+    </div>
 
-        function initCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        initCanvas();
+    <div class="logo-container">
+        <h1 class="title">بوابة تسجيل البيانات</h1>
+        <div class="subtitle">ENTERPRISE PORTAL</div>
+    </div>
 
-        window.addEventListener('resize', () => {
-            initCanvas();
-            createParticles();
-        });
+    <form id="promoterForm" novalidate>
+        <div class="input-group" id="groupName">
+            <label class="input-label"><span>الاسم الكامل للعميل</span></label>
+            <div class="input-wrapper">
+                <input type="text" id="customerName" class="input-control" placeholder="أدخل اسم العميل كاملاً..." required autocomplete="off">
+                <div class="field-check"></div>
+            </div>
+        </div>
 
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.x;
-            mouse.y = e.y;
-        });
+        <div class="input-group" id="groupPhone">
+            <label class="input-label"><span>رقم الهاتف المحمول</span></label>
+            <div class="input-wrapper phone-wrapper">
+                <input type="tel" id="phone" class="input-control phone-input" placeholder="07X XXXX XXXX" maxlength="13" required autocomplete="off">
+                <div id="carrierBadge" class="carrier-badge"></div>
+                <div class="field-check"></div>
+            </div>
+        </div>
 
-        class Particle {
-            constructor(x, y) {
-                this.x = x;
-                this.y = y;
-                this.size = Math.random() * 2 + 1;
-                this.baseX = this.x;
-                this.baseY = this.y;
-                this.density = (Math.random() * 20) + 1;
-            }
+        <!-- حقل اختيار المحافظة الفخم (Trigger) -->
+        <div class="input-group" id="groupGov">
+            <label class="input-label">
+                <span>المحافظة المستهدفة</span>
+                <span class="badge-official">تحديد إقليمي</span>
+            </label>
+            <div class="input-wrapper">
+                <div id="govSelectTrigger" class="input-control custom-select-trigger">
+                    <span id="govSelectText" class="select-trigger-text placeholder">-- انقر لاختيار المحافظة --</span>
+                    <div class="select-arrow-icon">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <input type="hidden" id="governorate" value="">
+                <div class="field-check"></div>
+            </div>
+        </div>
 
-            draw() {
-                ctx.fillStyle = 'rgba(0, 240, 255, 0.4)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.closePath();
-                ctx.fill();
-            }
+        <div class="input-group" id="groupRegion">
+            <label class="input-label"><span>المنطقة أو الحي السكني</span></label>
+            <div class="input-wrapper">
+                <input type="text" id="region" class="input-control" placeholder="مثال: العشار، المنصور..." required autocomplete="off">
+                <div class="field-check"></div>
+            </div>
+        </div>
 
-            update() {
-                let dx = mouse.x - this.x;
-                let dy = mouse.y - this.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
-                if (distance < mouse.radius) {
-                    let force = (mouse.radius - distance) / mouse.radius;
-                    let directionX = (dx / distance) * force * this.density;
-                    let directionY = (dy / distance) * force * this.density;
-                    this.x -= directionX;
-                    this.y -= directionY;
-                } else {
-                    if (this.x !== this.baseX) {
-                        let dx = this.x - this.baseX;
-                        this.x -= dx / 10;
-                    }
-                    if (this.y !== this.baseY) {
-                        let dy = this.y - this.baseY;
-                        this.y -= dy / 10;
-                    }
-                }
-            }
-        }
+        <div class="input-group" id="groupOrder">
+            <label class="input-label"><span>رقم الطلب المرجعي</span></label>
+            <div class="input-wrapper">
+                <input type="number" id="orderNumber" class="input-control" placeholder="أدخل رقم الطلب..." min="1" required autocomplete="off">
+                <div class="field-check"></div>
+            </div>
+        </div>
 
-        function createParticles() {
-            particlesArray = [];
-            let numberOfParticles = (canvas.width * canvas.height) / 9000;
-            for (let i = 0; i < numberOfParticles; i++) {
-                let x = Math.random() * canvas.width;
-                let y = Math.random() * canvas.height;
-                particlesArray.push(new Particle(x, y));
-            }
-        }
-        createParticles();
+        <div class="preview-box">
+            <div class="preview-title">معاينة رسالة الواتساب</div>
+            <div class="preview-content" id="livePreview">👤 الاسم الكامل: 
+📞 رقم الهاتف  : 
+📍 العنوان بالتفصيل: 
+✅ رقم الطلب  : </div>
+        </div>
 
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].draw();
-                particlesArray[i].update();
-            }
-            requestAnimationFrame(animateParticles);
-        }
-        animateParticles();
+        <div class="actions-container">
+            <button type="button" class="btn-copy" id="copyBtn">نسخ البيانات</button>
+            <button type="submit" class="btn-submit">
+                <svg class="wa-icon" viewBox="0 0 24 24">
+                    <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.758.459 3.474 1.33 4.982L2 22l5.122-1.334c1.455.793 3.097 1.21 4.885 1.211h.005c5.507 0 9.99-4.478 9.99-9.985 0-2.667-1.039-5.174-2.928-7.062A9.917 9.917 0 0 0 12.012 2zm5.836 14.129c-.244.688-1.417 1.314-1.982 1.398-.506.076-1.148.107-1.853-.117-.427-.135-.975-.317-1.677-.621-2.951-1.275-4.88-4.246-5.027-4.442-.146-.196-1.196-1.595-1.196-3.044 0-1.448.762-2.158 1.03-2.453.27-.295.588-.368.784-.368.196 0 .392.001.564.01.18.009.423-.068.663.505.244.588.833 2.037.906 2.185.073.147.122.319.025.515-.098.196-.147.319-.294.491-.147.172-.31.385-.442.516-.147.147-.3.308-.129.602.172.294.762 1.251 1.636 2.03 1.123.998 2.07 1.308 2.364 1.455.294.147.466.123.637-.073.172-.196.735-.858.931-1.152.196-.295.392-.245.686-.147.294.098 1.861.877 2.18 1.036.319.159.53.235.603.358.073.123.073.712-.171 1.401z"/>
+                </svg>
+                <span>إرسال فوري</span>
+            </button>
+        </div>
+    </form>
+</div>
 
-        /* ==========================================
-           2. تأثير الإمالة ثلاثية الأبعاد (3D Card Tilt)
-           ========================================== */
-        const cardWrapper = document.getElementById('cardWrapper');
-        const vipCard = document.getElementById('vipCard');
-
-        cardWrapper.addEventListener('mousemove', (e) => {
-            const rect = cardWrapper.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            vipCard.style.transform = `rotateX(${-y / 25}deg) rotateY(${x / 25}deg)`;
-        });
-
-        cardWrapper.addEventListener('mouseleave', () => {
-            vipCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
-        });
-
-        /* ==========================================
-           3. التوافق الذكي للشركات وشريط الإنجاز
-           ========================================== */
-        function handlePhoneInput(input) {
-            const val = input.value.trim();
-            const root = document.documentElement;
-            const label = document.getElementById('phoneLabel');
-
-            // اكتشاف مزود الخدمة تلقائياً وتغيير لون التوهج
-            if (val.startsWith('077') || val.startsWith('078')) {
-                root.style.setProperty('--carrier-glow', '#a855f7'); // زين - بنفسجي
-                label.innerText = 'رقم الهاتف (زين العراق)';
-            } else if (val.startsWith('075')) {
-                root.style.setProperty('--carrier-glow', '#00f0ff'); // كورك - أزرق نيوني
-                label.innerText = 'رقم الهاتف (كورك)';
-            } else if (val.startsWith('0770') || val.startsWith('0771')) {
-                root.style.setProperty('--carrier-glow', '#ff3366'); // آسيا سيل - أحمر
-                label.innerText = 'رقم الهاتف (آسيا سيل)';
-            } else {
-                root.style.setProperty('--carrier-glow', '#00ff9d'); // افتراضي
-                label.innerText = 'رقم الهاتف (العراق)';
-            }
-
-            validateForm();
-        }
-
-        function validateForm() {
-            const name = document.getElementById('custName');
-            const phone = document.getElementById('custPhone');
-            const city = document.getElementById('custCity');
-            const pkg = document.getElementById('custPackage');
-
-            let filledFields = 0;
-            const totalFields = 4;
-
-            // التحقق وتفعيل علامات الصح
-            toggleValidClass(name, name.value.trim().length >= 3, ++filledFields);
-            toggleValidClass(phone, phone.value.trim().length >= 10, ++filledFields);
-            toggleValidClass(city, city.value !== '', ++filledFields);
-            toggleValidClass(pkg, pkg.value.trim().length >= 2, ++filledFields);
-
-            // حساب نسبة شريط التقدم
-            let validCount = document.querySelectorAll('.input-group.is-valid').length;
-            let progressPercent = (validCount / totalFields) * 100;
-            document.getElementById('progressBar').style.width = progressPercent + '%';
-
-            // تحديث صندوق المعاينة الحية
-            updatePreview(name.value, phone.value, city.value, pkg.value);
-        }
-
-        function toggleValidClass(element, isValid) {
-            const group = element.closest('.input-group');
-            if (isValid) {
-                group.classList.add('is-valid');
-            } else {
-                group.classList.remove('is-valid');
-            }
-        }
-
-        function updatePreview(name, phone, city, pkg) {
-            const preview = document.getElementById('previewText');
-            if (!name && !phone && !city && !pkg) {
-                preview.innerText = 'في انتظار إدخال البيانات...';
-                return;
-            }
-            preview.innerText = `العميل: ${name || '---'}\nالحديث: ${phone || '---'}\nالوجهة: ${city || '---'}\nالطلب: ${pkg || '---'}`;
-        }
-
-        /* ==========================================
-           4. آلية الإرسال والاهتزاز اللمسي
-           ========================================== */
-        function handleSubmit() {
-            const validCount = document.querySelectorAll('.input-group.is-valid').length;
-
-            if (validCount < 4) {
-                // تفعيل اهتزاز العناصر غير المكتملة
-                document.querySelectorAll('.input-group').forEach(group => {
-                    if (!group.classList.contains('is-valid')) {
-                        group.classList.add('shake');
-                        setTimeout(() => group.classList.remove('shake'), 400);
-                    }
-                });
-
-                // تفعيل الاهتزاز المادي للهاتف (إن وجد)
-                if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
-                return;
-            }
-
-            // إرسال ناجح وتفعيل تأثير اهتزاز النجاح
-            if (navigator.vibrate) navigator.vibrate(200);
+<!-- النافذة المنبثقة الخرافية للمحافظات -->
+<div class="gov-modal-overlay" id="govModal">
+    <div class="gov-modal-card">
+        <div class="gov-modal-header">
+            <div class="gov-modal-title">
+                <span>📍</span>
+                <span>اختر المحافظة المستهدفة</span>
+            </div>
+            <button type="button" class="gov-modal-close" id="closeGovModal">✕</button>
+        </div>
+        <div class="gov-modal-body">
             
-            const btn = document.getElementById('submitBtn');
-            btn.style.background = 'var(--neon-emerald)';
-            btn.style.color = '#000';
-            btn.innerHTML = '<span>تم تسجيل الطلب بنجاح!</span>';
+            <div class="gov-region-group">
+                <div class="gov-region-title">📍 الوسط والعاصمة</div>
+                <div class="gov-grid">
+                    <div class="gov-item-card" data-value="بغداد"><span class="gov-item-name">بغداد</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="ديالى"><span class="gov-item-name">ديالى</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="الأنبار"><span class="gov-item-name">الأنبار</span><div class="gov-item-dot"></div></div>
+                </div>
+            </div>
 
-            setTimeout(() => {
-                alert('تم تحويل الطلب ومعالجته في النظام بنجاح.');
-            }, 300);
+            <div class="gov-region-group">
+                <div class="gov-region-title">🏛️ الفرات الأوسط</div>
+                <div class="gov-grid">
+                    <div class="gov-item-card" data-value="بابل"><span class="gov-item-name">بابل</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="كربلاء"><span class="gov-item-name">كربلاء المقدسة</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="النجف"><span class="gov-item-name">النجف الأشرف</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="القادسية"><span class="gov-item-name">القادسية (الديوانية)</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="واسط"><span class="gov-item-name">واسط</span><div class="gov-item-dot"></div></div>
+                </div>
+            </div>
+
+            <div class="gov-region-group">
+                <div class="gov-region-title">🌊 الجنوب</div>
+                <div class="gov-grid">
+                    <div class="gov-item-card" data-value="البصرة"><span class="gov-item-name">البصرة</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="ذي قار"><span class="gov-item-name">ذي قار</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="ميسان"><span class="gov-item-name">ميسان</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="المثنى"><span class="gov-item-name">المثنى</span><div class="gov-item-dot"></div></div>
+                </div>
+            </div>
+
+            <div class="gov-region-group">
+                <div class="gov-region-title">🏔️ الشمال وإقليم كردستان</div>
+                <div class="gov-grid">
+                    <div class="gov-item-card" data-value="نينوى"><span class="gov-item-name">نينوى</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="كركوك"><span class="gov-item-name">كركوك</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="صلاح الدين"><span class="gov-item-name">صلاح الدين</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="أربيل"><span class="gov-item-name">أربيل</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="السليمانية"><span class="gov-item-name">السليمانية</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="دهوك"><span class="gov-item-name">دهوك</span><div class="gov-item-dot"></div></div>
+                    <div class="gov-item-card" data-value="حلبجة"><span class="gov-item-name">حلبجة</span><div class="gov-item-dot"></div></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    // تأثير الإضاءة للماوس
+    const card = document.getElementById('promoterCard');
+    card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+    });
+
+    // تأثير الموجة (Ripple) للأزرار
+    document.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const circle = document.createElement('span');
+            const diameter = Math.max(this.clientWidth, this.clientHeight);
+            const radius = diameter / 2;
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${e.clientX - this.getBoundingClientRect().left - radius}px`;
+            circle.style.top = `${e.clientY - this.getBoundingClientRect().top - radius}px`;
+            circle.classList.add('ripple');
+            const existingRipple = this.getElementsByClassName('ripple')[0];
+            if (existingRipple) existingRipple.remove();
+            this.appendChild(circle);
+        });
+    });
+
+    // نظام التنبيهات (Toast)
+    function showToast(message, isSuccess = false) {
+        if (navigator.vibrate) navigator.vibrate(30);
+        const toast = document.getElementById('toast');
+        const msg = document.getElementById('toast-msg');
+        msg.innerText = message;
+        toast.className = isSuccess ? 'show success' : 'show';
+        setTimeout(() => toast.className = '', 2800);
+    }
+
+    // تأثير اهتزاز الخطأ
+    function triggerStructuralShake(elementId) {
+        const group = document.getElementById(elementId);
+        group.classList.add('shake-error');
+        if (navigator.vibrate) navigator.vibrate([40, 40, 40]);
+        setTimeout(() => group.classList.remove('shake-error'), 350);
+    }
+
+    // تعريف المتغيرات
+    const nameInput = document.getElementById('customerName');
+    const phoneInput = document.getElementById('phone');
+    const govInput = document.getElementById('governorate');
+    const govSelectTrigger = document.getElementById('govSelectTrigger');
+    const govSelectText = document.getElementById('govSelectText');
+    const regionInput = document.getElementById('region');
+    const orderInput = document.getElementById('orderNumber');
+    const carrierBadge = document.getElementById('carrierBadge');
+    const livePreview = document.getElementById('livePreview');
+
+    // التحكم بالنافذة المنبثقة للمحافظات
+    const govModal = document.getElementById('govModal');
+    const closeGovModal = document.getElementById('closeGovModal');
+    const govItemCards = document.querySelectorAll('.gov-item-card');
+
+    govSelectTrigger.addEventListener('click', () => {
+        govModal.classList.add('active');
+    });
+
+    closeGovModal.addEventListener('click', () => {
+        govModal.classList.remove('active');
+    });
+
+    govModal.addEventListener('click', (e) => {
+        if (e.target === govModal) govModal.classList.remove('active');
+    });
+
+    govItemCards.forEach(item => {
+        item.addEventListener('click', function() {
+            const val = this.getAttribute('data-value');
+            govInput.value = val;
+            govSelectText.innerText = val;
+            govSelectText.classList.remove('placeholder');
+
+            govItemCards.forEach(c => c.classList.remove('selected'));
+            this.classList.add('selected');
+
+            govModal.classList.remove('active');
+            updateSystemState();
+        });
+    });
+
+    // استرجاع البيانات المحفوظة
+    window.addEventListener('DOMContentLoaded', () => {
+        if(localStorage.getItem('ent_name')) nameInput.value = localStorage.getItem('ent_name');
+        if(localStorage.getItem('ent_phone')) phoneInput.value = localStorage.getItem('ent_phone');
+        if(localStorage.getItem('ent_gov')) {
+            const savedGov = localStorage.getItem('ent_gov');
+            govInput.value = savedGov;
+            govSelectText.innerText = savedGov;
+            govSelectText.classList.remove('placeholder');
+            govItemCards.forEach(c => {
+                if(c.getAttribute('data-value') === savedGov) c.classList.add('selected');
+            });
         }
-    </script>
+        if(localStorage.getItem('ent_region')) regionInput.value = localStorage.getItem('ent_region');
+        if(localStorage.getItem('ent_order')) orderInput.value = localStorage.getItem('ent_order');
+        
+        phoneInput.dispatchEvent(new Event('input')); 
+        updateSystemState();
+    });
+
+    // تحديث الحالة وشريط التقدم والمعاينة
+    function updateSystemState() {
+        const name = nameInput.value.trim();
+        const phone = phoneInput.value.replace(/\s/g, '');
+        const gov = govInput.value || "";
+        const region = regionInput.value.trim();
+        const orderNum = orderInput.value.trim();
+
+        document.getElementById('groupName').classList.toggle('valid', name.length > 1);
+        document.getElementById('groupPhone').classList.toggle('valid', phone.length === 11);
+        document.getElementById('groupGov').classList.toggle('valid', gov.length > 0);
+        document.getElementById('groupRegion').classList.toggle('valid', region.length > 1);
+        document.getElementById('groupOrder').classList.toggle('valid', orderNum.length > 0);
+
+        let filledCount = 0;
+        if (name.length > 1) filledCount++;
+        if (phone.length === 11) filledCount++;
+        if (gov.length > 0) filledCount++;
+        if (region.length > 1) filledCount++;
+        if (orderNum.length > 0) filledCount++;
+        
+        document.getElementById('progressBarFill').style.width = `${(filledCount / 5) * 100}%`;
+
+        localStorage.setItem('ent_name', name);
+        localStorage.setItem('ent_phone', phoneInput.value);
+        localStorage.setItem('ent_gov', gov);
+        localStorage.setItem('ent_region', region);
+        localStorage.setItem('ent_order', orderNum);
+
+        // صياغة رسالة الواتساب المطابقة لطلبك
+        livePreview.innerText = `👤 الاسم الكامل: ${name}\n📞 رقم الهاتف  : ${phoneInput.value}\n📍 العنوان بالتفصيل: ${gov ? gov + ' - ' : ''}${region}\n✅ رقم الطلب  : ${orderNum}`;
+    }
+
+    // تنسيق رقم الهاتف واكتشاف شركة الاتصال بالألوان المحددة
+    phoneInput.addEventListener('input', function() {
+        let val = this.value.replace(/\D/g, ''); 
+        carrierBadge.className = 'carrier-badge';
+        
+        if (val.startsWith('078') || val.startsWith('079')) {
+            carrierBadge.innerText = 'زين'; 
+            carrierBadge.classList.add('badge-zain', 'active');
+        } else if (val.startsWith('077')) {
+            carrierBadge.innerText = 'آسيا'; 
+            carrierBadge.classList.add('badge-asia', 'active');
+        } else if (val.startsWith('075')) {
+            carrierBadge.innerText = 'كورك'; 
+            carrierBadge.classList.add('badge-korek', 'active');
+        } else {
+            carrierBadge.classList.remove('active');
+        }
+
+        let formatted = val;
+        if (val.length > 4) formatted = val.slice(0, 4) + ' ' + val.slice(4);
+        if (val.length > 7) formatted = val.slice(0, 4) + ' ' + val.slice(4, 7) + ' ' + val.slice(7, 11);
+        this.value = formatted;
+        updateSystemState();
+    });
+
+    // مستمعات التحديث
+    [nameInput, regionInput, orderInput].forEach(el => {
+        el.addEventListener('input', updateSystemState);
+    });
+
+    // زر النسخ
+    document.getElementById('copyBtn').addEventListener('click', function() {
+        const textToCopy = livePreview.innerText;
+        navigator.clipboard.writeText(textToCopy).then(() => {
+            showToast("تم نسخ البيانات بنجاح", true);
+        });
+    });
+
+    // زر الإرسال عبر الواتساب
+    document.getElementById('promoterForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = nameInput.value.trim();
+        const phone = phoneInput.value.replace(/\s/g, ''); 
+        const gov = govInput.value;
+        const region = regionInput.value.trim();
+        const orderNum = orderInput.value.trim();
+
+        if (!name) { triggerStructuralShake('groupName'); showToast("خطأ: يرجى إدخال اسم العميل"); return; }
+        if (phone.length !== 11) { triggerStructuralShake('groupPhone'); showToast("خطأ: رقم الهاتف غير متكامل"); return; }
+        if (!gov) { triggerStructuralShake('groupGov'); showToast("خطأ: يرجى اختيار المحافظة"); return; }
+        if (!region) { triggerStructuralShake('groupRegion'); showToast("خطأ: يرجى تحديد المنطقة"); return; }
+        if (!orderNum) { triggerStructuralShake('groupOrder'); showToast("خطأ: يرجى إدخال رقم الطلب"); return; }
+
+        const targetWhatsAppNumber = "9647888988288"; 
+        const messageText = `👤 الاسم الكامل: ${name}\n📞 رقم الهاتف  : ${phoneInput.value}\n📍 العنوان بالتفصيل: ${gov} - ${region}\n✅ رقم الطلب  : ${orderNum}`;
+        const encodedMsg = encodeURIComponent(messageText);
+
+        window.location.href = `whatsapp://send?phone=${targetWhatsAppNumber}&text=${encodedMsg}`;
+
+        setTimeout(() => {
+            localStorage.clear();
+            document.getElementById('promoterForm').reset();
+            govInput.value = "";
+            govSelectText.innerText = "-- انقر لاختيار المحافظة --";
+            govSelectText.classList.add('placeholder');
+            govItemCards.forEach(c => c.classList.remove('selected'));
+            carrierBadge.className = 'carrier-badge';
+            updateSystemState();
+        }, 1000);
+    });
+</script>
 </body>
 </html>
+
