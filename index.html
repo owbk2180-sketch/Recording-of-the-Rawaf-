@@ -8,10 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         ::selection { background: #22c55e; color: #041208; }
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #05070a; }
-        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #22c55e; }
+        
+        /* 1. تخصيص السكرول بار العام بلمسة نيون خافتة */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: #020406; }
+        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #22c55e; box-shadow: 0 0 10px #22c55e; }
 
         * {
             -webkit-tap-highlight-color: transparent;
@@ -22,8 +24,9 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* 2. تحسين السواد المطلق (AMOLED True-Black) وتظليل الأطراف السينمائي */
         body {
-            background-color: #05070a;
+            background-color: #020406;
             color: #f1f5f9;
             display: flex;
             justify-content: center;
@@ -34,17 +37,26 @@
             overflow-x: hidden;
         }
 
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.75) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
         /* الخلفية المتحركة */
         .ambient-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             overflow: hidden; pointer-events: none; z-index: -1;
         }
         .orb {
-            position: absolute; border-radius: 50%; filter: blur(100px);
-            opacity: 0.1; animation: floatOrb 18s infinite alternate ease-in-out;
+            position: absolute; border-radius: 50%; filter: blur(110px);
+            opacity: 0.12; animation: floatOrb 18s infinite alternate ease-in-out;
         }
-        .orb-1 { width: 400px; height: 400px; background: #22c55e; top: -120px; right: -120px; }
-        .orb-2 { width: 500px; height: 500px; background: #0284c7; bottom: -180px; left: -180px; animation-delay: -7s; }
+        .orb-1 { width: 420px; height: 420px; background: #22c55e; top: -120px; right: -120px; }
+        .orb-2 { width: 520px; height: 520px; background: #0284c7; bottom: -180px; left: -180px; animation-delay: -7s; }
         @keyframes floatOrb {
             0% { transform: translate(0, 0) scale(1); }
             100% { transform: translate(40px, 50px) scale(1.1); }
@@ -53,19 +65,20 @@
         /* البطاقة الرئيسية */
         .promoter-card {
             width: 100%; max-width: 440px;
-            background: rgba(10, 14, 22, 0.9);
+            background: rgba(8, 12, 18, 0.92);
             backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px);
             padding: 36px 24px 26px 24px;
             border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.95), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.98), inset 0 1px 0 rgba(255, 255, 255, 0.12);
             position: relative; overflow: hidden; transform: translateZ(0);
+            z-index: 1;
         }
 
         .card-spotlight {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; border-radius: 24px; z-index: 1;
-            background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(34, 197, 94, 0.08), transparent 40%);
+            background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(34, 197, 94, 0.09), transparent 40%);
         }
 
         /* شريط التقدم */
@@ -76,7 +89,7 @@
         .progress-bar-fill {
             height: 100%; width: 0%; background: #22c55e;
             transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 0 10px #22c55e;
+            box-shadow: 0 0 12px #22c55e;
         }
 
         /* حالة النظام */
@@ -98,9 +111,15 @@
             100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
         }
 
-        /* الشعار والنصوص */
+        /* 3. الشعار والعنوان بلمعة الكروم والزمرد الفاخرة */
         .logo-container { text-align: center; margin-bottom: 22px; position: relative; z-index: 2; }
-        .title { font-size: 22px; font-weight: 900; color: #ffffff; letter-spacing: -0.5px; }
+        .title {
+            font-size: 22px; font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 35%, #22c55e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
         .subtitle { font-size: 10px; color: #22c55e; font-weight: 800; margin-top: 4px; letter-spacing: 3px; text-transform: uppercase; }
 
         /* الحقول */
@@ -118,25 +137,32 @@
         
         .input-wrapper { position: relative; display: flex; align-items: center; }
         .input-control {
-            width: 100%; background: rgba(4, 6, 10, 0.8); border: 1px solid rgba(255, 255, 255, 0.07);
+            width: 100%; background: rgba(4, 6, 10, 0.85); border: 1px solid rgba(255, 255, 255, 0.08);
             color: #ffffff; font-size: 13px; font-weight: 700; padding: 14px 16px;
             border-radius: 12px; outline: none; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); appearance: none;
         }
-        .input-control:hover { border-color: rgba(255, 255, 255, 0.15); background: rgba(6, 9, 14, 0.9); }
+        .input-control:hover { border-color: rgba(255, 255, 255, 0.18); background: rgba(6, 9, 14, 0.95); }
+        
+        /* 4. نبض الإضاءة للحقل النشط */
         .input-control:focus {
             border-color: #22c55e; background: rgba(7, 10, 16, 0.95);
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 0 3px rgba(34, 197, 94, 0.1);
+            animation: fieldPulse 2.5s infinite ease-in-out;
+        }
+        @keyframes fieldPulse {
+            0%, 100% { box-shadow: inset 0 2px 4px rgba(0,0,0,0.5), 0 0 0 3px rgba(34, 197, 94, 0.12); }
+            50% { box-shadow: inset 0 2px 4px rgba(0,0,0,0.5), 0 0 12px 3px rgba(34, 197, 94, 0.25); }
         }
         .input-group:focus-within .input-label { color: #22c55e; }
         .input-control::placeholder { color: #475569; font-weight: 600; }
 
-        /* علامة الصح للحقول الصالحة */
+        /* 5. علامة الصح بحركة ارتداد مطاطية (Elastic Pop) */
         .field-check {
             position: absolute; left: 14px; top: 50%; transform: translateY(-50%) scale(0);
             width: 16px; height: 16px; background: #22c55e; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); pointer-events: none;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
         }
         .field-check::after {
             content: ''; width: 4px; height: 8px; border: solid #041208;
@@ -157,11 +183,11 @@
         }
 
         /* ---------------------------------------------------- */
-        /* تصميم نافذة المحافظات الخرافية (VIP GOVERNORATES MODAL) */
+        /* تصميم نافذة المحافظات (VIP GOVERNORATES MODAL) */
         /* ---------------------------------------------------- */
         .gov-modal-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(3, 5, 9, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            background: rgba(2, 4, 7, 0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             z-index: 9999; display: flex; justify-content: center; align-items: center;
             padding: 16px; opacity: 0; pointer-events: none; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -169,12 +195,26 @@
 
         .gov-modal-card {
             width: 100%; max-width: 460px; max-height: 85vh;
-            background: rgba(12, 17, 26, 0.95); border: 1px solid rgba(34, 197, 94, 0.3);
-            border-radius: 28px; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9), 0 0 30px rgba(34, 197, 94, 0.15);
-            display: flex; flex-direction: column; overflow: hidden;
+            background: rgba(10, 15, 24, 0.96); border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 28px; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95), 0 0 30px rgba(34, 197, 94, 0.15);
+            display: flex; flex-direction: column; overflow: hidden; position: relative;
             transform: scale(0.92) translateY(20px); transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .gov-modal-overlay.active .gov-modal-card { transform: scale(1) translateY(0); }
+
+        /* 6. تأثير انكسار الضوء الكريستالي على بطاقة المحافظات */
+        .gov-modal-card::before {
+            content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%;
+            background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.04) 50%, transparent 60%);
+            pointer-events: none; z-index: 10;
+        }
+        .gov-modal-overlay.active .gov-modal-card::before {
+            animation: glassStreak 1.2s ease-out 0.2s forwards;
+        }
+        @keyframes glassStreak {
+            0% { left: -150%; }
+            100% { left: 150%; }
+        }
 
         .gov-modal-header {
             padding: 20px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
@@ -189,7 +229,12 @@
         }
         .gov-modal-close:hover { background: rgba(239, 68, 68, 0.2); color: #ef4444; border-color: rgba(239, 68, 68, 0.4); }
 
+        /* 7. سكرول بار نيون زجاجي مخصص داخل النافذة */
         .gov-modal-body { padding: 18px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
+        .gov-modal-body::-webkit-scrollbar { width: 4px; }
+        .gov-modal-body::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
+        .gov-modal-body::-webkit-scrollbar-thumb { background: rgba(34, 197, 94, 0.3); border-radius: 4px; }
+        .gov-modal-body::-webkit-scrollbar-thumb:hover { background: #22c55e; }
         
         .gov-region-group { display: flex; flex-direction: column; gap: 10px; }
         .gov-region-title {
@@ -243,19 +288,26 @@
             transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .carrier-badge.active { opacity: 1; transform: translateY(-50%) scale(1); }
-        .badge-zain { background: #7c3aed; } /* زين بنفسجي */
-        .badge-asia { background: #dc2626; } /* آسيا أحمر */
-        .badge-korek { background: #0284c7; } /* كورك أزرق */
+        .badge-zain { background: #7c3aed; box-shadow: 0 0 8px rgba(124, 58, 237, 0.4); }
+        .badge-asia { background: #dc2626; box-shadow: 0 0 8px rgba(220, 38, 38, 0.4); }
+        .badge-korek { background: #0284c7; box-shadow: 0 0 8px rgba(2, 132, 199, 0.4); }
 
         /* المعاينة المباشرة */
         .preview-box {
-            background: rgba(3, 5, 8, 0.7); border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4); border-radius: 10px;
+            background: rgba(3, 5, 8, 0.75); border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5); border-radius: 10px;
             padding: 12px; margin-bottom: 18px; font-size: 11px; color: #94a3b8;
             line-height: 1.5; position: relative; z-index: 2;
         }
         .preview-title { font-size: 9px; color: #22c55e; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
         .preview-content { white-space: pre-wrap; font-family: 'Cairo', sans-serif; color: #cbd5e1; font-size: 11px; line-height: 1.6; }
+        
+        /* 8. مؤشر الكتابة الحية البصري (Terminal Cursor Beam) */
+        .preview-content::after {
+            content: '▌'; font-size: 10px; color: #22c55e; margin-right: 3px;
+            animation: blinkBeam 0.9s infinite; vertical-align: middle;
+        }
+        @keyframes blinkBeam { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
         /* الأزرار */
         .actions-container { display: flex; gap: 8px; margin-top: 18px; position: relative; z-index: 2; }
@@ -271,16 +323,18 @@
             transform: rotate(30deg) translateX(-100%); animation: shimmer 4s infinite;
         }
         @keyframes shimmer { 0% { transform: translateX(-100%) rotate(30deg); } 20%, 100% { transform: translateX(100%) rotate(30deg); } }
-        .btn-submit:hover { background: #16a34a; transform: translateY(-1px); }
+        .btn-submit:hover { background: #16a34a; transform: translateY(-1px); box-shadow: 0 6px 20px -2px rgba(34, 197, 94, 0.5); }
         .btn-submit:active { transform: scale(0.98); }
 
+        /* 9. تحسين زر نسخ البيانات بتصميم زجاجي مطفي متناسق */
         .btn-copy {
-            flex: 1; padding: 14px; background: rgba(255, 255, 255, 0.04); color: #f1f5f9;
-            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; font-size: 12px;
+            flex: 1; padding: 14px; background: rgba(255, 255, 255, 0.03); color: #f1f5f9;
+            border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 12px; font-size: 12px;
             font-weight: 800; cursor: pointer; transition: all 0.25s ease;
+            backdrop-filter: blur(10px);
             display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden;
         }
-        .btn-copy:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.15); }
+        .btn-copy:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(34, 197, 94, 0.4); color: #22c55e; }
 
         .ripple {
             position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.25);
@@ -403,7 +457,7 @@
     </form>
 </div>
 
-<!-- النافذة المنبثقة الخرافية للمحافظات -->
+<!-- النافذة المنبثقة الخرافية للمحافظات (مع شعارات مجهرية للأقاليم) -->
 <div class="gov-modal-overlay" id="govModal">
     <div class="gov-modal-card">
         <div class="gov-modal-header">
@@ -416,7 +470,7 @@
         <div class="gov-modal-body">
             
             <div class="gov-region-group">
-                <div class="gov-region-title">📍 الوسط والعاصمة</div>
+                <div class="gov-region-title">🏛️ الوسط والعاصمة</div>
                 <div class="gov-grid">
                     <div class="gov-item-card" data-value="بغداد"><span class="gov-item-name">بغداد</span><div class="gov-item-dot"></div></div>
                     <div class="gov-item-card" data-value="ديالى"><span class="gov-item-name">ديالى</span><div class="gov-item-dot"></div></div>
@@ -425,7 +479,7 @@
             </div>
 
             <div class="gov-region-group">
-                <div class="gov-region-title">🏛️ الفرات الأوسط</div>
+                <div class="gov-region-title">🕌 الفرات الأوسط</div>
                 <div class="gov-grid">
                     <div class="gov-item-card" data-value="بابل"><span class="gov-item-name">بابل</span><div class="gov-item-dot"></div></div>
                     <div class="gov-item-card" data-value="كربلاء"><span class="gov-item-name">كربلاء المقدسة</span><div class="gov-item-dot"></div></div>
@@ -436,7 +490,7 @@
             </div>
 
             <div class="gov-region-group">
-                <div class="gov-region-title">🌊 الجنوب</div>
+                <div class="gov-region-title">🌴 الجنوب</div>
                 <div class="gov-grid">
                     <div class="gov-item-card" data-value="البصرة"><span class="gov-item-name">البصرة</span><div class="gov-item-dot"></div></div>
                     <div class="gov-item-card" data-value="ذي قار"><span class="gov-item-name">ذي قار</span><div class="gov-item-dot"></div></div>
@@ -597,7 +651,7 @@
         localStorage.setItem('ent_region', region);
         localStorage.setItem('ent_order', orderNum);
 
-        // صياغة رسالة الواتساب المطابقة لطلبك
+        // صياغة رسالة الواتساب
         livePreview.innerText = `👤 الاسم الكامل: ${name}\n📞 رقم الهاتف  : ${phoneInput.value}\n📍 العنوان بالتفصيل: ${gov ? gov + ' - ' : ''}${region}\n✅ رقم الطلب  : ${orderNum}`;
     }
 
@@ -675,4 +729,3 @@
 </script>
 </body>
 </html>
-
