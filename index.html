@@ -2,730 +2,439 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>منصة العمليات المركزية | Enterprise VIP Portal</title>
-    <!-- خط Cairo عالي الدقة -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة تسجيل البيانات السريعة</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <style>
-        ::selection { background: #22c55e; color: #041208; }
+        @keyframes glowPulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.6); }
+            50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.9); }
+        }
+        .animate-glow-pulse {
+            animation: glowPulse 2s infinite;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .stagger-1 { animation: fadeInUp 0.4s ease forwards 0.05s; opacity: 0; }
+        .stagger-2 { animation: fadeInUp 0.4s ease forwards 0.10s; opacity: 0; }
+        .stagger-3 { animation: fadeInUp 0.4s ease forwards 0.15s; opacity: 0; }
+        .stagger-4 { animation: fadeInUp 0.4s ease forwards 0.20s; opacity: 0; }
         
-        /* 1. تخصيص السكرول بار العام بلمسة نيون خافتة */
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #020406; }
-        ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #22c55e; box-shadow: 0 0 10px #22c55e; }
-
-        * {
-            -webkit-tap-highlight-color: transparent;
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-            -webkit-font-smoothing: antialiased;
+        /* إيقاف الخلفية المتحركة للأجهزة الضعيفة */
+        .no-motion * {
+            animation: none !important;
+            transition: none !important;
         }
-
-        /* 2. تحسين السواد المطلق (AMOLED True-Black) وتظليل الأطراف السينمائي */
-        body {
-            background-color: #020406;
-            color: #f1f5f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px 16px;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.75) 100%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* الخلفية المتحركة */
-        .ambient-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            overflow: hidden; pointer-events: none; z-index: -1;
-        }
-        .orb {
-            position: absolute; border-radius: 50%; filter: blur(110px);
-            opacity: 0.12; animation: floatOrb 18s infinite alternate ease-in-out;
-        }
-        .orb-1 { width: 420px; height: 420px; background: #22c55e; top: -120px; right: -120px; }
-        .orb-2 { width: 520px; height: 520px; background: #0284c7; bottom: -180px; left: -180px; animation-delay: -7s; }
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(40px, 50px) scale(1.1); }
-        }
-
-        /* البطاقة الرئيسية */
-        .promoter-card {
-            width: 100%; max-width: 440px;
-            background: rgba(8, 12, 18, 0.92);
-            backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px);
-            padding: 36px 24px 26px 24px;
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.98), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-            position: relative; overflow: hidden; transform: translateZ(0);
-            z-index: 1;
-        }
-
-        .card-spotlight {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; border-radius: 24px; z-index: 1;
-            background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(34, 197, 94, 0.09), transparent 40%);
-        }
-
-        /* شريط التقدم */
-        .progress-container {
-            position: absolute; top: 0; left: 0; right: 0; height: 2px;
-            background: rgba(255, 255, 255, 0.04); z-index: 5;
-        }
-        .progress-bar-fill {
-            height: 100%; width: 0%; background: #22c55e;
-            transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 0 12px #22c55e;
-        }
-
-        /* حالة النظام */
-        .system-status {
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            font-size: 11px; font-weight: 800; color: #94a3b8;
-            background: rgba(255, 255, 255, 0.02); padding: 5px 12px;
-            border-radius: 16px; width: fit-content; margin: 0 auto 20px auto;
-            border: 1px solid rgba(255, 255, 255, 0.04); position: relative; z-index: 2;
-            letter-spacing: 0.5px;
-        }
-        .status-dot {
-            width: 6px; height: 6px; background-color: #22c55e; border-radius: 50%;
-            box-shadow: 0 0 8px #22c55e; animation: pulse-dot 2s infinite;
-        }
-        @keyframes pulse-dot {
-            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.6); }
-            70% { transform: scale(1); box-shadow: 0 0 0 5px rgba(34, 197, 94, 0); }
-            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-        }
-
-        /* 3. الشعار والعنوان بلمعة الكروم والزمرد الفاخرة */
-        .logo-container { text-align: center; margin-bottom: 22px; position: relative; z-index: 2; }
-        .title {
-            font-size: 22px; font-weight: 900;
-            background: linear-gradient(135deg, #ffffff 35%, #22c55e 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
-        }
-        .subtitle { font-size: 10px; color: #22c55e; font-weight: 800; margin-top: 4px; letter-spacing: 3px; text-transform: uppercase; }
-
-        /* الحقول */
-        .input-group { margin-bottom: 16px; position: relative; z-index: 2; }
-        .input-label {
-            display: flex; justify-content: space-between; align-items: center;
-            font-size: 11px; font-weight: 700; color: #94a3b8; margin-bottom: 5px;
-            transition: color 0.3s ease; letter-spacing: 0.3px;
-        }
-        .badge-official {
-            font-size: 8px; background: rgba(34, 197, 94, 0.1); color: #22c55e;
-            padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(34, 197, 94, 0.2);
-            letter-spacing: 0.5px; font-weight: 800;
-        }
-        
-        .input-wrapper { position: relative; display: flex; align-items: center; }
-        .input-control {
-            width: 100%; background: rgba(4, 6, 10, 0.85); border: 1px solid rgba(255, 255, 255, 0.08);
-            color: #ffffff; font-size: 13px; font-weight: 700; padding: 14px 16px;
-            border-radius: 12px; outline: none; box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); appearance: none;
-        }
-        .input-control:hover { border-color: rgba(255, 255, 255, 0.18); background: rgba(6, 9, 14, 0.95); }
-        
-        /* 4. نبض الإضاءة للحقل النشط */
-        .input-control:focus {
-            border-color: #22c55e; background: rgba(7, 10, 16, 0.95);
-            animation: fieldPulse 2.5s infinite ease-in-out;
-        }
-        @keyframes fieldPulse {
-            0%, 100% { box-shadow: inset 0 2px 4px rgba(0,0,0,0.5), 0 0 0 3px rgba(34, 197, 94, 0.12); }
-            50% { box-shadow: inset 0 2px 4px rgba(0,0,0,0.5), 0 0 12px 3px rgba(34, 197, 94, 0.25); }
-        }
-        .input-group:focus-within .input-label { color: #22c55e; }
-        .input-control::placeholder { color: #475569; font-weight: 600; }
-
-        /* 5. علامة الصح بحركة ارتداد مطاطية (Elastic Pop) */
-        .field-check {
-            position: absolute; left: 14px; top: 50%; transform: translateY(-50%) scale(0);
-            width: 16px; height: 16px; background: #22c55e; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); pointer-events: none;
-            box-shadow: 0 0 10px rgba(34, 197, 94, 0.4);
-        }
-        .field-check::after {
-            content: ''; width: 4px; height: 8px; border: solid #041208;
-            border-width: 0 2px 2px 0; transform: rotate(45deg); margin-bottom: 2px;
-        }
-        .input-group.valid .field-check { transform: translateY(-50%) scale(1); }
-
-        /* قائمة المحافظات المخصصة التفاعلية (Trigger) */
-        .custom-select-trigger {
-            cursor: pointer; display: flex; justify-content: space-between; align-items: center;
-            user-select: none;
-        }
-        .select-trigger-text { color: #f1f5f9; font-weight: 700; }
-        .select-trigger-text.placeholder { color: #475569; font-weight: 600; }
-        .select-arrow-icon {
-            display: flex; align-items: center; justify-content: center;
-            transition: transform 0.3s ease;
-        }
-
-        /* ---------------------------------------------------- */
-        /* تصميم نافذة المحافظات (VIP GOVERNORATES MODAL) */
-        /* ---------------------------------------------------- */
-        .gov-modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(2, 4, 7, 0.88); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            z-index: 9999; display: flex; justify-content: center; align-items: center;
-            padding: 16px; opacity: 0; pointer-events: none; transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .gov-modal-overlay.active { opacity: 1; pointer-events: auto; }
-
-        .gov-modal-card {
-            width: 100%; max-width: 460px; max-height: 85vh;
-            background: rgba(10, 15, 24, 0.96); border: 1px solid rgba(34, 197, 94, 0.3);
-            border-radius: 28px; box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95), 0 0 30px rgba(34, 197, 94, 0.15);
-            display: flex; flex-direction: column; overflow: hidden; position: relative;
-            transform: scale(0.92) translateY(20px); transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .gov-modal-overlay.active .gov-modal-card { transform: scale(1) translateY(0); }
-
-        /* 6. تأثير انكسار الضوء الكريستالي على بطاقة المحافظات */
-        .gov-modal-card::before {
-            content: ''; position: absolute; top: 0; left: -150%; width: 100%; height: 100%;
-            background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.04) 50%, transparent 60%);
-            pointer-events: none; z-index: 10;
-        }
-        .gov-modal-overlay.active .gov-modal-card::before {
-            animation: glassStreak 1.2s ease-out 0.2s forwards;
-        }
-        @keyframes glassStreak {
-            0% { left: -150%; }
-            100% { left: 150%; }
-        }
-
-        .gov-modal-header {
-            padding: 20px 24px; border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(255, 255, 255, 0.01);
-        }
-        .gov-modal-title { font-size: 16px; font-weight: 900; color: #ffffff; display: flex; align-items: center; gap: 8px; }
-        .gov-modal-close {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #94a3b8; width: 32px; height: 32px; border-radius: 50%; font-size: 18px;
-            display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s;
-        }
-        .gov-modal-close:hover { background: rgba(239, 68, 68, 0.2); color: #ef4444; border-color: rgba(239, 68, 68, 0.4); }
-
-        /* 7. سكرول بار نيون زجاجي مخصص داخل النافذة */
-        .gov-modal-body { padding: 18px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 20px; }
-        .gov-modal-body::-webkit-scrollbar { width: 4px; }
-        .gov-modal-body::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
-        .gov-modal-body::-webkit-scrollbar-thumb { background: rgba(34, 197, 94, 0.3); border-radius: 4px; }
-        .gov-modal-body::-webkit-scrollbar-thumb:hover { background: #22c55e; }
-        
-        .gov-region-group { display: flex; flex-direction: column; gap: 10px; }
-        .gov-region-title {
-            font-size: 11px; font-weight: 800; color: #22c55e;
-            letter-spacing: 1px; display: flex; align-items: center; gap: 6px;
-            padding-bottom: 4px; border-bottom: 1px dashed rgba(34, 197, 94, 0.2);
-        }
-
-        .gov-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        
-        .gov-item-card {
-            background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06);
-            padding: 12px 14px; border-radius: 14px; cursor: pointer;
-            display: flex; align-items: center; justify-content: space-between;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .gov-item-card:hover {
-            background: rgba(34, 197, 94, 0.08); border-color: rgba(34, 197, 94, 0.4);
-            transform: translateY(-2px); box-shadow: 0 4px 12px rgba(34, 197, 94, 0.15);
-        }
-        .gov-item-card.selected {
-            background: linear-gradient(135deg, rgba(34, 197, 94, 0.25), rgba(34, 197, 94, 0.08));
-            border-color: #22c55e; box-shadow: 0 0 15px rgba(34, 197, 94, 0.25);
-        }
-        .gov-item-name { font-size: 13px; font-weight: 800; color: #f1f5f9; }
-        .gov-item-dot {
-            width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, 0.3);
-            transition: all 0.2s;
-        }
-        .gov-item-card.selected .gov-item-dot { background: #22c55e; border-color: #22c55e; box-shadow: 0 0 8px #22c55e; }
-
-        /* اهتزاز الخطأ */
-        @keyframes structuralShake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-4px); }
-            40%, 80% { transform: translateX(4px); }
-        }
-        .input-group.shake-error .input-control {
-            animation: structuralShake 0.35s ease-in-out;
-            border-color: #ef4444 !important; background: rgba(239, 68, 68, 0.05) !important;
-        }
-
-        /* حقل الهاتف وشعارات الشركات */
-        .phone-wrapper { position: relative; }
-        .phone-input { padding-left: 80px !important; text-align: left; direction: ltr; font-size: 14px; letter-spacing: 0.8px; }
-        .phone-input::placeholder { text-align: left; letter-spacing: 0; }
-        .carrier-badge {
-            position: absolute; left: 38px; top: 50%; transform: translateY(-50%) scale(0.85);
-            font-size: 10px; font-weight: 900; padding: 3px 8px; border-radius: 4px;
-            opacity: 0; pointer-events: none; color: #fff; letter-spacing: 0.5px;
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .carrier-badge.active { opacity: 1; transform: translateY(-50%) scale(1); }
-        .badge-zain { background: #7c3aed; box-shadow: 0 0 8px rgba(124, 58, 237, 0.4); }
-        .badge-asia { background: #dc2626; box-shadow: 0 0 8px rgba(220, 38, 38, 0.4); }
-        .badge-korek { background: #0284c7; box-shadow: 0 0 8px rgba(2, 132, 199, 0.4); }
-
-        /* المعاينة المباشرة */
-        .preview-box {
-            background: rgba(3, 5, 8, 0.75); border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5); border-radius: 10px;
-            padding: 12px; margin-bottom: 18px; font-size: 11px; color: #94a3b8;
-            line-height: 1.5; position: relative; z-index: 2;
-        }
-        .preview-title { font-size: 9px; color: #22c55e; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
-        .preview-content { white-space: pre-wrap; font-family: 'Cairo', sans-serif; color: #cbd5e1; font-size: 11px; line-height: 1.6; }
-        
-        /* 8. مؤشر الكتابة الحية البصري (Terminal Cursor Beam) */
-        .preview-content::after {
-            content: '▌'; font-size: 10px; color: #22c55e; margin-right: 3px;
-            animation: blinkBeam 0.9s infinite; vertical-align: middle;
-        }
-        @keyframes blinkBeam { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-        /* الأزرار */
-        .actions-container { display: flex; gap: 8px; margin-top: 18px; position: relative; z-index: 2; }
-        .btn-submit {
-            flex: 2; padding: 14px; background: #22c55e; color: #041208; border: none;
-            border-radius: 12px; font-size: 14px; font-weight: 900; cursor: pointer;
-            box-shadow: 0 4px 15px -2px rgba(34, 197, 94, 0.35); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex; justify-content: center; align-items: center; gap: 8px; position: relative; overflow: hidden;
-        }
-        .btn-submit::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(60deg, transparent 30%, rgba(255, 255, 255, 0.25) 50%, transparent 70%);
-            transform: rotate(30deg) translateX(-100%); animation: shimmer 4s infinite;
-        }
-        @keyframes shimmer { 0% { transform: translateX(-100%) rotate(30deg); } 20%, 100% { transform: translateX(100%) rotate(30deg); } }
-        .btn-submit:hover { background: #16a34a; transform: translateY(-1px); box-shadow: 0 6px 20px -2px rgba(34, 197, 94, 0.5); }
-        .btn-submit:active { transform: scale(0.98); }
-
-        /* 9. تحسين زر نسخ البيانات بتصميم زجاجي مطفي متناسق */
-        .btn-copy {
-            flex: 1; padding: 14px; background: rgba(255, 255, 255, 0.03); color: #f1f5f9;
-            border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 12px; font-size: 12px;
-            font-weight: 800; cursor: pointer; transition: all 0.25s ease;
-            backdrop-filter: blur(10px);
-            display: flex; justify-content: center; align-items: center; position: relative; overflow: hidden;
-        }
-        .btn-copy:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(34, 197, 94, 0.4); color: #22c55e; }
-
-        .ripple {
-            position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.25);
-            transform: scale(0); animation: ripple-effect 0.4s linear; pointer-events: none;
-        }
-        @keyframes ripple-effect { to { transform: scale(4); opacity: 0; } }
-
-        .wa-icon { width: 16px; height: 16px; fill: #041208; }
-
-        /* الإشعارات Toast */
-        #toast {
-            position: fixed; top: -70px; left: 50%; transform: translateX(-50%) scale(0.95);
-            background: rgba(239, 68, 68, 0.95); color: #fff; padding: 10px 20px;
-            border-radius: 20px; font-weight: 800; font-size: 12px; z-index: 99999;
-            opacity: 0; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15); pointer-events: none;
-        }
-        #toast.show { top: 20px; opacity: 1; transform: translateX(-50%) scale(1); }
-        #toast.success { background: rgba(34, 197, 94, 0.95); box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3); }
     </style>
 </head>
-<body>
+<body id="bodyRoot" class="bg-slate-950 text-slate-100 min-h-screen flex items-center justify-center p-4 relative overflow-x-hidden">
 
-<div class="ambient-bg">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-</div>
-
-<div id="toast"><span id="toast-msg"></span></div>
-
-<div class="promoter-card" id="promoterCard">
-    <div class="card-spotlight" id="cardSpotlight"></div>
-    
-    <div class="progress-container">
-        <div class="progress-bar-fill" id="progressBarFill"></div>
+    <!-- خلفية الـ Orbs المتحركة (نقطة 10) -->
+    <div id="bgOrbs" class="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
+        <div class="absolute -top-40 -right-40 w-96 h-96 bg-purple-600 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-blue-600 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
     </div>
 
-    <div class="system-status">
-        <div class="status-dot"></div>
-        <span>SYSTEM ONLINE</span>
-    </div>
-
-    <div class="logo-container">
-        <h1 class="title">بوابة تسجيل البيانات</h1>
-        <div class="subtitle">ENTERPRISE PORTAL</div>
-    </div>
-
-    <form id="promoterForm" novalidate>
-        <div class="input-group" id="groupName">
-            <label class="input-label"><span>الاسم الكامل للعميل</span></label>
-            <div class="input-wrapper">
-                <input type="text" id="customerName" class="input-control" placeholder="أدخل اسم العميل كاملاً..." required autocomplete="off">
-                <div class="field-check"></div>
+    <!-- بطاقة الاستمارة الرئيسية -->
+    <div class="relative z-10 w-full max-w-2xl bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl">
+        
+        <!-- رأس الاستمارة مع زر إعادة التعيين (نقطة 14) وتبديل الأداء (نقطة 10) -->
+        <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
+            <div>
+                <h1 class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
+                    <span>⚡ بوابة تسجيل البيانات</span>
+                </h1>
+                <p class="text-xs text-slate-400 mt-1">أدخل بياناتك بدقة وسرعة فائقة</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <!-- زر إيقاف الحركة للأجهزة الضعيفة -->
+                <button onclick="toggleMotion()" id="motionBtn" title="تخفيف الحركة والبطارية" class="p-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs transition">
+                    🔋 الأداء
+                </button>
+                <!-- زر إعادة تعيين المسودة -->
+                <button onclick="resetDraft()" title="إعادة تعيين الاستمارة" class="p-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-xs transition flex items-center gap-1">
+                    🗑️ مسح
+                </button>
             </div>
         </div>
 
-        <div class="input-group" id="groupPhone">
-            <label class="input-label"><span>رقم الهاتف المحمول</span></label>
-            <div class="input-wrapper phone-wrapper">
-                <input type="tel" id="phone" class="input-control phone-input" placeholder="07X XXXX XXXX" maxlength="13" required autocomplete="off">
-                <div id="carrierBadge" class="carrier-badge"></div>
-                <div class="field-check"></div>
+        <!-- شريط التقدم -->
+        <div class="mb-6">
+            <div class="flex justify-between text-xs text-slate-400 mb-1.5">
+                <span>اكتمال الاستمارة</span>
+                <span id="progressText">0%</span>
+            </div>
+            <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                <div id="progressBar" class="bg-emerald-500 h-full transition-all duration-300 w-0"></div>
             </div>
         </div>
 
-        <!-- حقل اختيار المحافظة الفخم (Trigger) -->
-        <div class="input-group" id="groupGov">
-            <label class="input-label">
-                <span>المحافظة المستهدفة</span>
-                <span class="badge-official">تحديد إقليمي</span>
-            </label>
-            <div class="input-wrapper">
-                <div id="govSelectTrigger" class="input-control custom-select-trigger">
-                    <span id="govSelectText" class="select-trigger-text placeholder">-- انقر لاختيار المحافظة --</span>
-                    <div class="select-arrow-icon">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
+        <!-- الاستمارة بتقسيم عمودين للشاشات العريضة (نقطة 7) -->
+        <form id="registrationForm" class="space-y-4" onsubmit="event.preventDefault();">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <!-- حقل الاسم (مع زر مسح سريع - نقطة 4) و(حركة ظهور - نقطة 13) -->
+                <div class="space-y-1.5 stagger-1 relative">
+                    <label class="text-xs font-medium text-slate-300">الاسم الكامل</label>
+                    <div class="relative">
+                        <input type="text" id="fullName" placeholder="أدخل اسمك الثلاثي" 
+                            class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition pr-4 pl-10"
+                            oninput="checkField('fullName'); updateProgress();">
+                        <!-- زر مسح سريع -->
+                        <button type="button" onclick="clearInput('fullName')" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white text-xs hidden clear-btn">✕</button>
                     </div>
                 </div>
-                <input type="hidden" id="governorate" value="">
-                <div class="field-check"></div>
+
+                <!-- حقل رقم الهاتف مع لوحة أرقام (نقطة 2)، لصق ذكي (نقطة 6)، وحالة التحقق (نقطة 15) -->
+                <div class="space-y-1.5 stagger-2 relative">
+                    <label class="text-xs font-medium text-slate-300">رقم الهاتف</label>
+                    <div class="relative flex items-center">
+                        <input type="tel" id="phone" inputmode="numeric" placeholder="07xxxxxxxx" 
+                            class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-emerald-500 transition pr-4 pl-20"
+                            oninput="formatPhone(this); updateProgress();">
+                        <!-- زر لصق ذكي وتنظيف -->
+                        <button type="button" onclick="smartPastePhone()" class="absolute left-9 top-1/2 -translate-y-1/2 bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded-lg text-[10px] transition">لصق</button>
+                        <button type="button" onclick="clearInput('phone')" class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white text-xs hidden clear-btn">✕</button>
+                    </div>
+                </div>
+
             </div>
-        </div>
 
-        <div class="input-group" id="groupRegion">
-            <label class="input-label"><span>المنطقة أو الحي السكني</span></label>
-            <div class="input-wrapper">
-                <input type="text" id="region" class="input-control" placeholder="مثال: العشار، المنصور..." required autocomplete="off">
-                <div class="field-check"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <!-- حقل المحافظة (يفتح نافذة البحث السريع - نقطة 1) -->
+                <div class="space-y-1.5 stagger-3 relative">
+                    <label class="text-xs font-medium text-slate-300">المحافظة</label>
+                    <div class="relative">
+                        <input type="text" id="province" readonly onclick="openProvinceModal()" placeholder="اختر المحافظة..." 
+                            class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white cursor-pointer focus:outline-none focus:border-emerald-500 transition">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs pointer-events-none">▼</span>
+                    </div>
+                </div>
+
+                <!-- حقل رقم الطلب مع زوائد زيادة وتناقص تلقائي (نقطة 9) -->
+                <div class="space-y-1.5 stagger-4 relative">
+                    <label class="text-xs font-medium text-slate-300">رقم الطلب</label>
+                    <div class="relative flex items-center">
+                        <input type="text" id="orderNo" value="ORD-9024" readonly
+                            class="w-full bg-slate-950/60 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:outline-none">
+                        <div class="absolute left-2 flex items-center gap-1">
+                            <button type="button" onclick="adjustOrder(-1)" class="w-6 h-6 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs flex items-center justify-center">-</button>
+                            <button type="button" onclick="adjustOrder(1)" class="w-6 h-6 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs flex items-center justify-center">+</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-        </div>
 
-        <div class="input-group" id="groupOrder">
-            <label class="input-label"><span>رقم الطلب المرجعي</span></label>
-            <div class="input-wrapper">
-                <input type="number" id="orderNumber" class="input-control" placeholder="أدخل رقم الطلب..." min="1" required autocomplete="off">
-                <div class="field-check"></div>
-            </div>
-        </div>
-
-        <div class="preview-box">
-            <div class="preview-title">معاينة رسالة الواتساب</div>
-            <div class="preview-content" id="livePreview">👤 الاسم الكامل: 
-📞 رقم الهاتف  : 
-📍 العنوان بالتفصيل: 
-✅ رقم الطلب  : </div>
-        </div>
-
-        <div class="actions-container">
-            <button type="button" class="btn-copy" id="copyBtn">نسخ البيانات</button>
-            <button type="submit" class="btn-submit">
-                <svg class="wa-icon" viewBox="0 0 24 24">
-                    <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984 0 1.758.459 3.474 1.33 4.982L2 22l5.122-1.334c1.455.793 3.097 1.21 4.885 1.211h.005c5.507 0 9.99-4.478 9.99-9.985 0-2.667-1.039-5.174-2.928-7.062A9.917 9.917 0 0 0 12.012 2zm5.836 14.129c-.244.688-1.417 1.314-1.982 1.398-.506.076-1.148.107-1.853-.117-.427-.135-.975-.317-1.677-.621-2.951-1.275-4.88-4.246-5.027-4.442-.146-.196-1.196-1.595-1.196-3.044 0-1.448.762-2.158 1.03-2.453.27-.295.588-.368.784-.368.196 0 .392.001.564.01.18.009.423-.068.663.505.244.588.833 2.037.906 2.185.073.147.122.319.025.515-.098.196-.147.319-.294.491-.147.172-.31.385-.442.516-.147.147-.3.308-.129.602.172.294.762 1.251 1.636 2.03 1.123.998 2.07 1.308 2.364 1.455.294.147.466.123.637-.073.172-.196.735-.858.931-1.152.196-.295.392-.245.686-.147.294.098 1.861.877 2.18 1.036.319.159.53.235.603.358.073.123.073.712-.171 1.401z"/>
-                </svg>
-                <span>إرسال فوري</span>
-            </button>
-        </div>
-    </form>
-</div>
-
-<!-- النافذة المنبثقة الخرافية للمحافظات (مع شعارات مجهرية للأقاليم) -->
-<div class="gov-modal-overlay" id="govModal">
-    <div class="gov-modal-card">
-        <div class="gov-modal-header">
-            <div class="gov-modal-title">
-                <span>📍</span>
-                <span>اختر المحافظة المستهدفة</span>
-            </div>
-            <button type="button" class="gov-modal-close" id="closeGovModal">✕</button>
-        </div>
-        <div class="gov-modal-body">
-            
-            <div class="gov-region-group">
-                <div class="gov-region-title">🏛️ الوسط والعاصمة</div>
-                <div class="gov-grid">
-                    <div class="gov-item-card" data-value="بغداد"><span class="gov-item-name">بغداد</span><div class="gov-item-dot"></div></div>
-                    <div class="gov-item-card" data-value="ديالى"><span class="gov-item-name">ديالى</span><div class="gov-item-dot"></div></div>
-                    <div class="gov-item-card" data-value="الأنبار"><span class="gov-item-name">الأنبار</span><div class="gov-item-dot"></div></div>
+            <!-- اقتراحات المناطق الشائعة (نقطة 5) -->
+            <div id="regionChipsContainer" class="space-y-1.5 hidden">
+                <label class="text-xs font-medium text-slate-400">المناطق الشائعة في المحافظة:</label>
+                <div class="flex flex-wrap gap-2" id="chipsList">
+                    <!-- يتم تعبئتها ديناميكياً -->
                 </div>
             </div>
 
-            <div class="gov-region-group">
-                <div class="gov-region-title">🕌 الفرات الأوسط</div>
-                <div class="gov-grid">
-                    <div class="gov-item-card" data-value="بابل"><span class="gov-item-name">بابل</span><div class="gov-item-dot"></div></div>
-                    <div class="gov-item-card" data-value="كربلاء"><span class="gov-item-name">كربلاء المقدسة</span><div class="gov-item-dot"></div></div>
-                    <div class="gov-item-card" data-value="النجف"><span class="gov-item-name">النجف الأشرف</span><div class="gov-item-dot"></div></div>
-                    <div class="gov-item-card" data-value="القادسية"><span class="gov-item-name">القادسية (الديوانية)</span><div class="gov-item-dot"></div></div>
-                    <div class="gov-item-card" data-value="واسط"><span class="gov-item-name">واسط</span><div class="gov-item-dot"></div></div>
+            <!-- شعارات شركات الاتصالات المضيئة (نقطة 11) -->
+            <div class="pt-2">
+                <label class="text-xs font-medium text-slate-400 mb-2 block">الشبكة المستخدمة:</label>
+                <div class="grid grid-cols-3 gap-3">
+                    <button type="button" onclick="selectCarrier('Zain', this)" class="carrier-badge p-2.5 rounded-xl border border-slate-800 bg-slate-950/40 text-center text-xs font-medium transition hover:border-amber-500/50">زين العراق</button>
+                    <button type="button" onclick="selectCarrier('AsiaCell', this)" class="carrier-badge p-2.5 rounded-xl border border-slate-800 bg-slate-950/40 text-center text-xs font-medium transition hover:border-amber-500/50">آسياسيل</button>
+                    <button type="button" onclick="selectCarrier('Korek', this)" class="carrier-badge p-2.5 rounded-xl border border-slate-800 bg-slate-950/40 text-center text-xs font-medium transition hover:border-amber-500/50">كورك</button>
                 </div>
             </div>
 
-            <div class="gov-region-group">
-                <div class="gov-region-title">🌴 الجنوب</div>
-                <div class="gov-grid">
-                    <div class="gov-item-card" data-value="البصرة"><span class="gov-item-name">البصرة</span><div class="gov-item-dot"></div></div>
-                    <div class="gov-item-card" data-value="ذي قار"><span class="gov-item-name">ذي قار</span><div class="gov-item-dot"></div></div>
-                    <div class="gov-item-card" data-value="ميسان"><span class="gov-item-name">ميسان</span><div class="gov-item-dot"></div></div>
-                    <div class="gov-item-card" data-value="المثنى"><span class="gov-item-name">المثنى</span><div class="gov-item-dot"></div></div>
+            <!-- طي ومعاينة رسالة الواتساب (نقطة 12) -->
+            <div class="border border-slate-800 rounded-2xl bg-slate-950/40 overflow-hidden mt-4">
+                <button type="button" onclick="toggleWhatsAppPreview()" class="w-full p-3.5 flex items-center justify-between text-xs font-medium text-slate-300 hover:bg-slate-900/50 transition">
+                    <span class="flex items-center gap-2">📱 معاينة رسالة الواتساب الجاهزة</span>
+                    <span id="waArrow" class="transform transition-transform">▼</span>
+                </button>
+                <div id="waPreviewBody" class="hidden p-3.5 pt-0 text-xs text-slate-400 border-t border-slate-800/50 bg-slate-950/80 leading-relaxed font-mono">
+                    مرحباً، أود تسجيل البيانات للطلب رقم <span id="waOrder">ORD-9024</span> باسم <span id="waName">...</span> ورقم الهاتف <span id="waPhone">...</span>.
                 </div>
             </div>
 
-            <div class="gov-region-group">
-                <div class="gov-region-title">🏔️ الشمال وإقليم كردستان</div>
-                <div class="gov-grid">
-                    <div class="gov-item-card" data-value="نينوى"><span class="gov-item-name">نينوى</span><div class="gov-item-dot"></div></div>
-                    <div class="gov-item-card" data-value="كركوك"><span class="gov-item-name">كركوك</span><div class="gov-item-dot"></div></div>
-                    <div class="gov-item-card" data-value="صلاح الدين"><span class="gov-item-name">صلاح الدين</span><div class="gov-item-dot"></div></div>
-                    <div class="gov-item-card" data-value="أربيل"><span class="gov-item-name">أربيل</span><div class="gov-item-dot"></div></div>
-                    <div class="gov-item-card" data-value="السليمانية"><span class="gov-item-name">السليمانية</span><div class="gov-item-dot"></div></div>
-                    <div class="gov-item-card" data-value="دهوك"><span class="gov-item-name">دهوك</span><div class="gov-item-dot"></div></div>
-                    <div class="gov-item-card" data-value="حلبجة"><span class="gov-item-name">حلبجة</span><div class="gov-item-dot"></div></div>
-                </div>
+            <!-- زر الإرسال مع التوهج النبضي عند 100% (نقطة 3) وإشعار نسخ مباشر (نقطة 8) -->
+            <div class="pt-2">
+                <button type="button" id="submitBtn" onclick="submitData()" 
+                    class="w-full py-3.5 rounded-xl bg-slate-800 text-slate-400 font-bold text-sm transition flex items-center justify-center gap-2 cursor-not-allowed">
+                    <span id="btnText">أكمل الحقول للإرسال الفوري</span>
+                </button>
             </div>
 
+        </form>
+    </div>
+
+    <!-- نافذة البحث السريع للمحافظات (نقطة 1) -->
+    <div id="provinceModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 w-full max-w-md rounded-3xl p-5 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between">
+                <h3 class="text-sm font-bold text-white">اختر المحافظة</h3>
+                <button onclick="closeProvinceModal()" class="text-slate-400 hover:text-white text-sm px-2 py-1">✕</button>
+            </div>
+            <!-- حقل بحث زجاجي داخل النافذة -->
+            <input type="text" id="provinceSearch" oninput="filterProvinces()" placeholder="ابحث عن المحافظة فوراً..." 
+                class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-emerald-500">
+            <div id="provincesList" class="max-h-60 overflow-y-auto space-y-1 pr-1">
+                <!-- يتم تعبئتها برمجياً -->
+            </div>
         </div>
     </div>
-</div>
 
-<script>
-    // تأثير الإضاءة للماوس
-    const card = document.getElementById('promoterCard');
-    card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-    });
+    <script>
+        const provincesData = {
+            "البصرة": ["العشار", "الجزائر", "الطويسة", "المعقل", "الجنينة", "البربدعية"],
+            "بغداد": ["الكرادة", "الجادرية", "المنصور", "الأعظمية", "الكاظمية", "حي الصليخ"],
+            "أربيل": ["عنكاوا", "المدينة القديمة", "باختياري", "سوارة توكل"],
+            "النجف": ["المدينة القديمة", "الحدث", "الغراف", "الجزيرة"],
+            "السليمانية": ["السركار", "بران", "القرية الألمانية"],
+            "نينوى": ["الموصل العتيقة", "الزهور", "السكر", "المهندسين"]
+        };
 
-    // تأثير الموجة (Ripple) للأزرار
-    document.querySelectorAll('button').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            const circle = document.createElement('span');
-            const diameter = Math.max(this.clientWidth, this.clientHeight);
-            const radius = diameter / 2;
-            circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${e.clientX - this.getBoundingClientRect().left - radius}px`;
-            circle.style.top = `${e.clientY - this.getBoundingClientRect().top - radius}px`;
-            circle.classList.add('ripple');
-            const existingRipple = this.getElementsByClassName('ripple')[0];
-            if (existingRipple) existingRipple.remove();
-            this.appendChild(circle);
-        });
-    });
+        let selectedCarrierValue = "";
 
-    // نظام التنبيهات (Toast)
-    function showToast(message, isSuccess = false) {
-        if (navigator.vibrate) navigator.vibrate(30);
-        const toast = document.getElementById('toast');
-        const msg = document.getElementById('toast-msg');
-        msg.innerText = message;
-        toast.className = isSuccess ? 'show success' : 'show';
-        setTimeout(() => toast.className = '', 2800);
-    }
-
-    // تأثير اهتزاز الخطأ
-    function triggerStructuralShake(elementId) {
-        const group = document.getElementById(elementId);
-        group.classList.add('shake-error');
-        if (navigator.vibrate) navigator.vibrate([40, 40, 40]);
-        setTimeout(() => group.classList.remove('shake-error'), 350);
-    }
-
-    // تعريف المتغيرات
-    const nameInput = document.getElementById('customerName');
-    const phoneInput = document.getElementById('phone');
-    const govInput = document.getElementById('governorate');
-    const govSelectTrigger = document.getElementById('govSelectTrigger');
-    const govSelectText = document.getElementById('govSelectText');
-    const regionInput = document.getElementById('region');
-    const orderInput = document.getElementById('orderNumber');
-    const carrierBadge = document.getElementById('carrierBadge');
-    const livePreview = document.getElementById('livePreview');
-
-    // التحكم بالنافذة المنبثقة للمحافظات
-    const govModal = document.getElementById('govModal');
-    const closeGovModal = document.getElementById('closeGovModal');
-    const govItemCards = document.querySelectorAll('.gov-item-card');
-
-    govSelectTrigger.addEventListener('click', () => {
-        govModal.classList.add('active');
-    });
-
-    closeGovModal.addEventListener('click', () => {
-        govModal.classList.remove('active');
-    });
-
-    govModal.addEventListener('click', (e) => {
-        if (e.target === govModal) govModal.classList.remove('active');
-    });
-
-    govItemCards.forEach(item => {
-        item.addEventListener('click', function() {
-            const val = this.getAttribute('data-value');
-            govInput.value = val;
-            govSelectText.innerText = val;
-            govSelectText.classList.remove('placeholder');
-
-            govItemCards.forEach(c => c.classList.remove('selected'));
-            this.classList.add('selected');
-
-            govModal.classList.remove('active');
-            updateSystemState();
-        });
-    });
-
-    // استرجاع البيانات المحفوظة
-    window.addEventListener('DOMContentLoaded', () => {
-        if(localStorage.getItem('ent_name')) nameInput.value = localStorage.getItem('ent_name');
-        if(localStorage.getItem('ent_phone')) phoneInput.value = localStorage.getItem('ent_phone');
-        if(localStorage.getItem('ent_gov')) {
-            const savedGov = localStorage.getItem('ent_gov');
-            govInput.value = savedGov;
-            govSelectText.innerText = savedGov;
-            govSelectText.classList.remove('placeholder');
-            govItemCards.forEach(c => {
-                if(c.getAttribute('data-value') === savedGov) c.classList.add('selected');
+        // تهيئة قائمة المحافظات
+        function loadProvinces(filter = "") {
+            const list = document.getElementById('provincesList');
+            list.innerHTML = "";
+            Object.keys(provincesData).forEach(prov => {
+                if(prov.includes(filter)) {
+                    const div = document.createElement('div');
+                    div.className = "p-3 rounded-xl hover:bg-slate-800 cursor-pointer text-xs text-slate-200 transition flex items-center justify-between";
+                    div.innerHTML = `<span>${prov}</span> <span class="text-[10px] text-slate-500">اختيار</span>`;
+                    div.onclick = () => selectProvince(prov);
+                    list.appendChild(div);
+                }
             });
         }
-        if(localStorage.getItem('ent_region')) regionInput.value = localStorage.getItem('ent_region');
-        if(localStorage.getItem('ent_order')) orderInput.value = localStorage.getItem('ent_order');
-        
-        phoneInput.dispatchEvent(new Event('input')); 
-        updateSystemState();
-    });
 
-    // تحديث الحالة وشريط التقدم والمعاينة
-    function updateSystemState() {
-        const name = nameInput.value.trim();
-        const phone = phoneInput.value.replace(/\s/g, '');
-        const gov = govInput.value || "";
-        const region = regionInput.value.trim();
-        const orderNum = orderInput.value.trim();
-
-        document.getElementById('groupName').classList.toggle('valid', name.length > 1);
-        document.getElementById('groupPhone').classList.toggle('valid', phone.length === 11);
-        document.getElementById('groupGov').classList.toggle('valid', gov.length > 0);
-        document.getElementById('groupRegion').classList.toggle('valid', region.length > 1);
-        document.getElementById('groupOrder').classList.toggle('valid', orderNum.length > 0);
-
-        let filledCount = 0;
-        if (name.length > 1) filledCount++;
-        if (phone.length === 11) filledCount++;
-        if (gov.length > 0) filledCount++;
-        if (region.length > 1) filledCount++;
-        if (orderNum.length > 0) filledCount++;
-        
-        document.getElementById('progressBarFill').style.width = `${(filledCount / 5) * 100}%`;
-
-        localStorage.setItem('ent_name', name);
-        localStorage.setItem('ent_phone', phoneInput.value);
-        localStorage.setItem('ent_gov', gov);
-        localStorage.setItem('ent_region', region);
-        localStorage.setItem('ent_order', orderNum);
-
-        // صياغة رسالة الواتساب
-        livePreview.innerText = `👤 الاسم الكامل: ${name}\n📞 رقم الهاتف  : ${phoneInput.value}\n📍 العنوان بالتفصيل: ${gov ? gov + ' - ' : ''}${region}\n✅ رقم الطلب  : ${orderNum}`;
-    }
-
-    // تنسيق رقم الهاتف واكتشاف شركة الاتصال بالألوان المحددة
-    phoneInput.addEventListener('input', function() {
-        let val = this.value.replace(/\D/g, ''); 
-        carrierBadge.className = 'carrier-badge';
-        
-        if (val.startsWith('078') || val.startsWith('079')) {
-            carrierBadge.innerText = 'زين'; 
-            carrierBadge.classList.add('badge-zain', 'active');
-        } else if (val.startsWith('077')) {
-            carrierBadge.innerText = 'آسيا'; 
-            carrierBadge.classList.add('badge-asia', 'active');
-        } else if (val.startsWith('075')) {
-            carrierBadge.innerText = 'كورك'; 
-            carrierBadge.classList.add('badge-korek', 'active');
-        } else {
-            carrierBadge.classList.remove('active');
+        function openProvinceModal() {
+            document.getElementById('provinceModal').classList.remove('hidden');
+            loadProvinces();
+            document.getElementById('provinceSearch').focus();
         }
 
-        let formatted = val;
-        if (val.length > 4) formatted = val.slice(0, 4) + ' ' + val.slice(4);
-        if (val.length > 7) formatted = val.slice(0, 4) + ' ' + val.slice(4, 7) + ' ' + val.slice(7, 11);
-        this.value = formatted;
-        updateSystemState();
-    });
+        function closeProvinceModal() {
+            document.getElementById('provinceModal').classList.add('hidden');
+        }
 
-    // مستمعات التحديث
-    [nameInput, regionInput, orderInput].forEach(el => {
-        el.addEventListener('input', updateSystemState);
-    });
+        function filterProvinces() {
+            const val = document.getElementById('provinceSearch').value;
+            loadProvinces(val);
+        }
 
-    // زر النسخ
-    document.getElementById('copyBtn').addEventListener('click', function() {
-        const textToCopy = livePreview.innerText;
-        navigator.clipboard.writeText(textToCopy).then(() => {
-            showToast("تم نسخ البيانات بنجاح", true);
-        });
-    });
+        function selectProvince(prov) {
+            document.getElementById('province').value = prov;
+            closeProvinceModal();
+            checkField('province');
+            updateProgress();
+            
+            // إظهار اقتراحات المناطق الشائعة (نقطة 5)
+            const chipsContainer = document.getElementById('regionChipsContainer');
+            const chipsList = document.getElementById('chipsList');
+            chipsList.innerHTML = "";
+            if(provincesData[prov]) {
+                chipsContainer.classList.remove('hidden');
+                provincesData[prov].forEach(region => {
+                    const chip = document.createElement('button');
+                    chip.type = "button";
+                    chip.className = "px-3 py-1.5 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 text-xs hover:border-emerald-500 hover:text-white transition";
+                    chip.innerText = region;
+                    chip.onclick = () => {
+                        // تحديد المنطقة
+                        document.querySelectorAll('#chipsList button').forEach(b => b.classList.remove('bg-emerald-600', 'border-emerald-500', 'text-white'));
+                        chip.classList.add('bg-emerald-600', 'border-emerald-500', 'text-white');
+                        updateProgress();
+                    };
+                    chipsList.appendChild(chip);
+                });
+            } else {
+                chipsContainer.classList.add('hidden');
+            }
+        }
 
-    // زر الإرسال عبر الواتساب
-    document.getElementById('promoterForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const name = nameInput.value.trim();
-        const phone = phoneInput.value.replace(/\s/g, ''); 
-        const gov = govInput.value;
-        const region = regionInput.value.trim();
-        const orderNum = orderInput.value.trim();
+        // تنسيق وفحص الهاتف (نقطة 2 و 15)
+        function formatPhone(input) {
+            let val = input.value.replace(/\D/g, '');
+            if(val.length > 11) val = val.substring(0, 11);
+            input.value = val;
+            
+            checkField('phone');
+            if(val.length === 11) {
+                input.classList.remove('border-slate-800', 'border-rose-500');
+                input.classList.add('border-emerald-500'); // نقطة 15: حدود ملونة لحالة التحقق
+            } else {
+                input.classList.remove('border-emerald-500');
+                input.classList.add('border-slate-800');
+            }
+            document.getElementById('waPhone').innerText = val || "...";
+        }
 
-        if (!name) { triggerStructuralShake('groupName'); showToast("خطأ: يرجى إدخال اسم العميل"); return; }
-        if (phone.length !== 11) { triggerStructuralShake('groupPhone'); showToast("خطأ: رقم الهاتف غير متكامل"); return; }
-        if (!gov) { triggerStructuralShake('groupGov'); showToast("خطأ: يرجى اختيار المحافظة"); return; }
-        if (!region) { triggerStructuralShake('groupRegion'); showToast("خطأ: يرجى تحديد المنطقة"); return; }
-        if (!orderNum) { triggerStructuralShake('groupOrder'); showToast("خطأ: يرجى إدخال رقم الطلب"); return; }
+        // لصق ذكي وتنظيف الهاتف (نقطة 6)
+        async function smartPastePhone() {
+            try {
+                const text = await navigator.clipboard.readText();
+                let cleanText = text.replace(/\D/g, '');
+                if(cleanText.startsWith('964')) {
+                    cleanText = '0' + cleanText.substring(3);
+                }
+                if(cleanText.length > 11) cleanText = cleanText.substring(0, 11);
+                const phoneInput = document.getElementById('phone');
+                phoneInput.value = cleanText;
+                formatPhone(phoneInput);
+                updateProgress();
+            } catch (err) {
+                alert('عذراً، يرجى السماح بصلاحية قراءة الحافظة أو اللصق اليدوي.');
+            }
+        }
 
-        const targetWhatsAppNumber = "9647888988288"; 
-        const messageText = `👤 الاسم الكامل: ${name}\n📞 رقم الهاتف  : ${phoneInput.value}\n📍 العنوان بالتفصيل: ${gov} - ${region}\n✅ رقم الطلب  : ${orderNum}`;
-        const encodedMsg = encodeURIComponent(messageText);
+        function checkField(id) {
+            const val = document.getElementById(id).value;
+            const clearBtn = document.getElementById(id).parentElement.querySelector('.clear-btn');
+            if(clearBtn) {
+                if(val.length > 0) clearBtn.classList.remove('hidden');
+                else clearBtn.classList.add('hidden');
+            }
+            if(id === 'fullName') document.getElementById('waName').innerText = val || "...";
+        }
 
-        window.location.href = `whatsapp://send?phone=${targetWhatsAppNumber}&text=${encodedMsg}`;
+        function clearInput(id) {
+            const el = document.getElementById(id);
+            el.value = "";
+            checkField(id);
+            if(id === 'phone') {
+                el.classList.remove('border-emerald-500');
+                document.getElementById('waPhone').innerText = "...";
+            }
+            updateProgress();
+        }
 
-        setTimeout(() => {
-            localStorage.clear();
-            document.getElementById('promoterForm').reset();
-            govInput.value = "";
-            govSelectText.innerText = "-- انقر لاختيار المحافظة --";
-            govSelectText.classList.add('placeholder');
-            govItemCards.forEach(c => c.classList.remove('selected'));
-            carrierBadge.className = 'carrier-badge';
-            updateSystemState();
-        }, 1000);
-    });
-</script>
+        // زوائد رقم الطلب (نقطة 9)
+        let currentOrderNum = 9024;
+        function adjustOrder(amount) {
+            currentOrderNum += amount;
+            if(currentOrderNum < 1) currentOrderNum = 1;
+            const formatted = `ORD-${currentOrderNum}`;
+            document.getElementById('orderNo').value = formatted;
+            document.getElementById('waOrder').innerText = formatted;
+        }
+
+        // اختيار شبكة الاتصالات مع توهج البراند (نقطة 11)
+        function selectCarrier(carrier, btn) {
+            document.querySelectorAll('.carrier-badge').forEach(b => {
+                b.classList.remove('bg-emerald-500/10', 'border-emerald-500', 'text-emerald-400');
+                b.classList.add('bg-slate-950/40', 'border-slate-800', 'text-slate-300');
+            });
+            btn.classList.remove('bg-slate-950/40', 'border-slate-800', 'text-slate-300');
+            btn.classList.add('bg-emerald-500/10', 'border-emerald-500', 'text-emerald-400');
+            selectedCarrierValue = carrier;
+            updateProgress();
+        }
+
+        // حساب نسبة التقدم وتفعيل الزر النبضي (نقطة 3)
+        function updateProgress() {
+            let score = 0;
+            if(document.getElementById('fullName').value.trim() !== "") score += 25;
+            if(document.getElementById('phone').value.length === 11) score += 25;
+            if(document.getElementById('province').value.trim() !== "") score += 25;
+            if(selectedCarrierValue !== "") score += 25;
+
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+
+            progressBar.style.width = score + "%";
+            progressText.innerText = score + "%";
+
+            if(score === 100) {
+                submitBtn.className = "w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition flex items-center justify-center gap-2 cursor-pointer animate-glow-pulse";
+                btnText.innerText = "🚀 إرسال فوري";
+            } else {
+                submitBtn.className = "w-full py-3.5 rounded-xl bg-slate-800 text-slate-400 font-bold text-sm transition flex items-center justify-center gap-2 cursor-not-allowed";
+                btnText.innerText = "أكمل الحقول للإرسال الفوري";
+            }
+        }
+
+        // إشعار نسخ وتحديث الزر مؤقتاً (نقطة 8)
+        function submitData() {
+            let score = 0;
+            if(document.getElementById('fullName').value.trim() !== "") score += 25;
+            if(document.getElementById('phone').value.length === 11) score += 25;
+            if(document.getElementById('province').value.trim() !== "") score += 25;
+            if(selectedCarrierValue !== "") score += 25;
+
+            if(score < 100) {
+                alert('يرجى إكمال كافة الحقول المطلوبة واختيار الشبكة.');
+                return;
+            }
+
+            const btnText = document.getElementById('btnText');
+            const originalText = btnText.innerText;
+            
+            // تغيير نص وزر الإرسال مؤقتاً (إشعار inline بدل Toast)
+            btnText.innerText = "✔ تم الإرسال بنجاح!";
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.classList.remove('bg-emerald-600', 'animate-glow-pulse');
+            submitBtn.classList.add('bg-blue-600');
+
+            setTimeout(() => {
+                btnText.innerText = originalText;
+                submitBtn.classList.remove('bg-blue-600');
+                submitBtn.classList.add('bg-emerald-600', 'animate-glow-pulse');
+            }, 2000);
+        }
+
+        // طي ومعاينة رسالة الواتساب (نقطة 12)
+        function toggleWhatsAppPreview() {
+            const body = document.getElementById('waPreviewBody');
+            const arrow = document.getElementById('waArrow');
+            body.classList.toggle('hidden');
+            arrow.classList.toggle('rotate-180');
+        }
+
+        // إيقاف الحركة للأجهزة الضعيفة (نقطة 10)
+        function toggleMotion() {
+            const root = document.getElementById('bodyRoot');
+            const orbs = document.getElementById('bgOrbs');
+            root.classList.toggle('no-motion');
+            orbs.classList.toggle('hidden');
+            const btn = document.getElementById('motionBtn');
+            if(root.classList.contains('no-motion')) {
+                btn.innerText = "✨ تشغيل الحركة";
+                btn.classList.add('bg-emerald-500/20', 'text-emerald-400');
+            } else {
+                btn.innerText = "🔋 الأداء";
+                btn.classList.remove('bg-emerald-500/20', 'text-emerald-400');
+            }
+        }
+
+        // إعادة تعيين المسودة (نقطة 14)
+        function resetDraft() {
+            if(confirm('هل أنت متأكد من مسح جميع البيانات وإعادة الاستمارة للصفر؟')) {
+                document.getElementById('registrationForm').reset();
+                document.querySelectorAll('.clear-btn').forEach(b => b.classList.add('hidden'));
+                document.querySelectorAll('.carrier-badge').forEach(b => {
+                    b.classList.remove('bg-emerald-500/10', 'border-emerald-500', 'text-emerald-400');
+                    b.classList.add('bg-slate-950/40', 'border-slate-800', 'text-slate-300');
+                });
+                document.getElementById('regionChipsContainer').classList.add('hidden');
+                selectedCarrierValue = "";
+                const phoneInput = document.getElementById('phone');
+                phoneInput.classList.remove('border-emerald-500');
+                phoneInput.classList.add('border-slate-800');
+                document.getElementById('waName').innerText = "...";
+                document.getElementById('waPhone').innerText = "...";
+                updateProgress();
+            }
+        }
+    </script>
 </body>
 </html>
+
