@@ -394,6 +394,15 @@
             </div>
         </div>
 
+        <!-- ملاحظة مهمة -->
+        <div class="input-group" id="groupNote">
+            <label class="input-label"><span>❓ ملاحظة مهمة</span></label>
+            <div class="input-wrapper">
+                <input type="text" id="importantNote" class="input-control" placeholder="أدخل أي ملاحظات إضافية إن وجدت..." autocomplete="off">
+                <div class="field-check"></div>
+            </div>
+        </div>
+
         <!-- معاينة الرسالة -->
         <div class="preview-box">
             <div class="preview-title">معاينة الرسالة الموثقة تلقائياً</div>
@@ -406,6 +415,8 @@
 📥  المنطقة  :  
 
 ✅ رقم الطلب  :  
+
+❓ ملاحظة مهمة  :  
 
 -----------------------
 تاريخ الطلب  : </div>
@@ -515,6 +526,7 @@
     const govSelectText = document.getElementById('govSelectText');
     const regionInput = document.getElementById('region');
     const orderInput = document.getElementById('orderNumber');
+    const noteInput = document.getElementById('importantNote');
     const carrierBadge = document.getElementById('carrierBadge');
     const livePreview = document.getElementById('livePreview');
 
@@ -565,7 +577,6 @@
             second: '2-digit',
             hour12: true
         };
-        // استخدام en-US لضمان طباعة الأرقام بصيغة English Digits 0-9
         return new Intl.DateTimeFormat('en-US', options).format(now);
     }
 
@@ -583,14 +594,15 @@
         }
         if(localStorage.getItem('ent_region')) regionInput.value = localStorage.getItem('ent_region');
         if(localStorage.getItem('ent_order')) orderInput.value = localStorage.getItem('ent_order');
+        if(localStorage.getItem('ent_note')) noteInput.value = localStorage.getItem('ent_note');
         
         phoneInput.dispatchEvent(new Event('input')); 
         updateSystemState();
     });
 
-    function generateFormattedMessage(name, phone, gov, region, orderNum) {
+    function generateFormattedMessage(name, phone, gov, region, orderNum, note) {
         const currentIraqTime = getIraqTimestampEnglishDigits();
-        return `👤 أسم الزبون  :  ${name}\n\n📞 رقم الهاتف  : ${phone}\n\n📍 المحافظة : ${gov}\n\n📥  المنطقة  :  ${region}\n\n✅ رقم الطلب  :  ${orderNum}\n\n-----------------------\nتاريخ الطلب  : ${currentIraqTime}`;
+        return `👤 أسم الزبون  :  ${name}\n\n📞 رقم الهاتف  : ${phone}\n\n📍 المحافظة : ${gov}\n\n📥  المنطقة  :  ${region}\n\n✅ رقم الطلب  :  ${orderNum}\n\n❓ ملاحظة مهمة  :  ${note}\n\n-----------------------\nتاريخ الطلب  : ${currentIraqTime}`;
     }
 
     function updateSystemState() {
@@ -599,6 +611,7 @@
         const gov = govInput.value || "";
         const region = regionInput.value.trim();
         const orderNum = orderInput.value.trim();
+        const note = noteInput.value.trim();
 
         const isNameValid = name.length > 0 && !name.includes(' ');
         const isOrderValid = orderNum.length > 0 && /^\d+$/.test(orderNum);
@@ -608,6 +621,7 @@
         document.getElementById('groupGov').classList.toggle('valid', gov.length > 0);
         document.getElementById('groupRegion').classList.toggle('valid', region.length > 1);
         document.getElementById('groupOrder').classList.toggle('valid', isOrderValid);
+        document.getElementById('groupNote').classList.toggle('valid', note.length > 0);
 
         let filledCount = 0;
         if (isNameValid) filledCount++;
@@ -623,8 +637,9 @@
         localStorage.setItem('ent_gov', gov);
         localStorage.setItem('ent_region', region);
         localStorage.setItem('ent_order', orderNum);
+        localStorage.setItem('ent_note', note);
 
-        livePreview.innerText = generateFormattedMessage(name, phoneInput.value, gov, region, orderNum);
+        livePreview.innerText = generateFormattedMessage(name, phoneInput.value, gov, region, orderNum, note);
     }
 
     // التعرف على الشركات بدون التغطية على الأرقام
@@ -656,7 +671,7 @@
         updateSystemState();
     });
 
-    [nameInput, regionInput].forEach(el => {
+    [nameInput, regionInput, noteInput].forEach(el => {
         el.addEventListener('input', updateSystemState);
     });
 
@@ -675,6 +690,7 @@
         const gov = govInput.value;
         const region = regionInput.value.trim();
         const orderNum = orderInput.value.trim();
+        const note = noteInput.value.trim();
 
         if (!name || name.includes(' ')) { 
             triggerStructuralShake('groupName'); 
@@ -703,7 +719,7 @@
         }
 
         const targetWhatsAppNumber = "9647888988288"; 
-        const messageText = generateFormattedMessage(name, phoneInput.value, gov, region, orderNum);
+        const messageText = generateFormattedMessage(name, phoneInput.value, gov, region, orderNum, note);
         const encodedMsg = encodeURIComponent(messageText);
 
         window.location.href = `whatsapp://send?phone=${targetWhatsAppNumber}&text=${encodedMsg}`;
@@ -723,3 +739,4 @@
 </script>
 </body>
 </html>
+
