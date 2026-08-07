@@ -35,7 +35,6 @@
             overflow-x: hidden;
         }
 
-        /* خلفية هادئة وبدون إضاءة نيون مجهدة */
         .ambient-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             overflow: hidden; pointer-events: none; z-index: -1;
@@ -76,22 +75,53 @@
             width: 8px; height: 8px; background-color: #10b981; border-radius: 50%;
         }
 
-        .logo-container { text-align: center; margin-bottom: 24px; }
+        .logo-container { text-align: center; margin-bottom: 20px; }
         .title {
             font-size: 22px; font-weight: 800; color: #f8fafc;
             letter-spacing: -0.3px;
         }
         .subtitle { font-size: 11px; color: #38bdf8; font-weight: 700; margin-top: 2px; letter-spacing: 2px; text-transform: uppercase; }
 
+        /* منطقة التفكيك الذكي للرسائل */
+        .smart-parse-container {
+            background: #0f172a;
+            border: 1px dashed #0ea5e9;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 20px;
+            transition: all 0.2s ease;
+        }
+        .smart-parse-container:focus-within {
+            border-style: solid;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15);
+        }
+        .smart-parse-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;
+        }
+        .smart-parse-title {
+            font-size: 11px; font-weight: 800; color: #38bdf8; display: flex; align-items: center; gap: 6px;
+        }
+        .btn-clipboard-paste {
+            background: rgba(14, 165, 233, 0.15); color: #38bdf8; border: 1px solid rgba(14, 165, 233, 0.3);
+            font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 6px; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .btn-clipboard-paste:hover { background: #0ea5e9; color: #fff; }
+        .smart-parse-textarea {
+            width: 100%; background: transparent; border: none; color: #f8fafc; font-size: 12px;
+            outline: none; resize: none; height: 42px; font-weight: 500;
+        }
+        .smart-parse-textarea::placeholder { color: #64748b; font-size: 11px; }
+
         .section-divider {
-            display: flex; align-items: center; gap: 10px; margin: 20px 0 16px 0;
+            display: flex; align-items: center; gap: 10px; margin: 18px 0 14px 0;
             font-size: 11px; font-weight: 700; color: #64748b;
         }
         .section-divider::before, .section-divider::after {
             content: ''; flex: 1; height: 1px; background: rgba(255, 255, 255, 0.08);
         }
 
-        .input-group { margin-bottom: 16px; position: relative; }
+        .input-group { margin-bottom: 14px; position: relative; }
         .input-label {
             display: flex; justify-content: space-between; align-items: center;
             font-size: 12px; font-weight: 700; color: #cbd5e1; margin-bottom: 6px;
@@ -150,7 +180,6 @@
         }
         .carrier-badge.active { opacity: 1; }
         
-        /* ألوان مطفأة ومريحة للعين للشركات */
         .badge-zain { background: #6d28d9; }
         .badge-asia { background: #b91c1c; }
         .badge-korek { background: #0369a1; }
@@ -197,7 +226,6 @@
         .gov-search-input:focus { border-color: #0ea5e9; }
 
         .gov-modal-body { padding: 18px 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 18px; }
-        
         .gov-region-group { display: flex; flex-direction: column; gap: 10px; }
         .gov-region-title {
             font-size: 12px; font-weight: 800; color: #38bdf8;
@@ -205,7 +233,6 @@
         }
 
         .gov-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-        
         .gov-item-card {
             background: #0f172a; border: 1px solid #334155;
             padding: 10px 12px; border-radius: 8px; cursor: pointer;
@@ -226,7 +253,6 @@
             animation: shake 0.3s ease; border-color: #ef4444 !important; background: rgba(239, 68, 68, 0.08) !important;
         }
 
-        /* معاينة شبيها بالفاتورة الرسمية الموثقة */
         .preview-box {
             background: #0f172a; border: 1px solid #334155;
             border-radius: 12px; padding: 16px; margin-bottom: 20px; position: relative;
@@ -288,6 +314,15 @@
     <div class="logo-container">
         <h1 class="title">بوابة تسجيل البيانات</h1>
         <div class="subtitle">ENTERPRISE EXECUTIVE PORTAL</div>
+    </div>
+
+    <!-- ميزة التفكيك الذكي للرسائل -->
+    <div class="smart-parse-container">
+        <div class="smart-parse-header">
+            <span class="smart-parse-title">⚡ التفكيك والتعبئة الذكية</span>
+            <button type="button" class="btn-clipboard-paste" id="btnPasteClipboard">📋 لصق من الحافظة</button>
+        </div>
+        <textarea id="smartParseText" class="smart-parse-textarea" placeholder="الصق رسالة الزبون الكاملة هنا لتوزيع البيانات تلقائياً..."></textarea>
     </div>
 
     <form id="promoterForm" novalidate>
@@ -404,7 +439,7 @@
     </form>
 </div>
 
-<!-- النافذة المنبثقة للمحافظات مع البحث السريع -->
+<!-- النافذة المنبثقة للمحافظات -->
 <div class="gov-modal-overlay" id="govModal">
     <div class="gov-modal-card">
         <div class="gov-modal-header">
@@ -418,7 +453,6 @@
             <input type="text" id="govSearchInput" class="gov-search-input" placeholder="🔍 بحث سريع عن المحافظة...">
         </div>
         <div class="gov-modal-body" id="govModalBody">
-            
             <div class="gov-region-group">
                 <div class="gov-region-title">العاصمة والوسط</div>
                 <div class="gov-grid">
@@ -427,7 +461,6 @@
                     <div class="gov-item-card" data-value="الأنبار (الرمادي)"><span class="gov-item-name">الأنبار (الرمادي)</span></div>
                 </div>
             </div>
-
             <div class="gov-region-group">
                 <div class="gov-region-title">الفرات الأوسط</div>
                 <div class="gov-grid">
@@ -438,7 +471,6 @@
                     <div class="gov-item-card" data-value="واسط (الكوت)"><span class="gov-item-name">واسط (الكوت)</span></div>
                 </div>
             </div>
-
             <div class="gov-region-group">
                 <div class="gov-region-title">الجنوب</div>
                 <div class="gov-grid">
@@ -448,7 +480,6 @@
                     <div class="gov-item-card" data-value="المثنى (السماوة)"><span class="gov-item-name">المثنى (السماوة)</span></div>
                 </div>
             </div>
-
             <div class="gov-region-group">
                 <div class="gov-region-title">الشمال وإقليم كردستان</div>
                 <div class="gov-grid">
@@ -461,7 +492,6 @@
                     <div class="gov-item-card" data-value="حلبجة"><span class="gov-item-name">حلبجة</span></div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -499,6 +529,114 @@
     const govItemCards = document.querySelectorAll('.gov-item-card');
     const govSearchInput = document.getElementById('govSearchInput');
 
+    const smartParseText = document.getElementById('smartParseText');
+    const btnPasteClipboard = document.getElementById('btnPasteClipboard');
+
+    // قاموس المحافظات للتعرف الذكي
+    const governorateMap = [
+        { key: 'البصرة', val: 'البصرة (الفيحاء)' },
+        { key: 'بغداد', val: 'بغداد (العاصمة)' },
+        { key: 'اربيل', val: 'أربيل' },
+        { key: 'أربيل', val: 'أربيل' },
+        { key: 'النجف', val: 'النجف الأشرف (النجف)' },
+        { key: 'كربلاء', val: 'كربلاء المقدسة (كربلاء)' },
+        { key: 'الناصرية', val: 'ذي قار (الناصرية)' },
+        { key: 'ذي قار', val: 'ذي قار (الناصرية)' },
+        { key: 'الموصل', val: 'نينوى (الموصل)' },
+        { key: 'نينوى', val: 'نينوى (الموصل)' },
+        { key: 'كركوك', val: 'كركوك' },
+        { key: 'الحلة', val: 'بابل (الحلة)' },
+        { key: 'بابل', val: 'بابل (الحلة)' },
+        { key: 'العمارة', val: 'ميسان (العمارة)' },
+        { key: 'ميسان', val: 'ميسان (العمارة)' },
+        { key: 'الديوانية', val: 'القادسية (الديوانية)' },
+        { key: 'الكوت', val: 'واسط (الكوت)' },
+        { key: 'واسط', val: 'واسط (الكوت)' },
+        { key: 'السماوة', val: 'المثنى (السماوة)' },
+        { key: 'الرمادي', val: 'الأنبار (الرمادي)' },
+        { key: 'الأنبار', val: 'الأنبار (الرمادي)' },
+        { key: 'الانبار', val: 'الأنبار (الرمادي)' },
+        { key: 'بعقوبة', val: 'ديالى (بعقوبة)' },
+        { key: 'ديالى', val: 'ديالى (بعقوبة)' },
+        { key: 'تكريت', val: 'صلاح الدين (تكريت)' },
+        { key: 'صلاح الدين', val: 'صلاح الدين (تكريت)' },
+        { key: 'السليمانية', val: 'السليمانية' },
+        { key: 'دهوك', val: 'دهوك' },
+        { key: 'حلبجة', val: 'حلبجة' }
+    ];
+
+    // خوارزمية التفكيك والتعبئة الذكية
+    function parseAndFillSmartText(text) {
+        if (!text || text.trim().length === 0) return;
+
+        // 1. استخراج رقم الهاتف
+        let cleanedText = text.replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d)); // تحويل الأرقام العربية إلى إنجليزية
+        const phoneMatch = cleanedText.match(/(?:07|\+?9647)\d{8,9}/);
+        if (phoneMatch) {
+            let extractedPhone = phoneMatch[0];
+            if (extractedPhone.startsWith('+964')) extractedPhone = '0' + extractedPhone.slice(4);
+            else if (extractedPhone.startsWith('964')) extractedPhone = '0' + extractedPhone.slice(3);
+            phoneInput.value = extractedPhone;
+            phoneInput.dispatchEvent(new Event('input'));
+        }
+
+        // 2. مطابقة المحافظة
+        let foundGov = '';
+        for (let item of governorateMap) {
+            if (cleanedText.includes(item.key)) {
+                foundGov = item.val;
+                break;
+            }
+        }
+        if (foundGov) {
+            govInput.value = foundGov;
+            govSelectText.innerText = foundGov;
+            govSelectText.classList.remove('placeholder');
+            govItemCards.forEach(c => {
+                if (c.getAttribute('data-value') === foundGov) c.classList.add('selected');
+                else c.classList.remove('selected');
+            });
+        }
+
+        // 3. محاولة استخراج رقم الطلب إن وجد
+        const orderMatch = cleanedText.match(/(?:طلب|رقم|كود|#)\s*[:=]?\s*(\d+)/i);
+        if (orderMatch) {
+            orderInput.value = orderMatch[1];
+        }
+
+        // 4. استخراج الاسم والمنطقة عبر الأسطر والكلمات المفتاحية
+        const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+        if (lines.length > 0) {
+            // محاولة التعرف على الاسم من أول كلمة/سطر لا يحتوي أرقاماً
+            for (let line of lines) {
+                if (!/\d/.test(line) && !line.includes('محافظة') && !line.includes('منطقة')) {
+                    let firstWord = line.split(' ')[0];
+                    if (firstWord && firstWord.length > 1) {
+                        nameInput.value = firstWord;
+                        break;
+                    }
+                }
+            }
+        }
+
+        updateSystemState();
+        showToast("تم تفكيك البيانات وتعبئتها بنجاح!", true);
+    }
+
+    smartParseText.addEventListener('input', function() {
+        parseAndFillSmartText(this.value);
+    });
+
+    btnPasteClipboard.addEventListener('click', async () => {
+        try {
+            const clipboardText = await navigator.clipboard.readText();
+            smartParseText.value = clipboardText;
+            parseAndFillSmartText(clipboardText);
+        } catch (err) {
+            showToast("يرجى لصق النص يدوياً داخل الصندوق");
+        }
+    });
+
     govSelectTrigger.addEventListener('click', () => {
         govModal.classList.add('active');
         govSearchInput.value = '';
@@ -509,7 +647,6 @@
     closeGovModal.addEventListener('click', () => govModal.classList.remove('active'));
     govModal.addEventListener('click', (e) => { if (e.target === govModal) govModal.classList.remove('active'); });
 
-    // تصفية المحافظات بالبحث
     govSearchInput.addEventListener('input', function() {
         filterGovernorates(this.value.trim().toLowerCase());
     });
@@ -517,11 +654,7 @@
     function filterGovernorates(query) {
         govItemCards.forEach(card => {
             const val = card.getAttribute('data-value').toLowerCase();
-            if (val.includes(query)) {
-                card.style.display = 'flex';
-            } else {
-                card.style.display = 'none';
-            }
+            card.style.display = val.includes(query) ? 'flex' : 'none';
         });
     }
 
@@ -540,29 +673,21 @@
         });
     });
 
-    // الاسم الأول فقط بدون مسافات
     nameInput.addEventListener('keydown', function(e) {
         if (e.key === ' ') e.preventDefault();
     });
 
-    // أرقام فقط لرقم الطلب
     orderInput.addEventListener('input', function() {
         this.value = this.value.replace(/\D/g, '');
         updateSystemState();
     });
 
-    // توقيت العراق بالأرقام الإنجليزية (0-9)
     function getIraqTimestampEnglishDigits() {
         const now = new Date();
         const options = {
             timeZone: 'Asia/Baghdad',
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: true
+            year: 'numeric', month: '2-digit', day: '2-digit',
+            hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
         };
         return new Intl.DateTimeFormat('en-US', options).format(now);
     }
@@ -646,8 +771,6 @@
             carrierBadge.innerText = 'كورك'; 
             carrierBadge.classList.add('badge-korek', 'active');
             this.classList.add('carrier-korek-active');
-        } else {
-            carrierBadge.classList.remove('active');
         }
 
         let formatted = val;
@@ -713,6 +836,7 @@
         setTimeout(() => {
             localStorage.clear();
             document.getElementById('promoterForm').reset();
+            smartParseText.value = "";
             govInput.value = "";
             govSelectText.innerText = "-- انقر لاختيار المحافظة --";
             govSelectText.classList.add('placeholder');
