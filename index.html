@@ -565,12 +565,26 @@
         { key: 'حلبجة', val: 'حلبجة' }
     ];
 
+    // دالة تفريغ وتحضير الفورما لإدخال جديد
+    function clearFormState() {
+        localStorage.clear();
+        document.getElementById('promoterForm').reset();
+        smartParseText.value = "";
+        govInput.value = "";
+        govSelectText.innerText = "-- انقر لاختيار المحافظة --";
+        govSelectText.classList.add('placeholder');
+        govItemCards.forEach(c => c.classList.remove('selected'));
+        carrierBadge.className = 'carrier-badge';
+        phoneInput.classList.remove('carrier-zain-active', 'carrier-asia-active', 'carrier-korek-active');
+        updateSystemState();
+    }
+
     // خوارزمية التفكيك والتعبئة الذكية
     function parseAndFillSmartText(text) {
         if (!text || text.trim().length === 0) return;
 
         // 1. استخراج رقم الهاتف
-        let cleanedText = text.replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d)); // تحويل الأرقام العربية إلى إنجليزية
+        let cleanedText = text.replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d));
         const phoneMatch = cleanedText.match(/(?:07|\+?9647)\d{8,9}/);
         if (phoneMatch) {
             let extractedPhone = phoneMatch[0];
@@ -607,7 +621,6 @@
         // 4. استخراج الاسم والمنطقة عبر الأسطر والكلمات المفتاحية
         const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
         if (lines.length > 0) {
-            // محاولة التعرف على الاسم من أول كلمة/سطر لا يحتوي أرقاماً
             for (let line of lines) {
                 if (!/\d/.test(line) && !line.includes('محافظة') && !line.includes('منطقة')) {
                     let firstWord = line.split(' ')[0];
@@ -784,10 +797,14 @@
         el.addEventListener('input', updateSystemState);
     });
 
+    // زر نسخ البيانات + مسح الحقول مباشرة لإدخال جديد
     document.getElementById('copyBtn').addEventListener('click', function() {
         const textToCopy = livePreview.innerText;
         navigator.clipboard.writeText(textToCopy).then(() => {
-            showToast("تم نسخ البيانات بنجاح", true);
+            showToast("تم النسخ وتفريغ الحقول بنجاح!", true);
+            clearFormState();
+        }).catch(() => {
+            showToast("تعذر النسخ إلى الحافظة تلقائياً");
         });
     });
 
@@ -834,18 +851,10 @@
         window.location.href = `whatsapp://send?phone=${targetWhatsAppNumber}&text=${encodedMsg}`;
 
         setTimeout(() => {
-            localStorage.clear();
-            document.getElementById('promoterForm').reset();
-            smartParseText.value = "";
-            govInput.value = "";
-            govSelectText.innerText = "-- انقر لاختيار المحافظة --";
-            govSelectText.classList.add('placeholder');
-            govItemCards.forEach(c => c.classList.remove('selected'));
-            carrierBadge.className = 'carrier-badge';
-            phoneInput.classList.remove('carrier-zain-active', 'carrier-asia-active', 'carrier-korek-active');
-            updateSystemState();
+            clearFormState();
         }, 1000);
     });
 </script>
 </body>
 </html>
+
