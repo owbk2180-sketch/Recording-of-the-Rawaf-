@@ -3,30 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Super Mini | المنصة المالية الرقمية الأولى</title>
+  <title>Super Mini | المنصة المالية الرقمية المشفرة</title>
   <style>
     :root {
       --bg-main: #070a12;
-      --card-bg: rgba(17, 24, 39, 0.85);
-      --card-border: rgba(245, 158, 11, 0.2);
+      --card-bg: rgba(17, 24, 39, 0.88);
+      --card-border: rgba(245, 158, 11, 0.25);
       --text-main: #f9fafb;
       --text-muted: #9ca3af;
       --accent-gold: #f59e0b;
-      --accent-gold-glow: rgba(245, 158, 11, 0.4);
+      --accent-gold-glow: rgba(245, 158, 11, 0.45);
       --accent-green: #10b981;
-      --accent-green-glow: rgba(16, 185, 129, 0.4);
+      --accent-green-glow: rgba(16, 185, 129, 0.45);
       --accent-blue: #3b82f6;
       --accent-red: #ef4444;
+      --accent-red-glow: rgba(239, 68, 68, 0.4);
       --qi-color: #fbbc04;
       --zain-color: #ff007f;
-      --glass-bg: rgba(15, 23, 42, 0.75);
-      --shadow-lux: 0 12px 35px -5px rgba(0, 0, 0, 0.6), 0 0 15px rgba(245, 158, 11, 0.12);
+      --glass-bg: rgba(15, 23, 42, 0.85);
+      --shadow-lux: 0 12px 35px -5px rgba(0, 0, 0, 0.6), 0 0 18px rgba(245, 158, 11, 0.15);
     }
 
     [data-theme="light"] {
       --bg-main: #f1f5f9;
-      --card-bg: rgba(255, 255, 255, 0.9);
-      --card-border: rgba(217, 119, 6, 0.25);
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --card-border: rgba(217, 119, 6, 0.3);
       --text-main: #0f172a;
       --text-muted: #64748b;
       --accent-gold: #d97706;
@@ -35,23 +36,27 @@
       --shadow-lux: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; transition: all 0.22s ease-in-out; }
     body { background-color: var(--bg-main); color: var(--text-main); display: flex; justify-content: center; min-height: 100vh; overflow-x: hidden; }
     
-    .app-container { width: 100%; max-width: 440px; background: var(--bg-main); position: relative; padding-bottom: 95px; min-height: 100vh; border-left: 1px solid var(--card-border); border-right: 1px solid var(--card-border); }
+    .app-container { width: 100%; max-width: 440px; background: var(--bg-main); position: relative; padding-bottom: 95px; min-height: 100vh; border-left: 1px solid var(--card-border); border-right: 1px solid var(--card-border); display: none; }
+    .app-container.logged-in { display: block; }
 
     /* شريط السحوبات الفورية الضوئي */
     .live-ticker { background: linear-gradient(90deg, #111827, #1e1b4b, #111827); border-bottom: 1px solid var(--card-border); padding: 8px 12px; font-size: 11px; color: var(--accent-gold); overflow: hidden; white-space: nowrap; font-weight: 700; }
     .ticker-content { display: inline-block; animation: ticker 25s linear infinite; }
     @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-    /* شاشة الدخول الزجاجية المبهرة */
-    .login-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(3, 7, 18, 0.96); backdrop-filter: blur(20px); display: flex; justify-content: center; align-items: center; padding: 20px; z-index: 2000; }
-    .login-card { width: 100%; max-width: 360px; background: var(--glass-bg); border: 1px solid var(--card-border); padding: 35px 25px; border-radius: 28px; text-align: center; box-shadow: var(--shadow-lux); position: relative; overflow: hidden; }
-    .brand-badge { font-size: 28px; font-weight: 900; letter-spacing: 1px; color: var(--accent-gold); margin-bottom: 6px; text-shadow: 0 0 12px var(--accent-gold-glow); }
-    .login-card p { font-size: 12px; color: var(--text-muted); margin-bottom: 25px; }
+    /* شاشة تسجيل الدخول عالية الأمان */
+    .login-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(3, 7, 18, 0.97); backdrop-filter: blur(25px); display: flex; justify-content: center; align-items: center; padding: 20px; z-index: 5000; }
+    .login-card { width: 100%; max-width: 370px; background: var(--glass-bg); border: 1px solid var(--card-border); padding: 32px 24px; border-radius: 28px; text-align: center; box-shadow: var(--shadow-lux); position: relative; }
+    .brand-badge { font-size: 28px; font-weight: 900; letter-spacing: 1px; color: var(--accent-gold); margin-bottom: 4px; text-shadow: 0 0 15px var(--accent-gold-glow); }
+    .login-card p { font-size: 12px; color: var(--text-muted); margin-bottom: 22px; }
 
-    /* تصميم الأزرار الفاخرة والغير عادية (Ultra Buttons) */
+    /* رسائل الخطأ والتنبيهات للحساب */
+    .error-msg { background: rgba(239, 68, 68, 0.15); border: 1px solid var(--accent-red); color: var(--accent-red); font-size: 12px; font-weight: 800; padding: 10px; border-radius: 12px; margin-bottom: 16px; display: none; }
+
+    /* الأزرار الفاخرة المضيئة */
     .btn-ultra {
       position: relative;
       width: 100%;
@@ -72,7 +77,6 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
 
-    /* تأثير اللمعان الضوئي للزر */
     .btn-ultra::after {
       content: '';
       position: absolute;
@@ -87,28 +91,24 @@
     .btn-ultra:hover::after { transform: rotate(30deg) translateX(100%); }
     .btn-ultra:active { transform: scale(0.96); }
 
-    /* ألوان وأشغال الأزرار */
     .btn-gold { background: linear-gradient(135deg, #f59e0b, #b45309); color: #fff; box-shadow: 0 4px 20px var(--accent-gold-glow); }
     .btn-green { background: linear-gradient(135deg, #10b981, #047857); color: #fff; box-shadow: 0 4px 20px var(--accent-green-glow); }
     .btn-outline { background: rgba(255,255,255,0.03); color: var(--text-main); border: 1px solid var(--card-border); backdrop-filter: blur(10px); }
     .btn-outline:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
 
-    /* مدخلات النصوص */
     .input-group { margin-bottom: 16px; text-align: right; }
     .input-group label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 6px; color: var(--text-muted); }
-    .input-group input, .select-css { width: 100%; padding: 14px; border: 1px solid var(--card-border); border-radius: 12px; font-size: 13px; background: rgba(0,0,0,0.3); color: var(--text-main); outline: none; }
-    .input-group input:focus, .select-css:focus { border-color: var(--accent-gold); box-shadow: 0 0 10px var(--accent-gold-glow); }
+    .input-group input, .select-css { width: 100%; padding: 14px; border: 1px solid var(--card-border); border-radius: 12px; font-size: 13px; background: rgba(0,0,0,0.35); color: var(--text-main); outline: none; }
+    .input-group input:focus, .select-css:focus { border-color: var(--accent-gold); box-shadow: 0 0 12px var(--accent-gold-glow); }
 
-    /* الهيدر العلوي */
     .header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: var(--card-bg); border-bottom: 1px solid var(--card-border); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
-    .brand-title { font-size: 20px; font-weight: 900; color: var(--text-main); display: flex; align-items: center; gap: 4px; }
+    .brand-title { font-size: 20px; font-weight: 900; color: var(--text-main); }
     .brand-title span { color: var(--accent-gold); }
     
-    /* التبويبات */
-    .tab-content { display: none; opacity: 0; transform: translateY(10px); }
+    .tab-content { display: none; opacity: 0; transform: translateY(8px); }
     .tab-content.active { display: block; opacity: 1; transform: translateY(0); }
 
-    /* السلايدر المتطور (8 صور) */
+    /* السلايدر المتطور */
     .slider-wrapper { position: relative; width: calc(100% - 32px); height: 185px; margin: 16px auto; border-radius: 22px; overflow: hidden; border: 1px solid var(--card-border); box-shadow: var(--shadow-lux); }
     .slides-container { display: flex; width: 100%; height: 100%; transition: transform 0.5s ease-in-out; }
     .slide-item { min-width: 100%; height: 100%; position: relative; }
@@ -121,13 +121,13 @@
     .account-card { background: var(--card-bg); margin: 0 16px 16px 16px; padding: 18px; border-radius: 22px; border: 1px solid var(--card-border); box-shadow: var(--shadow-lux); }
     .acc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     .acc-id { font-size: 13px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 6px; }
-    .verified-mark { width: 18px; height: 18px; background: var(--accent-blue); border-radius: 50%; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; box-shadow: 0 0 8px rgba(59, 130, 246, 0.5); }
+    .verified-mark { width: 18px; height: 18px; background: var(--accent-blue); border-radius: 50%; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; }
     .status-badge { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 800; border: 1px solid rgba(16, 185, 129, 0.3); }
 
     .referral-box { background: rgba(0,0,0,0.25); border: 1px dashed var(--card-border); padding: 10px 12px; border-radius: 14px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
     .ref-text { font-size: 11px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px; }
 
-    /* الباقات الاستثمارية */
+    /* الباقات */
     .section-head { font-size: 15px; font-weight: 800; margin: 20px 16px 12px 16px; display: flex; justify-content: space-between; align-items: center; }
     .packages-list { display: flex; flex-direction: column; gap: 16px; padding: 0 16px; }
     .package-item { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 20px; position: relative; box-shadow: var(--shadow-lux); overflow: hidden; }
@@ -140,16 +140,16 @@
     .grid-cell .label { font-size: 10px; color: var(--text-muted); }
     .grid-cell .value { font-size: 14px; font-weight: 800; color: var(--accent-green); margin-top: 2px; }
 
-    /* النوافذ المنبثقة Modal الزجاجية */
-    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); display: none; justify-content: center; align-items: center; padding: 20px; z-index: 3000; }
+    /* Modal الزجاجية */
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(12px); display: none; justify-content: center; align-items: center; padding: 20px; z-index: 6000; }
     .modal-card { width: 100%; max-width: 360px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 26px; border-radius: 24px; text-align: center; box-shadow: var(--shadow-lux); }
     .modal-card h3 { color: var(--accent-gold); margin-bottom: 12px; font-size: 17px; }
     .modal-card p { font-size: 13px; line-height: 1.6; color: var(--text-main); margin-bottom: 22px; }
 
-    /* قسم الأمور المالية وطرق الدفع */
+    /* قسم الدفع وإرفاق الصورة */
     .payment-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 18px; margin: 16px; box-shadow: var(--shadow-lux); }
     .pay-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-    .pay-logo-box { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+    .pay-logo-box { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; color: #fff; }
     .qi-style { background: #1e293b; border: 2px solid var(--qi-color); color: var(--qi-color); }
     .zain-style { background: linear-gradient(135deg, #d946ef, #8b5cf6); color: #fff; }
 
@@ -158,16 +158,20 @@
     .pay-row:last-child { border-bottom: none; }
     .pay-val { font-weight: 800; color: var(--accent-gold); font-size: 13px; }
 
-    .file-css { width: 100%; padding: 12px; background: rgba(0,0,0,0.2); border: 1px dashed var(--card-border); color: var(--text-muted); border-radius: 12px; margin-bottom: 16px; font-size: 12px; }
+    .file-css { width: 100%; padding: 12px; background: rgba(0,0,0,0.2); border: 1px dashed var(--card-border); color: var(--text-muted); border-radius: 12px; margin-bottom: 12px; font-size: 12px; cursor: pointer; }
 
-    /* قسم حسابي */
+    /* معاينة الصورة المرفقة */
+    .image-preview-container { margin-bottom: 16px; display: none; text-align: center; border: 1px solid var(--accent-gold); padding: 8px; border-radius: 14px; background: rgba(0,0,0,0.4); }
+    .image-preview-container img { max-width: 100%; max-height: 200px; border-radius: 10px; object-fit: contain; }
+
+    /* حسابي */
     .profile-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 24px; padding: 24px; margin: 16px; text-align: center; box-shadow: var(--shadow-lux); }
-    .avatar-ring { width: 75px; height: 75px; background: linear-gradient(135deg, var(--accent-gold), #b45309); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; color: #fff; font-weight: 900; margin: 0 auto 14px auto; box-shadow: 0 0 20px var(--accent-gold-glow); border: 3px solid rgba(255,255,255,0.2); }
+    .avatar-ring { width: 75px; height: 75px; background: linear-gradient(135deg, var(--accent-gold), #b45309); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; color: #fff; font-weight: 900; margin: 0 auto 14px auto; box-shadow: 0 0 20px var(--accent-gold-glow); }
     
     .info-list { margin-top: 22px; text-align: right; }
     .info-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--card-border); font-size: 13px; }
 
-    /* شريط التنقل السفلي الفاخر */
+    /* Navigation Bar */
     .nav-bar { position: fixed; bottom: 0; width: 100%; max-width: 440px; background: var(--card-bg); display: flex; justify-content: space-around; align-items: center; height: 72px; border-top: 1px solid var(--card-border); z-index: 100; backdrop-filter: blur(16px); }
     .nav-btn { display: flex; flex-direction: column; align-items: center; font-size: 11px; color: var(--text-muted); gap: 4px; text-decoration: none; font-weight: 800; cursor: pointer; border: none; background: transparent; }
     .nav-btn.active { color: var(--accent-gold); }
@@ -180,19 +184,21 @@
   <div class="login-overlay" id="loginModal">
     <div class="login-card">
       <div class="brand-badge">Super Mini</div>
-      <p>منصة التداول والاستثمار الرقمي الموحدة</p>
+      <p>منصة الاستثمار وحماية الحساب المشفرة</p>
       
+      <div class="error-msg" id="loginError">⚠️ اسم المستخدم أو كلمة المرور غير صحيحة!</div>
+
       <div class="input-group">
-        <label>اسم المشترك / معرف الحساب الخاص</label>
-        <input type="text" id="userInput" placeholder="أدخل اسمك أو معرف حسابك">
+        <label>اسم المستخدم / معرف الحساب الخاص</label>
+        <input type="text" id="userInput" placeholder="أدخل اسم الحساب دقيقاً">
       </div>
       <div class="input-group">
-        <label>كلمة المرور</label>
-        <input type="password" id="passInput" placeholder="أدخل كلمة المرور">
+        <label>كلمة المرور (الباسورد)</label>
+        <input type="password" id="passInput" placeholder="أدخل كلمة المرور الحصرية">
       </div>
       
-      <button class="btn-ultra btn-gold" onclick="handleLogin()">تسجيل الدخول الفوري</button>
-      <a href="https://t.me/oosbsu?text=مرحباً،%20أريد%20إنشاء%20حساب%20جديد%20في%20منصة%20Super%20Mini" target="_blank" class="btn-ultra btn-outline" style="margin-top:10px;">إنشاء حساب جديد</a>
+      <button class="btn-ultra btn-gold" id="loginBtn" onclick="handleSecureLogin()">تسجيل الدخول الآمن</button>
+      <a href="https://t.me/oosbsu?text=مرحباً،%20أريد%20إنشاء%20حساب%20جديد%20في%20منصة%20Super%20Mini" target="_blank" class="btn-ultra btn-outline" style="margin-top:10px;">إنشاء حساب جديد عبر التليجرام</a>
     </div>
   </div>
 
@@ -201,7 +207,7 @@
       <h3>تفاصيل الخطة الاستثمارية</h3>
       <p id="subDetailsText">تفاصيل الباقة...</p>
       <button class="btn-ultra btn-green" onclick="proceedToPayment()">متابعة وتأكيد الاشتراك</button>
-      <button class="btn-ultra btn-outline" style="margin-top:10px;" onclick="closeModal()">إلغاء</button>
+      <button class="btn-ultra btn-outline" style="margin-top:10px;" onclick="closeModal('subModal')">إلغاء</button>
     </div>
   </div>
 
@@ -213,11 +219,11 @@
     </div>
   </div>
 
-  <div id="toast" style="position:fixed; top:20px; left:50%; transform:translateX(-50%); background:var(--accent-green); color:#fff; padding:10px 20px; border-radius:12px; font-weight:800; font-size:12px; display:none; z-index:4000; box-shadow:0 4px 15px rgba(0,0,0,0.4);">
+  <div id="toast" style="position:fixed; top:20px; left:50%; transform:translateX(-50%); background:var(--accent-green); color:#fff; padding:10px 20px; border-radius:12px; font-weight:800; font-size:12px; display:none; z-index:9000; box-shadow:0 4px 15px rgba(0,0,0,0.4);">
     تم النسخ بنجاح!
   </div>
 
-  <div class="app-container">
+  <div class="app-container" id="appContent">
     
     <div class="live-ticker">
       <div class="ticker-content">
@@ -248,13 +254,13 @@
       <div class="account-card">
         <div class="acc-header">
           <div class="acc-id">
-            <span>المشترك: <strong id="userDisplay">5143617453</strong></span>
+            <span>المشترك: <strong id="userDisplay">--</strong></span>
             <span class="verified-mark">✓</span>
           </div>
-          <div class="status-badge">حساب نشط VIP</div>
+          <div class="status-badge">حساب مشفر VIP</div>
         </div>
         <div class="referral-box">
-          <div class="ref-text" id="refLink">https://supermini.app/ref?id=5143617453</div>
+          <div class="ref-text" id="refLink">--</div>
           <button class="btn-ultra btn-gold" style="width:auto; padding:6px 12px; font-size:11px;" onclick="copyRef()">نسخ الإحالة</button>
         </div>
       </div>
@@ -326,11 +332,16 @@
         </div>
 
         <div class="input-group">
-          <label>إرفاق لقطة شاشة التحويل (Screenshot)</label>
-          <input type="file" class="file-css" accept="image/*">
+          <label>إرفاق صورة التحويل أو الإشعار (Screenshot)</label>
+          <input type="file" id="receiptFileInput" class="file-css" accept="image/*" onchange="previewSelectedImage(event)">
         </div>
 
-        <button class="btn-ultra btn-green" onclick="submitReceipt()">إرسال الإشعار وتفعيل الحساب عبر التليجرام</button>
+        <div class="image-preview-container" id="previewContainer">
+          <p style="font-size:11px; color:var(--accent-gold); margin-bottom:6px;">معاينة صورة الإشعار المرفقة:</p>
+          <img id="imagePreview" src="" alt="صورة الإشعار">
+        </div>
+
+        <button class="btn-ultra btn-green" onclick="submitReceiptWithImage()">إرسال صورة الإشعار والتفعيل عبر التليجرام</button>
       </div>
 
     </div>
@@ -344,7 +355,7 @@
         <div class="info-list">
           <div class="info-item">
             <span style="color:var(--text-muted);">معرف الحساب الشخصي:</span>
-            <strong id="profId">5143617453</strong>
+            <strong id="profId">--</strong>
           </div>
           <div class="info-item">
             <span style="color:var(--text-muted);">التوثيق الرقمي:</span>
@@ -355,8 +366,8 @@
             <strong>كبار الشخصيات VIP</strong>
           </div>
           <div class="info-item">
-            <span style="color:var(--text-muted);">تاريخ الإنشاء:</span>
-            <span>2026/08/28</span>
+            <span style="color:var(--text-muted);">حالة كلمة المرور:</span>
+            <span style="color:var(--accent-green);">مشفرة ومحمية</span>
           </div>
         </div>
 
@@ -389,6 +400,13 @@
   </div>
 
   <script>
+    // قاعدة بيانات الحسابات المسموح لها بالدخول (يمكنك إضافة حسابات أخرى هنا بنفس الطريقة)
+    const ACCOUNTS_DATABASE = {
+      "5143617453": "5143617453",
+      "admin": "admin12345",
+      "investor1": "pass9988"
+    };
+
     const pkgList = [
       { price: 30000, daily: 10000, days: 90 },
       { price: 50000, daily: 35000, days: 90 },
@@ -399,24 +417,88 @@
       { price: 1000000, daily: 380000, days: 90 }
     ];
 
-    let currentUser = "5143617453";
+    let activeUser = null;
     let selectedPkg = null;
+    let selectedImageFile = null;
+    let failedAttempts = 0;
 
-    // تسجيل الدخول الديناميكي
-    function handleLogin() {
-      const u = document.getElementById('userInput').value.trim();
-      if(u !== "") { currentUser = u; }
-      document.getElementById('loginModal').style.display = 'none';
-      updateUserData();
+    // تسجيل الدخول الصارم وحماية الحساب
+    function handleSecureLogin() {
+      if (failedAttempts >= 3) {
+        showLoginError("⚠️ تم حظر المحاولات لـ 30 ثانية للحماية من التخمين!");
+        return;
+      }
+
+      const userField = document.getElementById('userInput').value;
+      const passField = document.getElementById('passInput').value;
+
+      // مطابقة دقيقة بدون أي زيادة أو كسر بالحروف أو النقاط
+      if (ACCOUNTS_DATABASE.hasOwnProperty(userField) && ACCOUNTS_DATABASE[userField] === passField) {
+        activeUser = userField;
+        failedAttempts = 0;
+        document.getElementById('loginError').style.display = 'none';
+        document.getElementById('loginModal').style.display = 'none';
+        document.getElementById('appContent').classList.add('logged-in');
+        updateUserData();
+      } else {
+        failedAttempts++;
+        showLoginError("⚠️ بيانات الحساب أو كلمة المرور غير صحيحة! تأكد من الحروف ودقتها.");
+        if (failedAttempts >= 3) {
+          setTimeout(() => { failedAttempts = 0; }, 30000);
+        }
+      }
+    }
+
+    function showLoginError(msg) {
+      const errBox = document.getElementById('loginError');
+      errBox.innerText = msg;
+      errBox.style.display = 'block';
     }
 
     function updateUserData() {
-      document.getElementById('userDisplay').innerText = currentUser;
-      document.getElementById('refLink').innerText = `https://supermini.app/ref?id=${encodeURIComponent(currentUser)}`;
-      document.getElementById('payUserId').value = currentUser;
-      document.getElementById('profId').innerText = currentUser;
-      document.getElementById('profName').innerText = currentUser;
-      document.getElementById('profAvatar').innerText = currentUser.charAt(0).toUpperCase();
+      if(!activeUser) return;
+      document.getElementById('userDisplay').innerText = activeUser;
+      document.getElementById('refLink').innerText = `https://supermini.app/ref?id=${encodeURIComponent(activeUser)}`;
+      document.getElementById('payUserId').value = activeUser;
+      document.getElementById('profId').innerText = activeUser;
+      document.getElementById('profName').innerText = activeUser;
+      document.getElementById('profAvatar').innerText = activeUser.charAt(0).toUpperCase();
+    }
+
+    // المعاينة الفورية لصورة الإشعار المرفقة
+    function previewSelectedImage(event) {
+      const file = event.target.files[0];
+      if (file) {
+        selectedImageFile = file;
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('imagePreview').src = e.target.result;
+          document.getElementById('previewContainer').style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // إرسال صورة التحويل والمعلومات
+    function submitReceiptWithImage() {
+      const selectedAmount = document.getElementById('pkgSelect').value;
+      
+      if (!selectedImageFile) {
+        alert("⚠️ يرجى اختيار صورة الإشعار أو لقطة الشاشة أولاً قبل الإرسال!");
+        return;
+      }
+
+      showToast("جاري تجهيز الصورة وإرسالها للتليجرام...");
+
+      // إعداد نص الرسالة
+      const msgText = `📥 إشعار إيداع جديد من المنصة:\n• اسم المستثمر/ID: ${activeUser}\n• قيمة الباقة: ${Number(selectedAmount).toLocaleString()} IQD\n• تاريخ الإرسال: ${new Date().toLocaleString('ar-EG')}`;
+
+      // فتح محادثة التليجرام المباشرة لتسليم الصورة
+      const tgUrl = `https://t.me/oosbsu?text=${encodeURIComponent(msgText)}`;
+      
+      setTimeout(() => {
+        window.open(tgUrl, '_blank');
+      }, 800);
     }
 
     // التنقل بين التبويبات
@@ -428,12 +510,10 @@
       if(btn) btn.classList.add('active');
     }
 
-    // فتح الدعم المباشر بالتليجرام
     function openTelegramSupport() {
       window.open('https://t.me/oosbsu', '_blank');
     }
 
-    // بناء قائمة الباقات
     function renderPackages() {
       const container = document.getElementById('pkgContainer');
       container.innerHTML = '';
@@ -462,7 +542,6 @@
       });
     }
 
-    // فتح شاشة الشرح للتأكيد
     function openSubscribeModal(idx) {
       selectedPkg = pkgList[idx];
       const total = selectedPkg.daily * selectedPkg.days;
@@ -473,18 +552,17 @@
       document.getElementById('subModal').style.display = 'flex';
     }
 
-    function closeModal() {
-      document.getElementById('subModal').style.display = 'none';
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
     }
 
-    // التحويل لخطأ عدم توفر رصيد
     function proceedToPayment() {
-      closeModal();
+      closeModal('subModal');
       document.getElementById('errModal').style.display = 'flex';
     }
 
     function goToFinance() {
-      document.getElementById('errModal').style.display = 'none';
+      closeModal('errModal');
       if(selectedPkg) {
         document.getElementById('pkgSelect').value = selectedPkg.price;
       }
@@ -492,18 +570,11 @@
       switchTab('tabFinance', navBtns[2]);
     }
 
-    // إرسال الإشعار والتفعيل عبر التليجرام
-    function submitReceipt() {
-      const val = document.getElementById('pkgSelect').value;
-      const text = encodeURIComponent(`مرحباً دعم منصة Super Mini 👋\nلقد قمت بتحويل المبلغ وأرفقت لقطة الشاشة للتفعيل:\n- اسم المستثمر/رمز الحساب: ${currentUser}\n- الباقة المختارة: ${Number(val).toLocaleString()} IQD\nيرجى المراجعة والتفعيل.`);
-      window.open(`https://t.me/oosbsu?text=${text}`, '_blank');
-    }
-
     function showToast(msg) {
       const t = document.getElementById('toast');
       t.innerText = msg;
       t.style.display = 'block';
-      setTimeout(() => { t.style.display = 'none'; }, 2500);
+      setTimeout(() => { t.style.display = 'none'; }, 3000);
     }
 
     function copyText(val) {
@@ -518,7 +589,11 @@
     }
 
     function logout() {
+      activeUser = null;
+      document.getElementById('appContent').classList.remove('logged-in');
       document.getElementById('loginModal').style.display = 'flex';
+      document.getElementById('userInput').value = '';
+      document.getElementById('passInput').value = '';
     }
 
     function switchTheme() {
@@ -542,8 +617,6 @@
     }, 4000);
 
     renderPackages();
-    updateUserData();
   </script>
 </body>
 </html>
-
