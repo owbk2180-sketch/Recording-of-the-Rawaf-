@@ -126,7 +126,6 @@
     .referral-box { background: rgba(0,0,0,0.25); border: 1px dashed var(--card-border); padding: 10px 12px; border-radius: 14px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
     .ref-text { font-size: 11px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px; }
 
-    /* لوحة الأدمن الخاصة */
     .admin-card { background: rgba(15, 23, 42, 0.95); border: 2px dashed var(--accent-gold); border-radius: 22px; margin: 16px; padding: 18px; box-shadow: var(--shadow-lux); display: none; }
     .admin-head { font-size: 15px; font-weight: 900; color: var(--accent-gold); margin-bottom: 12px; text-align: center; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; }
     .admin-user-item { background: rgba(0,0,0,0.4); border: 1px solid var(--card-border); padding: 12px; border-radius: 14px; margin-bottom: 10px; }
@@ -182,6 +181,7 @@
 </head>
 <body>
 
+  <!-- نافذة تسجيل الدخول -->
   <div class="login-overlay" id="loginModal">
     <div class="login-card">
       <div class="brand-badge">Super Mini</div>
@@ -203,6 +203,7 @@
     </div>
   </div>
 
+  <!-- نافذة إنشاء الحساب -->
   <div class="modal-overlay" id="registerModal">
     <div class="modal-card">
       <div class="brand-badge" style="font-size: 22px;">حساب جديد</div>
@@ -261,6 +262,7 @@
       <button class="btn-ultra btn-outline" style="width:auto; padding:6px 14px; font-size:11px;" onclick="switchTheme()" id="themeBtn">🌙 Dark</button>
     </div>
 
+    <!-- قسم الرئيسية -->
     <div id="tabHome" class="tab-content active">
       
       <div class="slider-wrapper">
@@ -269,10 +271,6 @@
           <div class="slide-item"><img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>نمو الأرباح اليومية</h3><p>عوائد تنزل تلقائياً في محفظتك</p></div></div>
           <div class="slide-item"><img src="https://images.unsplash.com/photo-1618042164219-62c820f10723?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>تداول الذهب والأصول</h3><p>إدارة مالية آمنة ومضمونة 100%</p></div></div>
           <div class="slide-item"><img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>حلول استثمارية متكاملة</h3><p>اختر الباقة المناسبة لك وابدأ فوراً</p></div></div>
-          <div class="slide-item"><img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>سيولة وسحب يومي</h3><p>تحويل سريع وسهل لجميع المحافظ</p></div></div>
-          <div class="slide-item"><img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>استثمار ذكي ومستقر</h3><p>خطط متنوعة من 30 ألف لـ مليون دينار</p></div></div>
-          <div class="slide-item"><img src="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>عضوية النخبة الممتازة</h3><p>تفعيل مباشر وتتبع مستمر</p></div></div>
-          <div class="slide-item"><img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>تشفير وأمان موثوق</h3><p>حماية عالية لمعاملاتك المالية</p></div></div>
         </div>
       </div>
 
@@ -296,7 +294,6 @@
         </div>
       </div>
 
-      <!-- لوحة الأدمن (تظهر فقط وحصرياً للمشرف 5143617453) -->
       <div class="admin-card" id="adminPanel">
         <div class="admin-head">👑 لوحة الأدمن الخاصة (إدارة أرصدة الزبائن)</div>
         <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px; text-align: center;">تحكم كامل بأرصدة المشتركين وإجراء الشحن والخصم الفوري</p>
@@ -307,7 +304,24 @@
       <div class="packages-list" id="pkgContainer"></div>
     </div>
 
+    <!-- قسم الأمور المالية -->
     <div id="tabFinance" class="tab-content">
+      
+      <!-- إضافة بطاقة معلومات الحساب في الأمور المالية -->
+      <div class="account-card" style="border-color: var(--accent-green); margin-top: 16px;">
+        <div class="acc-header">
+          <h3 style="color: var(--accent-green); font-size: 16px;">حالة الحساب المالي</h3>
+        </div>
+        <div class="balance-box">
+          <span class="balance-title">الرصيد المتوفر:</span>
+          <span class="balance-value" id="financeBalance">0 IQD</span>
+        </div>
+        <div class="balance-box" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); margin-top: 10px;">
+          <span class="balance-title" style="color: var(--accent-gold);">الاشتراك الحالي (الباقة):</span>
+          <span class="balance-value" style="color: var(--accent-gold); font-size: 14px;" id="financeSub">لا يوجد اشتراك فعال</span>
+        </div>
+      </div>
+
       <div class="section-head">طرق الدفع والإيداع الرسمية</div>
       
       <div class="payment-card">
@@ -381,9 +395,9 @@
 
         <button class="btn-ultra btn-green" onclick="submitReceiptWithImage()">إرسال صورة الإشعار والتفعيل عبر التليجرام</button>
       </div>
-
     </div>
 
+    <!-- قسم الحساب -->
     <div id="tabProfile" class="tab-content">
       <div class="profile-card">
         <div class="avatar-ring" id="profAvatar">U</div>
@@ -417,6 +431,7 @@
       </div>
     </div>
 
+    <!-- شريط التنقل السفلي -->
     <div class="nav-bar">
       <button class="nav-btn active" onclick="switchTab('tabHome', this)">
         <svg class="nav-svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
@@ -442,38 +457,38 @@
   </div>
 
   <script>
-    // حساب الأدمن الرئيسي وحسابات افتراضية
     const ADMIN_ACCOUNT_ID = "5143617453";
-
     const DEFAULT_ACCOUNTS = {
       "5143617453": "5143617453"
     };
 
-    // جلب قاعدة البيانات وحفظها
     function getUsersDatabase() {
       const stored = localStorage.getItem('SUPER_MINI_USERS');
-      if (stored) {
-        return JSON.parse(stored);
-      } else {
-        localStorage.setItem('SUPER_MINI_USERS', JSON.stringify(DEFAULT_ACCOUNTS));
-        return DEFAULT_ACCOUNTS;
-      }
+      if (stored) return JSON.parse(stored);
+      localStorage.setItem('SUPER_MINI_USERS', JSON.stringify(DEFAULT_ACCOUNTS));
+      return DEFAULT_ACCOUNTS;
     }
 
-    // جلب جدول أرصدة المستخدمين
     function getUserBalances() {
       const stored = localStorage.getItem('SUPER_MINI_BALANCES');
-      if (stored) {
-        return JSON.parse(stored);
-      } else {
-        const initBalances = { "5143617453": 1000000 };
-        localStorage.setItem('SUPER_MINI_BALANCES', JSON.stringify(initBalances));
-        return initBalances;
-      }
+      if (stored) return JSON.parse(stored);
+      const initBalances = { "5143617453": 1000000 };
+      localStorage.setItem('SUPER_MINI_BALANCES', JSON.stringify(initBalances));
+      return initBalances;
     }
 
     function saveUserBalances(balances) {
       localStorage.setItem('SUPER_MINI_BALANCES', JSON.stringify(balances));
+    }
+
+    // دوال إدارة اشتراكات المستخدمين
+    function getUserSubscriptions() {
+      const stored = localStorage.getItem('SUPER_MINI_SUBS');
+      return stored ? JSON.parse(stored) : {};
+    }
+
+    function saveUserSubscription(subs) {
+      localStorage.setItem('SUPER_MINI_SUBS', JSON.stringify(subs));
     }
 
     const pkgList = [
@@ -490,7 +505,6 @@
     let selectedPkg = null;
     let selectedImageFile = null;
 
-    // تسجيل الدخول
     function handleSecureLogin() {
       const userField = document.getElementById('userInput').value.trim();
       const passField = document.getElementById('passInput').value.trim();
@@ -507,7 +521,6 @@
       }
     }
 
-    // فتح نافذة إنشاء حساب جديد
     function openRegisterModal() {
       document.getElementById('regError').style.display = 'none';
       document.getElementById('regUser').value = '';
@@ -516,28 +529,17 @@
       document.getElementById('registerModal').style.display = 'flex';
     }
 
-    // تنفيذ عملية إنشاء الحساب
     function handleRegister() {
       const u = document.getElementById('regUser').value.trim();
       const p1 = document.getElementById('regPass').value.trim();
       const p2 = document.getElementById('regPassConfirm').value.trim();
 
-      if (!u || !p1 || !p2) {
-        showRegError("⚠️ يرجى ملء كافة الحقول!");
-        return;
-      }
-      if (p1 !== p2) {
-        showRegError("⚠️ كلمات المرور غير متطابقة!");
-        return;
-      }
+      if (!u || !p1 || !p2) { showRegError("⚠️ يرجى ملء كافة الحقول!"); return; }
+      if (p1 !== p2) { showRegError("⚠️ كلمات المرور غير متطابقة!"); return; }
 
       const db = getUsersDatabase();
-      if (db.hasOwnProperty(u)) {
-        showRegError("⚠️ اسم المستخدم هذا حُجز بالفعل، اختر اسماً آخر!");
-        return;
-      }
+      if (db.hasOwnProperty(u)) { showRegError("⚠️ اسم المستخدم هذا حُجز بالفعل، اختر اسماً آخر!"); return; }
 
-      // حفظ الحساب وتعيين رصيد ابتدائي 0
       db[u] = p1;
       localStorage.setItem('SUPER_MINI_USERS', JSON.stringify(db));
 
@@ -545,7 +547,6 @@
       balances[u] = 0;
       saveUserBalances(balances);
 
-      // الدخول الفوري
       activeUser = u;
       closeModal('registerModal');
       document.getElementById('loginModal').style.display = 'none';
@@ -566,7 +567,6 @@
       errBox.style.display = 'block';
     }
 
-    // تحديث بيانات الشاشة والأدمن
     function updateUserData() {
       if(!activeUser) return;
       document.getElementById('userDisplay').innerText = activeUser;
@@ -576,15 +576,22 @@
       document.getElementById('profName').innerText = activeUser;
       document.getElementById('profAvatar').innerText = activeUser.charAt(0).toUpperCase();
 
-      // تجديد الرصيد المعروض
       const balances = getUserBalances();
+      const subs = getUserSubscriptions();
       const currentBal = balances[activeUser] !== undefined ? balances[activeUser] : 0;
       const formattedBal = Number(currentBal).toLocaleString() + " IQD";
 
       document.getElementById('homeUserBalance').innerText = formattedBal;
       document.getElementById('profBalance').innerText = formattedBal;
+      document.getElementById('financeBalance').innerText = formattedBal;
 
-      // فحص وصلاحية لوحة الأدمن (حصرية للحساب 5143617453)
+      const currentSub = subs[activeUser];
+      if(currentSub) {
+        document.getElementById('financeSub').innerText = `باقة ${Number(currentSub).toLocaleString()} IQD`;
+      } else {
+        document.getElementById('financeSub').innerText = "لا يوجد اشتراك فعال";
+      }
+
       const adminPanel = document.getElementById('adminPanel');
       if (activeUser === ADMIN_ACCOUNT_ID) {
         adminPanel.style.display = 'block';
@@ -594,21 +601,23 @@
       }
     }
 
-    // عرض قائمة المستخدمين والتحكم بالأرصدة داخل لوحة الأدمن
     function renderAdminUsersList() {
       const container = document.getElementById('adminUserList');
       const db = getUsersDatabase();
       const balances = getUserBalances();
+      const subs = getUserSubscriptions();
       container.innerHTML = '';
 
       Object.keys(db).forEach(userKey => {
         const uBalance = balances[userKey] || 0;
+        const uSub = subs[userKey] ? `باقة ${Number(subs[userKey]).toLocaleString()}` : 'لا يوجد';
         container.innerHTML += `
           <div class="admin-user-item">
             <div class="admin-user-info">
               <span>🆔 الحساب: <strong style="color:var(--accent-gold);">${userKey}</strong></span>
               <span>💰 الرصيد: <strong style="color:var(--accent-green);">${Number(uBalance).toLocaleString()} IQD</strong></span>
             </div>
+            <div style="font-size:11px; margin-bottom:8px; color:#ccc;">الاشتراك الفعال: <strong style="color:var(--accent-gold);">${uSub}</strong></div>
             <div class="admin-actions">
               <input type="number" id="amt_${userKey}" placeholder="المبلغ (IQD)" />
               <button class="btn-ultra btn-green" style="padding:6px 10px; font-size:11px;" onclick="modifyUserBalance('${userKey}', 'add')">شحن (+)</button>
@@ -619,19 +628,12 @@
       });
     }
 
-    // تغيير رصيد الزبون من قبل الأدمن
     function modifyUserBalance(targetUser, action) {
       const inputEl = document.getElementById(`amt_${targetUser}`);
       const val = parseFloat(inputEl.value);
-
-      if (isNaN(val) || val <= 0) {
-        alert("⚠️ يرجى إدخال مبلغ صحيح أكبر من 0");
-        return;
-      }
-
+      if (isNaN(val) || val <= 0) { alert("⚠️ يرجى إدخال مبلغ صحيح أكبر من 0"); return; }
       const balances = getUserBalances();
       const current = balances[targetUser] || 0;
-
       if (action === 'add') {
         balances[targetUser] = current + val;
         showToast(`تم شحن ${val.toLocaleString()} IQD للحساب ${targetUser}`);
@@ -639,7 +641,6 @@
         balances[targetUser] = Math.max(0, current - val);
         showToast(`تم خصم ${val.toLocaleString()} IQD من الحساب ${targetUser}`);
       }
-
       saveUserBalances(balances);
       updateUserData();
     }
@@ -663,20 +664,15 @@
         alert("⚠️ يرجى اختيار صورة الإشعار أو لقطة الشاشة أولاً قبل الإرسال!");
         return;
       }
-
       showToast("جاري تجهيز الرسالة للتليجرام...");
-      const msgText = `📥 إشعار إيداع جديد:\n• اسم المستثمر/ID: ${activeUser}\n• قيمة الباقة: ${Number(selectedAmount).toLocaleString()} IQD`;
+      const msgText = `📥 إشعار إيداع جديد:\n• اسم المستثمر/ID: ${activeUser}\n• قيمة الباقة المراد تفعيلها: ${Number(selectedAmount).toLocaleString()} IQD`;
       const tgUrl = `https://t.me/oosbsu?text=${encodeURIComponent(msgText)}`;
-      
-      setTimeout(() => {
-        window.open(tgUrl, '_blank');
-      }, 800);
+      setTimeout(() => { window.open(tgUrl, '_blank'); }, 800);
     }
 
     function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
-      
       document.getElementById(tabId).classList.add('active');
       if(btn) btn.classList.add('active');
     }
@@ -688,7 +684,6 @@
     function renderPackages() {
       const container = document.getElementById('pkgContainer');
       container.innerHTML = '';
-      
       pkgList.forEach((pkg, index) => {
         const total = pkg.daily * pkg.days;
         container.innerHTML += `
@@ -730,12 +725,14 @@
     function proceedToPayment() {
       closeModal('subModal');
       const balances = getUserBalances();
+      const subs = getUserSubscriptions();
       const userBal = balances[activeUser] || 0;
 
-      // التأكد من كفاية الرصيد
       if (userBal >= selectedPkg.price) {
         balances[activeUser] -= selectedPkg.price;
+        subs[activeUser] = selectedPkg.price;
         saveUserBalances(balances);
+        saveUserSubscription(subs);
         updateUserData();
         showToast("🎉 تم تفعيل الباقة بنجاح وخصم قيمتها من رصيدك!");
       } else {
@@ -745,9 +742,7 @@
 
     function goToFinance() {
       closeModal('errModal');
-      if(selectedPkg) {
-        document.getElementById('pkgSelect').value = selectedPkg.price;
-      }
+      if(selectedPkg) { document.getElementById('pkgSelect').value = selectedPkg.price; }
       const navBtns = document.querySelectorAll('.nav-btn');
       switchTab('tabFinance', navBtns[2]);
     }
@@ -793,7 +788,7 @@
     let currentSlide = 0;
     const slidesTrack = document.getElementById('slidesTrack');
     setInterval(() => {
-      currentSlide = (currentSlide + 1) % 8;
+      currentSlide = (currentSlide + 1) % 4; // تم تعديلها لتلائم 4 صور
       slidesTrack.style.transform = `translateX(${currentSlide * 100}%)`;
     }, 4000);
 
@@ -801,4 +796,3 @@
   </script>
 </body>
 </html>
-
