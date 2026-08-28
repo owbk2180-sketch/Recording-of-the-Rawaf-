@@ -89,6 +89,7 @@
 
     .btn-gold { background: linear-gradient(135deg, #f59e0b, #b45309); color: #fff; box-shadow: 0 4px 20px var(--accent-gold-glow); }
     .btn-green { background: linear-gradient(135deg, #10b981, #047857); color: #fff; box-shadow: 0 4px 20px var(--accent-green-glow); }
+    .btn-red { background: linear-gradient(135deg, #ef4444, #991b1b); color: #fff; box-shadow: 0 4px 20px var(--accent-red-glow); }
     .btn-outline { background: rgba(255,255,255,0.03); color: var(--text-main); border: 1px solid var(--card-border); backdrop-filter: blur(10px); }
     .btn-outline:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
 
@@ -118,8 +119,20 @@
     .verified-mark { width: 18px; height: 18px; background: var(--accent-blue); border-radius: 50%; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; }
     .status-badge { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 800; border: 1px solid rgba(16, 185, 129, 0.3); }
 
+    .balance-box { margin-top: 12px; padding: 12px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 14px; display: flex; justify-content: space-between; align-items: center; }
+    .balance-title { font-size: 12px; color: var(--text-muted); font-weight: 700; }
+    .balance-value { font-size: 16px; color: var(--accent-green); font-weight: 900; }
+
     .referral-box { background: rgba(0,0,0,0.25); border: 1px dashed var(--card-border); padding: 10px 12px; border-radius: 14px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
     .ref-text { font-size: 11px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px; }
+
+    /* لوحة الأدمن الخاصة */
+    .admin-card { background: rgba(15, 23, 42, 0.95); border: 2px dashed var(--accent-gold); border-radius: 22px; margin: 16px; padding: 18px; box-shadow: var(--shadow-lux); display: none; }
+    .admin-head { font-size: 15px; font-weight: 900; color: var(--accent-gold); margin-bottom: 12px; text-align: center; border-bottom: 1px solid var(--card-border); padding-bottom: 8px; }
+    .admin-user-item { background: rgba(0,0,0,0.4); border: 1px solid var(--card-border); padding: 12px; border-radius: 14px; margin-bottom: 10px; }
+    .admin-user-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 12px; font-weight: 800; }
+    .admin-actions { display: flex; gap: 8px; margin-top: 6px; }
+    .admin-actions input { width: 50%; padding: 8px; font-size: 12px; border-radius: 8px; background: #000; color: #fff; border: 1px solid var(--card-border); }
 
     .section-head { font-size: 15px; font-weight: 800; margin: 20px 16px 12px 16px; display: flex; justify-content: space-between; align-items: center; }
     .packages-list { display: flex; flex-direction: column; gap: 16px; padding: 0 16px; }
@@ -197,8 +210,8 @@
       <div class="error-msg" id="regError"></div>
       
       <div class="input-group">
-        <label>اختر اسم الحساب / المعرف</label>
-        <input type="text" id="regUser" placeholder="مثال: Ahmed99">
+        <label>اختر اسم الحساب / المعرف الخاص بك</label>
+        <input type="text" id="regUser" placeholder="مثال: Ahmed99 أو رقم معرف">
       </div>
       <div class="input-group">
         <label>اختر كلمة المرور</label>
@@ -271,10 +284,23 @@
           </div>
           <div class="status-badge">حساب مشفر VIP</div>
         </div>
+
+        <div class="balance-box">
+          <span class="balance-title">رصيد المحفظة الحالي:</span>
+          <span class="balance-value" id="homeUserBalance">0 IQD</span>
+        </div>
+
         <div class="referral-box">
           <div class="ref-text" id="refLink">--</div>
           <button class="btn-ultra btn-gold" style="width:auto; padding:6px 14px; font-size:11px;" onclick="copyRef()">نسخ الإحالة</button>
         </div>
+      </div>
+
+      <!-- لوحة الأدمن (تظهر فقط وحصرياً للمشرف 5143617453) -->
+      <div class="admin-card" id="adminPanel">
+        <div class="admin-head">👑 لوحة الأدمن الخاصة (إدارة أرصدة الزبائن)</div>
+        <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px; text-align: center;">تحكم كامل بأرصدة المشتركين وإجراء الشحن والخصم الفوري</p>
+        <div id="adminUserList"></div>
       </div>
 
       <div class="section-head">باقات الاستثمار المتاحة (90 يوم)</div>
@@ -370,6 +396,10 @@
             <strong id="profId">--</strong>
           </div>
           <div class="info-item">
+            <span style="color:var(--text-muted);">رصيد الحساب:</span>
+            <strong id="profBalance" style="color:var(--accent-green);">0 IQD</strong>
+          </div>
+          <div class="info-item">
             <span style="color:var(--text-muted);">التوثيق الرقمي:</span>
             <span style="color:var(--accent-blue); font-weight:bold;">مكتمل ومعتمد</span>
           </div>
@@ -412,13 +442,14 @@
   </div>
 
   <script>
-    // الحسابات الافتراضية
+    // حساب الأدمن الرئيسي وحسابات افتراضية
+    const ADMIN_ACCOUNT_ID = "5143617453";
+
     const DEFAULT_ACCOUNTS = {
-      "5143617453": "5143617453",
-      "admin": "admin12345"
+      "5143617453": "5143617453"
     };
 
-    // جلب قاعدة بيانات الحسابات من ذاكرة المتصفح
+    // جلب قاعدة البيانات وحفظها
     function getUsersDatabase() {
       const stored = localStorage.getItem('SUPER_MINI_USERS');
       if (stored) {
@@ -427,6 +458,22 @@
         localStorage.setItem('SUPER_MINI_USERS', JSON.stringify(DEFAULT_ACCOUNTS));
         return DEFAULT_ACCOUNTS;
       }
+    }
+
+    // جلب جدول أرصدة المستخدمين
+    function getUserBalances() {
+      const stored = localStorage.getItem('SUPER_MINI_BALANCES');
+      if (stored) {
+        return JSON.parse(stored);
+      } else {
+        const initBalances = { "5143617453": 1000000 };
+        localStorage.setItem('SUPER_MINI_BALANCES', JSON.stringify(initBalances));
+        return initBalances;
+      }
+    }
+
+    function saveUserBalances(balances) {
+      localStorage.setItem('SUPER_MINI_BALANCES', JSON.stringify(balances));
     }
 
     const pkgList = [
@@ -469,7 +516,7 @@
       document.getElementById('registerModal').style.display = 'flex';
     }
 
-    // تنفيذ عملية التكريك وإنشاء الحساب
+    // تنفيذ عملية إنشاء الحساب
     function handleRegister() {
       const u = document.getElementById('regUser').value.trim();
       const p1 = document.getElementById('regPass').value.trim();
@@ -490,11 +537,15 @@
         return;
       }
 
-      // حفظ الحساب الجديد
+      // حفظ الحساب وتعيين رصيد ابتدائي 0
       db[u] = p1;
       localStorage.setItem('SUPER_MINI_USERS', JSON.stringify(db));
 
-      // الدخول الفوري بالحساب الجديد
+      const balances = getUserBalances();
+      balances[u] = 0;
+      saveUserBalances(balances);
+
+      // الدخول الفوري
       activeUser = u;
       closeModal('registerModal');
       document.getElementById('loginModal').style.display = 'none';
@@ -515,6 +566,7 @@
       errBox.style.display = 'block';
     }
 
+    // تحديث بيانات الشاشة والأدمن
     function updateUserData() {
       if(!activeUser) return;
       document.getElementById('userDisplay').innerText = activeUser;
@@ -523,6 +575,73 @@
       document.getElementById('profId').innerText = activeUser;
       document.getElementById('profName').innerText = activeUser;
       document.getElementById('profAvatar').innerText = activeUser.charAt(0).toUpperCase();
+
+      // تجديد الرصيد المعروض
+      const balances = getUserBalances();
+      const currentBal = balances[activeUser] !== undefined ? balances[activeUser] : 0;
+      const formattedBal = Number(currentBal).toLocaleString() + " IQD";
+
+      document.getElementById('homeUserBalance').innerText = formattedBal;
+      document.getElementById('profBalance').innerText = formattedBal;
+
+      // فحص وصلاحية لوحة الأدمن (حصرية للحساب 5143617453)
+      const adminPanel = document.getElementById('adminPanel');
+      if (activeUser === ADMIN_ACCOUNT_ID) {
+        adminPanel.style.display = 'block';
+        renderAdminUsersList();
+      } else {
+        adminPanel.style.display = 'none';
+      }
+    }
+
+    // عرض قائمة المستخدمين والتحكم بالأرصدة داخل لوحة الأدمن
+    function renderAdminUsersList() {
+      const container = document.getElementById('adminUserList');
+      const db = getUsersDatabase();
+      const balances = getUserBalances();
+      container.innerHTML = '';
+
+      Object.keys(db).forEach(userKey => {
+        const uBalance = balances[userKey] || 0;
+        container.innerHTML += `
+          <div class="admin-user-item">
+            <div class="admin-user-info">
+              <span>🆔 الحساب: <strong style="color:var(--accent-gold);">${userKey}</strong></span>
+              <span>💰 الرصيد: <strong style="color:var(--accent-green);">${Number(uBalance).toLocaleString()} IQD</strong></span>
+            </div>
+            <div class="admin-actions">
+              <input type="number" id="amt_${userKey}" placeholder="المبلغ (IQD)" />
+              <button class="btn-ultra btn-green" style="padding:6px 10px; font-size:11px;" onclick="modifyUserBalance('${userKey}', 'add')">شحن (+)</button>
+              <button class="btn-ultra btn-red" style="padding:6px 10px; font-size:11px;" onclick="modifyUserBalance('${userKey}', 'sub')">خصم (-)</button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // تغيير رصيد الزبون من قبل الأدمن
+    function modifyUserBalance(targetUser, action) {
+      const inputEl = document.getElementById(`amt_${targetUser}`);
+      const val = parseFloat(inputEl.value);
+
+      if (isNaN(val) || val <= 0) {
+        alert("⚠️ يرجى إدخال مبلغ صحيح أكبر من 0");
+        return;
+      }
+
+      const balances = getUserBalances();
+      const current = balances[targetUser] || 0;
+
+      if (action === 'add') {
+        balances[targetUser] = current + val;
+        showToast(`تم شحن ${val.toLocaleString()} IQD للحساب ${targetUser}`);
+      } else if (action === 'sub') {
+        balances[targetUser] = Math.max(0, current - val);
+        showToast(`تم خصم ${val.toLocaleString()} IQD من الحساب ${targetUser}`);
+      }
+
+      saveUserBalances(balances);
+      updateUserData();
     }
 
     function previewSelectedImage(event) {
@@ -610,7 +729,18 @@
 
     function proceedToPayment() {
       closeModal('subModal');
-      document.getElementById('errModal').style.display = 'flex';
+      const balances = getUserBalances();
+      const userBal = balances[activeUser] || 0;
+
+      // التأكد من كفاية الرصيد
+      if (userBal >= selectedPkg.price) {
+        balances[activeUser] -= selectedPkg.price;
+        saveUserBalances(balances);
+        updateUserData();
+        showToast("🎉 تم تفعيل الباقة بنجاح وخصم قيمتها من رصيدك!");
+      } else {
+        document.getElementById('errModal').style.display = 'flex';
+      }
     }
 
     function goToFinance() {
