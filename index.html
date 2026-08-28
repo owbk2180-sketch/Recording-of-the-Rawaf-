@@ -3,212 +3,248 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Super Mini | منصة الاستثمار والتداول الذكي</title>
+  <title>Super Mini | المنصة المالية الرقمية الأولى</title>
   <style>
     :root {
-      --bg-main: #090d16;
-      --card-bg: #111827;
-      --card-border: #1f293d;
-      --text-main: #f3f4f6;
+      --bg-main: #070a12;
+      --card-bg: rgba(17, 24, 39, 0.85);
+      --card-border: rgba(245, 158, 11, 0.2);
+      --text-main: #f9fafb;
       --text-muted: #9ca3af;
       --accent-gold: #f59e0b;
+      --accent-gold-glow: rgba(245, 158, 11, 0.4);
       --accent-green: #10b981;
+      --accent-green-glow: rgba(16, 185, 129, 0.4);
       --accent-blue: #3b82f6;
       --accent-red: #ef4444;
       --qi-color: #fbbc04;
       --zain-color: #ff007f;
-      --glass: rgba(17, 24, 39, 0.85);
-      --shadow-premium: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+      --glass-bg: rgba(15, 23, 42, 0.75);
+      --shadow-lux: 0 12px 35px -5px rgba(0, 0, 0, 0.6), 0 0 15px rgba(245, 158, 11, 0.12);
     }
 
     [data-theme="light"] {
-      --bg-main: #f8fafc;
-      --card-bg: #ffffff;
-      --card-border: #e2e8f0;
+      --bg-main: #f1f5f9;
+      --card-bg: rgba(255, 255, 255, 0.9);
+      --card-border: rgba(217, 119, 6, 0.25);
       --text-main: #0f172a;
       --text-muted: #64748b;
       --accent-gold: #d97706;
+      --accent-gold-glow: rgba(217, 119, 6, 0.3);
       --accent-green: #059669;
-      --accent-blue: #2563eb;
-      --shadow-premium: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+      --shadow-lux: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; transition: background 0.25s, color 0.25s; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); }
     body { background-color: var(--bg-main); color: var(--text-main); display: flex; justify-content: center; min-height: 100vh; overflow-x: hidden; }
     
-    .app-container { width: 100%; max-width: 440px; background: var(--bg-main); position: relative; padding-bottom: 90px; min-height: 100vh; border-left: 1px solid var(--card-border); border-right: 1px solid var(--card-border); }
+    .app-container { width: 100%; max-width: 440px; background: var(--bg-main); position: relative; padding-bottom: 95px; min-height: 100vh; border-left: 1px solid var(--card-border); border-right: 1px solid var(--card-border); }
 
-    /* شريط السحوبات الفورية */
-    .live-ticker { background: linear-gradient(90deg, #1e1b4b, #0f172a); border-bottom: 1px solid var(--card-border); padding: 6px 12px; font-size: 11px; color: #fbbf24; overflow: hidden; white-space: nowrap; }
+    /* شريط السحوبات الفورية الضوئي */
+    .live-ticker { background: linear-gradient(90deg, #111827, #1e1b4b, #111827); border-bottom: 1px solid var(--card-border); padding: 8px 12px; font-size: 11px; color: var(--accent-gold); overflow: hidden; white-space: nowrap; font-weight: 700; }
     .ticker-content { display: inline-block; animation: ticker 25s linear infinite; }
     @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-    /* شاشة تسجيل الدخول الرسمية */
-    .login-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(5, 8, 15, 0.95); backdrop-filter: blur(16px); display: flex; justify-content: center; align-items: center; padding: 20px; z-index: 2000; }
-    .login-card { width: 100%; max-width: 360px; background: var(--glass); border: 1px solid var(--card-border); padding: 35px 25px; border-radius: 24px; text-align: center; box-shadow: var(--shadow-premium); }
-    .brand-badge { font-size: 26px; font-weight: 900; letter-spacing: 1px; color: var(--accent-gold); margin-bottom: 5px; }
+    /* شاشة الدخول الزجاجية المبهرة */
+    .login-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(3, 7, 18, 0.96); backdrop-filter: blur(20px); display: flex; justify-content: center; align-items: center; padding: 20px; z-index: 2000; }
+    .login-card { width: 100%; max-width: 360px; background: var(--glass-bg); border: 1px solid var(--card-border); padding: 35px 25px; border-radius: 28px; text-align: center; box-shadow: var(--shadow-lux); position: relative; overflow: hidden; }
+    .brand-badge { font-size: 28px; font-weight: 900; letter-spacing: 1px; color: var(--accent-gold); margin-bottom: 6px; text-shadow: 0 0 12px var(--accent-gold-glow); }
     .login-card p { font-size: 12px; color: var(--text-muted); margin-bottom: 25px; }
-    
+
+    /* تصميم الأزرار الفاخرة والغير عادية (Ultra Buttons) */
+    .btn-ultra {
+      position: relative;
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      overflow: hidden;
+      text-decoration: none;
+      z-index: 1;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    /* تأثير اللمعان الضوئي للزر */
+    .btn-ultra::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(60deg, transparent, rgba(255,255,255,0.25), transparent);
+      transform: rotate(30deg) translateX(-100%);
+      transition: 0.6s;
+    }
+    .btn-ultra:hover::after { transform: rotate(30deg) translateX(100%); }
+    .btn-ultra:active { transform: scale(0.96); }
+
+    /* ألوان وأشغال الأزرار */
+    .btn-gold { background: linear-gradient(135deg, #f59e0b, #b45309); color: #fff; box-shadow: 0 4px 20px var(--accent-gold-glow); }
+    .btn-green { background: linear-gradient(135deg, #10b981, #047857); color: #fff; box-shadow: 0 4px 20px var(--accent-green-glow); }
+    .btn-outline { background: rgba(255,255,255,0.03); color: var(--text-main); border: 1px solid var(--card-border); backdrop-filter: blur(10px); }
+    .btn-outline:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+
+    /* مدخلات النصوص */
     .input-group { margin-bottom: 16px; text-align: right; }
-    .input-group label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 6px; color: var(--text-muted); text-transform: uppercase; }
-    .input-group input { width: 100%; padding: 14px; border: 1px solid var(--card-border); border-radius: 12px; font-size: 14px; background: rgba(0,0,0,0.3); color: var(--text-main); outline: none; }
-    .input-group input:focus { border-color: var(--accent-gold); }
-    
-    .btn-primary { width: 100%; padding: 14px; background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; font-size: 15px; margin-top: 8px; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
-    .btn-secondary { width: 100%; padding: 14px; background: transparent; color: var(--text-main); border: 1px solid var(--card-border); border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 14px; margin-top: 10px; display: block; text-decoration: none; text-align: center; }
+    .input-group label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 6px; color: var(--text-muted); }
+    .input-group input, .select-css { width: 100%; padding: 14px; border: 1px solid var(--card-border); border-radius: 12px; font-size: 13px; background: rgba(0,0,0,0.3); color: var(--text-main); outline: none; }
+    .input-group input:focus, .select-css:focus { border-color: var(--accent-gold); box-shadow: 0 0 10px var(--accent-gold-glow); }
 
     /* الهيدر العلوي */
-    .header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: var(--card-bg); border-bottom: 1px solid var(--card-border); sticky: top: 0; z-index: 100; }
-    .brand-title { font-size: 18px; font-weight: 900; color: var(--text-main); }
+    .header { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: var(--card-bg); border-bottom: 1px solid var(--card-border); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(12px); }
+    .brand-title { font-size: 20px; font-weight: 900; color: var(--text-main); display: flex; align-items: center; gap: 4px; }
     .brand-title span { color: var(--accent-gold); }
-    .theme-toggle { background: var(--bg-main); border: 1px solid var(--card-border); padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; color: var(--text-main); }
+    
+    /* التبويبات */
+    .tab-content { display: none; opacity: 0; transform: translateY(10px); }
+    .tab-content.active { display: block; opacity: 1; transform: translateY(0); }
 
-    /* التبويبات الصفحات */
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-
-    /* السلايدر (8 صور) */
-    .slider-wrapper { position: relative; width: calc(100% - 32px); height: 180px; margin: 16px auto; border-radius: 20px; overflow: hidden; border: 1px solid var(--card-border); box-shadow: var(--shadow-premium); }
+    /* السلايدر المتطور (8 صور) */
+    .slider-wrapper { position: relative; width: calc(100% - 32px); height: 185px; margin: 16px auto; border-radius: 22px; overflow: hidden; border: 1px solid var(--card-border); box-shadow: var(--shadow-lux); }
     .slides-container { display: flex; width: 100%; height: 100%; transition: transform 0.5s ease-in-out; }
     .slide-item { min-width: 100%; height: 100%; position: relative; }
     .slide-item img { width: 100%; height: 100%; object-fit: cover; }
-    .slide-caption { position: absolute; inset: 0; background: linear-gradient(to top, rgba(9, 13, 22, 0.95), rgba(9, 13, 22, 0.1)); display: flex; flex-direction: column; justify-content: flex-end; padding: 14px; }
-    .slide-caption h3 { font-size: 15px; font-weight: 800; color: var(--accent-gold); margin-bottom: 2px; }
-    .slide-caption p { font-size: 11px; color: #d1d5db; }
+    .slide-caption { position: absolute; inset: 0; background: linear-gradient(to top, rgba(7, 10, 18, 0.95), rgba(7, 10, 18, 0.1)); display: flex; flex-direction: column; justify-content: flex-end; padding: 16px; }
+    .slide-caption h3 { font-size: 15px; font-weight: 800; color: var(--accent-gold); }
+    .slide-caption p { font-size: 11px; color: #d1d5db; margin-top: 2px; }
 
-    /* كارت بيانات الحساب والإحالة */
-    .account-card { background: var(--card-bg); margin: 0 16px 16px 16px; padding: 16px; border-radius: 20px; border: 1px solid var(--card-border); }
-    .acc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    /* كارت الحساب والإحالة */
+    .account-card { background: var(--card-bg); margin: 0 16px 16px 16px; padding: 18px; border-radius: 22px; border: 1px solid var(--card-border); box-shadow: var(--shadow-lux); }
+    .acc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
     .acc-id { font-size: 13px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; gap: 6px; }
-    .verified-mark { width: 16px; height: 16px; background: var(--accent-blue); border-radius: 50%; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; }
-    .status-badge { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
-    
-    .referral-box { background: var(--bg-main); border: 1px dashed var(--card-border); padding: 10px; border-radius: 12px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
+    .verified-mark { width: 18px; height: 18px; background: var(--accent-blue); border-radius: 50%; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; box-shadow: 0 0 8px rgba(59, 130, 246, 0.5); }
+    .status-badge { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 800; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    .referral-box { background: rgba(0,0,0,0.25); border: 1px dashed var(--card-border); padding: 10px 12px; border-radius: 14px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; }
     .ref-text { font-size: 11px; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px; }
-    .copy-btn { background: var(--accent-gold); color: #fff; border: none; padding: 6px 12px; border-radius: 8px; font-size: 11px; font-weight: 800; cursor: pointer; }
 
-    /* قائمة الباقات */
-    .section-head { font-size: 15px; font-weight: 800; margin: 20px 16px 12px 16px; }
-    .packages-list { display: flex; flex-direction: column; gap: 14px; padding: 0 16px; }
-    .package-item { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 18px; position: relative; }
+    /* الباقات الاستثمارية */
+    .section-head { font-size: 15px; font-weight: 800; margin: 20px 16px 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+    .packages-list { display: flex; flex-direction: column; gap: 16px; padding: 0 16px; }
+    .package-item { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 20px; position: relative; box-shadow: var(--shadow-lux); overflow: hidden; }
+    .package-item::before { content: ''; position: absolute; top: 0; right: 0; width: 5px; height: 100%; background: linear-gradient(to bottom, var(--accent-gold), var(--accent-green)); }
     .pkg-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .pkg-title { font-size: 18px; font-weight: 900; color: var(--text-main); }
-    .pkg-tag { background: rgba(245, 158, 11, 0.1); color: var(--accent-gold); padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; }
-    .pkg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: var(--bg-main); padding: 10px; border-radius: 12px; margin-bottom: 14px; }
-    .grid-cell .label { font-size: 10px; color: var(--text-muted); }
-    .grid-cell .value { font-size: 13px; font-weight: 800; color: var(--accent-green); margin-top: 2px; }
-    .action-btn { width: 100%; padding: 12px; background: linear-gradient(135deg, #10b981, #059669); color: #fff; border: none; border-radius: 12px; font-weight: 800; font-size: 13px; cursor: pointer; }
-
-    /* النوافذ المنبثقة Modal */
-    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; padding: 20px; z-index: 3000; }
-    .modal-card { width: 100%; max-width: 360px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: 20px; text-align: center; }
-    .modal-card h3 { color: var(--accent-gold); margin-bottom: 12px; font-size: 16px; }
-    .modal-card p { font-size: 13px; line-height: 1.6; color: var(--text-main); margin-bottom: 20px; }
-
-    /* تصميم طرق الدفع والأمور المالية */
-    .payment-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; padding: 16px; margin: 16px; }
-    .pay-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-    .pay-logo { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 12px; color: #fff; }
-    .qi-bg { background: #1e293b; border: 2px solid var(--qi-color); color: var(--qi-color); }
-    .zain-bg { background: linear-gradient(135deg, #c026d3, #7c3aed); color: #fff; }
+    .pkg-title { font-size: 19px; font-weight: 900; color: var(--text-main); }
+    .pkg-tag { background: rgba(245, 158, 11, 0.15); color: var(--accent-gold); padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 800; border: 1px solid rgba(245, 158, 11, 0.3); }
     
-    .pay-details { background: var(--bg-main); padding: 12px; border-radius: 12px; margin-bottom: 8px; font-size: 12px; }
-    .pay-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-    .pay-row:last-child { margin-bottom: 0; }
-    .pay-value { font-weight: 800; color: var(--accent-gold); letter-spacing: 0.5px; }
+    .pkg-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: rgba(0,0,0,0.25); padding: 12px; border-radius: 14px; margin-bottom: 16px; }
+    .grid-cell .label { font-size: 10px; color: var(--text-muted); }
+    .grid-cell .value { font-size: 14px; font-weight: 800; color: var(--accent-green); margin-top: 2px; }
 
-    .form-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; padding: 16px; margin: 16px; }
-    .form-box h4 { font-size: 14px; color: var(--accent-gold); margin-bottom: 14px; }
-    .select-css { width: 100%; padding: 12px; background: var(--bg-main); border: 1px solid var(--card-border); color: var(--text-main); border-radius: 10px; outline: none; margin-bottom: 12px; font-size: 13px; }
-    .file-css { width: 100%; padding: 10px; background: var(--bg-main); border: 1px dashed var(--card-border); color: var(--text-muted); border-radius: 10px; margin-bottom: 14px; font-size: 12px; }
+    /* النوافذ المنبثقة Modal الزجاجية */
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px); display: none; justify-content: center; align-items: center; padding: 20px; z-index: 3000; }
+    .modal-card { width: 100%; max-width: 360px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 26px; border-radius: 24px; text-align: center; box-shadow: var(--shadow-lux); }
+    .modal-card h3 { color: var(--accent-gold); margin-bottom: 12px; font-size: 17px; }
+    .modal-card p { font-size: 13px; line-height: 1.6; color: var(--text-main); margin-bottom: 22px; }
 
-    /* قسم حسابي الرسمي */
-    .profile-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 20px; margin: 16px; text-align: center; }
-    .avatar-circle { width: 70px; height: 70px; background: linear-gradient(135deg, var(--accent-gold), #d97706); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 28px; color: #fff; font-weight: 900; margin: 0 auto 12px auto; box-shadow: 0 4px 15px rgba(245,158,11,0.3); }
-    .info-list { margin-top: 20px; text-align: right; }
+    /* قسم الأمور المالية وطرق الدفع */
+    .payment-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 18px; margin: 16px; box-shadow: var(--shadow-lux); }
+    .pay-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .pay-logo-box { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; color: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+    .qi-style { background: #1e293b; border: 2px solid var(--qi-color); color: var(--qi-color); }
+    .zain-style { background: linear-gradient(135deg, #d946ef, #8b5cf6); color: #fff; }
+
+    .pay-details { background: rgba(0,0,0,0.3); padding: 12px 14px; border-radius: 12px; margin-bottom: 12px; font-size: 12px; }
+    .pay-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .pay-row:last-child { border-bottom: none; }
+    .pay-val { font-weight: 800; color: var(--accent-gold); font-size: 13px; }
+
+    .file-css { width: 100%; padding: 12px; background: rgba(0,0,0,0.2); border: 1px dashed var(--card-border); color: var(--text-muted); border-radius: 12px; margin-bottom: 16px; font-size: 12px; }
+
+    /* قسم حسابي */
+    .profile-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 24px; padding: 24px; margin: 16px; text-align: center; box-shadow: var(--shadow-lux); }
+    .avatar-ring { width: 75px; height: 75px; background: linear-gradient(135deg, var(--accent-gold), #b45309); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 30px; color: #fff; font-weight: 900; margin: 0 auto 14px auto; box-shadow: 0 0 20px var(--accent-gold-glow); border: 3px solid rgba(255,255,255,0.2); }
+    
+    .info-list { margin-top: 22px; text-align: right; }
     .info-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--card-border); font-size: 13px; }
 
-    /* شريط التنقل السفلي */
-    .nav-bar { position: fixed; bottom: 0; width: 100%; max-width: 440px; background: var(--card-bg); display: flex; justify-content: space-around; align-items: center; height: 70px; border-top: 1px solid var(--card-border); z-index: 100; }
-    .nav-link { display: flex; flex-direction: column; align-items: center; font-size: 11px; color: var(--text-muted); gap: 4px; text-decoration: none; font-weight: 700; cursor: pointer; border: none; background: transparent; }
-    .nav-link.active { color: var(--accent-gold); }
-    .nav-svg { width: 20px; height: 20px; fill: currentColor; }
+    /* شريط التنقل السفلي الفاخر */
+    .nav-bar { position: fixed; bottom: 0; width: 100%; max-width: 440px; background: var(--card-bg); display: flex; justify-content: space-around; align-items: center; height: 72px; border-top: 1px solid var(--card-border); z-index: 100; backdrop-filter: blur(16px); }
+    .nav-btn { display: flex; flex-direction: column; align-items: center; font-size: 11px; color: var(--text-muted); gap: 4px; text-decoration: none; font-weight: 800; cursor: pointer; border: none; background: transparent; }
+    .nav-btn.active { color: var(--accent-gold); }
+    .nav-btn.active svg { fill: var(--accent-gold); filter: drop-shadow(0 0 6px var(--accent-gold-glow)); }
+    .nav-svg { width: 22px; height: 22px; fill: var(--text-muted); }
   </style>
 </head>
 <body>
 
-  <!-- شاشة تسجيل الدخول التكيفية مع اسم المشترك -->
   <div class="login-overlay" id="loginModal">
     <div class="login-card">
       <div class="brand-badge">Super Mini</div>
-      <p>منصة الاستثمار والتداول المالي الموحدة</p>
+      <p>منصة التداول والاستثمار الرقمي الموحدة</p>
       
       <div class="input-group">
-        <label>اسم المشترك / معرف الحساب</label>
+        <label>اسم المشترك / معرف الحساب الخاص</label>
         <input type="text" id="userInput" placeholder="أدخل اسمك أو معرف حسابك">
       </div>
       <div class="input-group">
         <label>كلمة المرور</label>
-        <input type="password" id="passInput" placeholder="أدخل كلمة المرور الخاصة بك">
+        <input type="password" id="passInput" placeholder="أدخل كلمة المرور">
       </div>
       
-      <button class="btn-primary" onclick="handleLogin()">تسجيل الدخول</button>
-      <a href="https://t.me/oosbsu?text=مرحباً،%20أريد%20إنشاء%20حساب%20جديد%20في%20منصة%20Super%20Mini" target="_blank" class="btn-secondary">إنشاء حساب جديد</a>
+      <button class="btn-ultra btn-gold" onclick="handleLogin()">تسجيل الدخول الفوري</button>
+      <a href="https://t.me/oosbsu?text=مرحباً،%20أريد%20إنشاء%20حساب%20جديد%20في%20منصة%20Super%20Mini" target="_blank" class="btn-ultra btn-outline" style="margin-top:10px;">إنشاء حساب جديد</a>
     </div>
   </div>
 
-  <!-- النافذة المنبثقة لتأكيد وتفاصيل الاشتراك -->
   <div class="modal-overlay" id="subModal">
     <div class="modal-card">
       <h3>تفاصيل الخطة الاستثمارية</h3>
-      <p id="subDetailsText">ستقوم باستثمار المبلغ لمدة 90 يوماً متواصلة مع نزول ربح يومي تلقائي للحساب.</p>
-      <button class="btn-primary" onclick="proceedToPayment()">متابعة وتأكيد الاشتراك</button>
-      <button class="btn-secondary" onclick="closeModal()">إلغاء</button>
+      <p id="subDetailsText">تفاصيل الباقة...</p>
+      <button class="btn-ultra btn-green" onclick="proceedToPayment()">متابعة وتأكيد الاشتراك</button>
+      <button class="btn-ultra btn-outline" style="margin-top:10px;" onclick="closeModal()">إلغاء</button>
     </div>
   </div>
 
-  <!-- النافذة المنبثقة للتنبيه عند عدم توفر رصيد -->
   <div class="modal-overlay" id="errModal">
     <div class="modal-card">
-      <h3 style="color: var(--accent-red);">⚠️ عذراً، لا يوجد رصيد كافٍ</h3>
-      <p>يرجى تعبئة الحساب أولاً من قسم <strong>الأمور المالية</strong> وإرفاق إشعار التحويل لتفعيل هذه الباقة.</p>
-      <button class="btn-primary" onclick="goToFinance()">الانتقال إلى الأمور المالية</button>
+      <h3 style="color: var(--accent-red);">⚠️ تنبيه: لا يوجد رصيد كافٍ</h3>
+      <p>عذراً، يرجى تعبئة حسابك بالمبلغ المباشر أولاً من قسم <strong>الأمور المالية</strong> وإرفاق إشعار التحويل لتفعيل الباقة.</p>
+      <button class="btn-ultra btn-gold" onclick="goToFinance()">الانتقال إلى الأمور المالية</button>
     </div>
+  </div>
+
+  <div id="toast" style="position:fixed; top:20px; left:50%; transform:translateX(-50%); background:var(--accent-green); color:#fff; padding:10px 20px; border-radius:12px; font-weight:800; font-size:12px; display:none; z-index:4000; box-shadow:0 4px 15px rgba(0,0,0,0.4);">
+    تم النسخ بنجاح!
   </div>
 
   <div class="app-container">
     
-    <!-- شريط السحوبات الحية -->
     <div class="live-ticker">
       <div class="ticker-content">
         🔥 تم سحب 380,000 IQD للحساب ID: 5143... • تم سحب 122,000 IQD للحساب ID: 7781... • تم سحب 80,000 IQD للحساب ID: 9021...
       </div>
     </div>
 
-    <!-- الهيدر العلوي -->
     <div class="header">
       <div class="brand-title">Super <span>Mini</span></div>
-      <button class="theme-toggle" onclick="switchTheme()" id="themeBtn">🌙 Dark</button>
+      <button class="btn-ultra btn-outline" style="width:auto; padding:6px 14px; font-size:11px;" onclick="switchTheme()" id="themeBtn">🌙 Dark</button>
     </div>
 
-    <!-- 1. التبويب الرئيسي (الرئيسية) -->
     <div id="tabHome" class="tab-content active">
       
-      <!-- السلايدر (8 صور تداول مالية) -->
       <div class="slider-wrapper">
         <div class="slides-container" id="slidesTrack">
-          <div class="slide-item"><img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>التداول الرقمي المحترف</h3><p>أعلى عوائد استثمارية بخطط 90 يوماً</p></div></div>
-          <div class="slide-item"><img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>نمو الأرباح اليومية</h3><p>عوائد مستمرة تنزل مباشرة في حسابك</p></div></div>
+          <div class="slide-item"><img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>تداول رقمي احترافي</h3><p>أعلى عوائد استثمارية بخطط 90 يوماً</p></div></div>
+          <div class="slide-item"><img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>نمو الأرباح اليومية</h3><p>عوائد تنزل تلقائياً في محفظتك</p></div></div>
           <div class="slide-item"><img src="https://images.unsplash.com/photo-1618042164219-62c820f10723?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>تداول الذهب والأصول</h3><p>إدارة مالية آمنة ومضمونة 100%</p></div></div>
-          <div class="slide-item"><img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>حلول مالية متكاملة</h3><p>اختر الباقة المناسبة لميزانيتك واجني الأرباح</p></div></div>
-          <div class="slide-item"><img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>سيولة وسحب يومي</h3><p>تحويل سريع وسهل عبر الوسائل المحلية</p></div></div>
-          <div class="slide-item"><img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>استثمار ذكي ومستقر</h3><p>خطط متنوعة تبدأ من 30 ألف دينار</p></div></div>
-          <div class="slide-item"><img src="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>عضوية النخبة الفاخرة</h3><p>تفعيل مباشر ومتابعة مستمرة</p></div></div>
-          <div class="slide-item"><img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>حماية وأمان رقمي</h3><p>تشفير كامل لكافة بيانات الحساب والمعاملات</p></div></div>
+          <div class="slide-item"><img src="https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>حلول استثمارية متكاملة</h3><p>اختر الباقة المناسبة لك وابدأ فوراً</p></div></div>
+          <div class="slide-item"><img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>سيولة وسحب يومي</h3><p>تحويل سريع وسهل لجميع المحافظ</p></div></div>
+          <div class="slide-item"><img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>استثمار ذكي ومستقر</h3><p>خطط متنوعة من 30 ألف لـ مليون دينار</p></div></div>
+          <div class="slide-item"><img src="https://images.unsplash.com/photo-1565514020179-026b92b84bb6?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>عضوية النخبة الممتازة</h3><p>تفعيل مباشر وتتبع مستمر</p></div></div>
+          <div class="slide-item"><img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>تشفير وأمان موثوق</h3><p>حماية عالية لمعاملاتك المالية</p></div></div>
         </div>
       </div>
 
-      <!-- كارت بيانات الحساب والإحالة -->
       <div class="account-card">
         <div class="acc-header">
           <div class="acc-id">
@@ -219,70 +255,65 @@
         </div>
         <div class="referral-box">
           <div class="ref-text" id="refLink">https://supermini.app/ref?id=5143617453</div>
-          <button class="copy-btn" onclick="copyRef()">نسخ الإحالة</button>
+          <button class="btn-ultra btn-gold" style="width:auto; padding:6px 12px; font-size:11px;" onclick="copyRef()">نسخ الإحالة</button>
         </div>
       </div>
 
-      <!-- قائمة الباقات الاستثمارية -->
       <div class="section-head">باقات الاستثمار المتاحة (90 يوم)</div>
       <div class="packages-list" id="pkgContainer"></div>
     </div>
 
-    <!-- 2. التبويب الثاني (الأمور المالية) -->
     <div id="tabFinance" class="tab-content">
-      <div class="section-head">وسائل الإيداع والدفع الرسمية</div>
+      <div class="section-head">طرق الدفع والإيداع الرسمية</div>
       
-      <!-- كارت كي كارد وسوبر كي -->
       <div class="payment-card">
         <div class="pay-header">
-          <div class="pay-logo qi-bg">Qi</div>
+          <div class="pay-logo-box qi-style">Qi</div>
           <div>
-            <div style="font-weight: 800; font-size: 14px;">شركة كي كارد / Super Key</div>
-            <div style="font-size: 10px; color: var(--text-muted);">دفع الكتروني مباشر</div>
+            <div style="font-weight: 900; font-size: 15px;">شركة كي كارد / Super Key</div>
+            <div style="font-size: 11px; color: var(--text-muted);">دفع الكتروني مباشر وموزع معتمد</div>
           </div>
         </div>
         <div class="pay-details">
           <div class="pay-row">
-            <span>رقم البطاقة (Qi Card):</span>
-            <span class="pay-value" id="qiNum">5143617453</span>
+            <span>رقم بطاقة كي كارد (Qi Card):</span>
+            <span class="pay-val">5143617453</span>
           </div>
           <div class="pay-row">
             <span>رقم سوبر كي (Super Key):</span>
-            <span class="pay-value" id="superNum">07888988288</span>
+            <span class="pay-val">07888988288</span>
           </div>
         </div>
-        <button class="copy-btn" style="width:100%; text-align:center;" onclick="copyText('5143617453')">نسخ رقم البطاقة</button>
+        <button class="btn-ultra btn-gold" onclick="copyText('5143617453')">نسخ رقم بطاقة كي كارد</button>
       </div>
 
-      <!-- كارت زين كاش -->
       <div class="payment-card">
         <div class="pay-header">
-          <div class="pay-logo zain-bg">Zain</div>
+          <div class="pay-logo-box zain-style">Zain</div>
           <div>
-            <div style="font-weight: 800; font-size: 14px;">ZainCash (زين كاش)</div>
-            <div style="font-size: 10px; color: var(--text-muted);">محفظة تحويل مالية</div>
+            <div style="font-weight: 900; font-size: 15px;">ZainCash (زين كاش)</div>
+            <div style="font-size: 11px; color: var(--text-muted);">محفظة التحويل المالي السريع</div>
           </div>
         </div>
         <div class="pay-details">
           <div class="pay-row">
             <span>رقم التحويل الرسمي:</span>
-            <span class="pay-value" id="zainNum">07888189070</span>
+            <span class="pay-val">07888189070</span>
           </div>
         </div>
-        <button class="copy-btn" style="width:100%; text-align:center;" onclick="copyText('07888189070')">نسخ رقم زين كاش</button>
+        <button class="btn-ultra btn-gold" onclick="copyText('07888189070')">نسخ رقم زين كاش</button>
       </div>
 
-      <!-- نموذج إرفاق لقطة شاشة التحويل -->
-      <div class="form-box">
-        <h4>تأكيد التحويل ورفع الإشعار</h4>
+      <div class="payment-card" style="border-color: var(--accent-gold);">
+        <h4 style="font-size:14px; color:var(--accent-gold); margin-bottom:14px; text-align:center;">إرفاق لقطة الشاشة وتأكيد الإيداع</h4>
         
         <div class="input-group">
-          <label>رمز المستثمر / اسم الحساب</label>
-          <input type="text" id="payUserId" readonly style="opacity: 0.7;">
+          <label>رمز المستثمر / اسم الحساب الخاص بك</label>
+          <input type="text" id="payUserId" readonly style="opacity:0.8; background:rgba(0,0,0,0.5);">
         </div>
 
         <div class="input-group">
-          <label>اختر الباقات المراد تفعيلها</label>
+          <label>اختر الباقة المراد تفعيلها</label>
           <select class="select-css" id="pkgSelect">
             <option value="30000">باقة 30,000 IQD (ربح يومي 10,000 IQD)</option>
             <option value="50000">باقة 50,000 IQD (ربح يومي 35,000 IQD)</option>
@@ -296,64 +327,60 @@
 
         <div class="input-group">
           <label>إرفاق لقطة شاشة التحويل (Screenshot)</label>
-          <input type="file" class="file-css" id="payFile" accept="image/*">
+          <input type="file" class="file-css" accept="image/*">
         </div>
 
-        <button class="btn-primary" onclick="submitReceipt()">إرسال الإشعار وتفعيل الحساب عبر التليجرام</button>
+        <button class="btn-ultra btn-green" onclick="submitReceipt()">إرسال الإشعار وتفعيل الحساب عبر التليجرام</button>
       </div>
 
     </div>
 
-    <!-- 3. التبويب الثالث (حسابي) -->
     <div id="tabProfile" class="tab-content">
-      <div class="profile-box">
-        <div class="avatar-circle" id="profAvatar">U</div>
-        <h3 id="profName">المشترك</h3>
-        <p style="font-size: 11px; color: var(--accent-green); font-weight: bold; margin-top: 4px;">عضوية موثوقة ومفعلة ✓</p>
+      <div class="profile-card">
+        <div class="avatar-ring" id="profAvatar">U</div>
+        <h3 id="profName" style="font-size:18px; font-weight:900;">المشترك</h3>
+        <p style="font-size:12px; color:var(--accent-green); font-weight:bold; margin-top:4px;">عضوية استثمارية موثقة ✓</p>
 
         <div class="info-list">
           <div class="info-item">
-            <span style="color: var(--text-muted);">معرف الحساب الشخصي:</span>
+            <span style="color:var(--text-muted);">معرف الحساب الشخصي:</span>
             <strong id="profId">5143617453</strong>
           </div>
           <div class="info-item">
-            <span style="color: var(--text-muted);">حالة التوثيق الرقمي:</span>
-            <span style="color: var(--accent-blue); font-weight: bold;">مكتمل 100%</span>
+            <span style="color:var(--text-muted);">التوثيق الرقمي:</span>
+            <span style="color:var(--accent-blue); font-weight:bold;">مكتمل ومعتمد</span>
           </div>
           <div class="info-item">
-            <span style="color: var(--text-muted);">نوع الحساب:</span>
-            <strong>المحفظة المستثمرة VIP</strong>
+            <span style="color:var(--text-muted);">درجة المحفظة:</span>
+            <strong>كبار الشخصيات VIP</strong>
           </div>
           <div class="info-item">
-            <span style="color: var(--text-muted);">تاريخ انضمام الحساب:</span>
-            <span id="profDate">2026/08/28</span>
+            <span style="color:var(--text-muted);">تاريخ الإنشاء:</span>
+            <span>2026/08/28</span>
           </div>
         </div>
 
-        <button class="btn-secondary" style="margin-top: 20px; border-color: var(--accent-red); color: var(--accent-red);" onclick="logout()">تسجيل الخروج</button>
+        <button class="btn-ultra btn-outline" style="margin-top:22px; border-color:var(--accent-red); color:var(--accent-red);" onclick="logout()">تسجيل الخروج</button>
       </div>
     </div>
 
-    <!-- شريط التنقل السفلي المطور -->
     <div class="nav-bar">
-      <button class="nav-link active" onclick="switchTab('tabHome', this)">
+      <button class="nav-btn active" onclick="switchTab('tabHome', this)">
         <svg class="nav-svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
         <span>الرئيسية</span>
       </button>
       
-      <!-- زر الدعم المباشر يحول تلقائياً إلى التليجرام -->
-      <button class="nav-link" onclick="openTelegramSupport()">
+      <button class="nav-btn" onclick="openTelegramSupport()">
         <svg class="nav-svg" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
         <span>الدعم</span>
       </button>
 
-      <!-- تغيير اسم "السحب" إلى "الأمور المالية" -->
-      <button class="nav-link" onclick="switchTab('tabFinance', this)">
+      <button class="nav-btn" onclick="switchTab('tabFinance', this)">
         <svg class="nav-svg" viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
         <span>الأمور المالية</span>
       </button>
 
-      <button class="nav-link" onclick="switchTab('tabProfile', this)">
+      <button class="nav-btn" onclick="switchTab('tabProfile', this)">
         <svg class="nav-svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
         <span>حسابي</span>
       </button>
@@ -375,12 +402,10 @@
     let currentUser = "5143617453";
     let selectedPkg = null;
 
-    // تسجيل الدخول الديناميكي لكل زبون
+    // تسجيل الدخول الديناميكي
     function handleLogin() {
       const u = document.getElementById('userInput').value.trim();
-      if(u !== "") {
-        currentUser = u;
-      }
+      if(u !== "") { currentUser = u; }
       document.getElementById('loginModal').style.display = 'none';
       updateUserData();
     }
@@ -397,18 +422,18 @@
     // التنقل بين التبويبات
     function switchTab(tabId, btn) {
       document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(n => n.classList.remove('active'));
       
       document.getElementById(tabId).classList.add('active');
       if(btn) btn.classList.add('active');
     }
 
-    // زر الدعم يحول تلقائياً للتليجرام
+    // فتح الدعم المباشر بالتليجرام
     function openTelegramSupport() {
       window.open('https://t.me/oosbsu', '_blank');
     }
 
-    // بناء الباقات الاستثمارية
+    // بناء قائمة الباقات
     function renderPackages() {
       const container = document.getElementById('pkgContainer');
       container.innerHTML = '';
@@ -428,23 +453,22 @@
               </div>
               <div class="grid-cell">
                 <div class="label">إجمالي الأرباح</div>
-                <div class="value" style="color: var(--accent-gold);">${total.toLocaleString()} IQD</div>
+                <div class="value" style="color:var(--accent-gold);">${total.toLocaleString()} IQD</div>
               </div>
             </div>
-            <button class="action-btn" onclick="openSubscribeModal(${index})">اشترك الآن</button>
+            <button class="btn-ultra btn-green" onclick="openSubscribeModal(${index})">اشترك الآن</button>
           </div>
         `;
       });
     }
 
-    // عند الضغط على زر "اشترك" يظهر الشرح التوضيحي
+    // فتح شاشة الشرح للتأكيد
     function openSubscribeModal(idx) {
       selectedPkg = pkgList[idx];
       const total = selectedPkg.daily * selectedPkg.days;
       document.getElementById('subDetailsText').innerHTML = `
-        أنت على وشك الاشتراك في باقة <strong>${selectedPkg.price.toLocaleString()} IQD</strong>.<br>
-        ستستثمر هذا المبلغ لمدة <strong>90 يوماً</strong> متواصلة، وسينزل لك ربح يومي قدره <strong>${selectedPkg.daily.toLocaleString()} IQD</strong>.<br>
-        إجمالي أرباحك الصافية: <strong style="color:var(--accent-gold);">${total.toLocaleString()} IQD</strong>.
+        سوف تدفع مبلغ استثماري قدره <strong>${selectedPkg.price.toLocaleString()} IQD</strong> لمدة <strong>90 يوماً</strong>.<br>
+        ينزل لك ربح يومي قدره <strong>${selectedPkg.daily.toLocaleString()} IQD</strong> لمجموع أرباح صافية <strong>${total.toLocaleString()} IQD</strong>.
       `;
       document.getElementById('subModal').style.display = 'flex';
     }
@@ -453,7 +477,7 @@
       document.getElementById('subModal').style.display = 'none';
     }
 
-    // عند المتابعة يظهر خطأ تعبئة الرصيد ويحوله للأمور المالية
+    // التحويل لخطأ عدم توفر رصيد
     function proceedToPayment() {
       closeModal();
       document.getElementById('errModal').style.display = 'flex';
@@ -464,33 +488,39 @@
       if(selectedPkg) {
         document.getElementById('pkgSelect').value = selectedPkg.price;
       }
-      const navBtns = document.querySelectorAll('.nav-link');
+      const navBtns = document.querySelectorAll('.nav-btn');
       switchTab('tabFinance', navBtns[2]);
     }
 
-    // رفع إشعار التحويل وتوجيهه إلى التليجرام
+    // إرسال الإشعار والتفعيل عبر التليجرام
     function submitReceipt() {
       const val = document.getElementById('pkgSelect').value;
-      const text = encodeURIComponent(`مرحباً دعم منصة Super Mini 👋\nلقد قمت بتحويل المبلغ وإرفاق لقطة الشاشة للتفعيل:\n- اسم المستثمر/المعرف: ${currentUser}\n- الباقة المختارة: ${Number(val).toLocaleString()} IQD\nيرجى التفعيل والحساب.`);
+      const text = encodeURIComponent(`مرحباً دعم منصة Super Mini 👋\nلقد قمت بتحويل المبلغ وأرفقت لقطة الشاشة للتفعيل:\n- اسم المستثمر/رمز الحساب: ${currentUser}\n- الباقة المختارة: ${Number(val).toLocaleString()} IQD\nيرجى المراجعة والتفعيل.`);
       window.open(`https://t.me/oosbsu?text=${text}`, '_blank');
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.innerText = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 2500);
     }
 
     function copyText(val) {
       navigator.clipboard.writeText(val);
-      alert('تم نسخ الرقم بنجاح: ' + val);
+      showToast('تم نسخ الرقم بنجاح: ' + val);
     }
 
     function copyRef() {
       const link = document.getElementById('refLink').innerText;
       navigator.clipboard.writeText(link);
-      alert('تم نسخ رابط الإحالة بنجاح!');
+      showToast('تم نسخ رابط الإحالة بنجاح!');
     }
 
     function logout() {
       document.getElementById('loginModal').style.display = 'flex';
     }
 
-    // التبديل بين الليل والنهار
     function switchTheme() {
       const html = document.documentElement;
       const btn = document.getElementById('themeBtn');
@@ -503,15 +533,14 @@
       }
     }
 
-    // السلايدر التفاعلي 8 صور
-    let currentIdx = 0;
+    // السلايدر التفاعلي
+    let currentSlide = 0;
     const slidesTrack = document.getElementById('slidesTrack');
     setInterval(() => {
-      currentIdx = (currentIdx + 1) % 8;
-      slidesTrack.style.transform = `translateX(${currentIdx * 100}%)`;
+      currentSlide = (currentSlide + 1) % 8;
+      slidesTrack.style.transform = `translateX(${currentSlide * 100}%)`;
     }, 4000);
 
-    // التشغيل الأولي
     renderPackages();
     updateUserData();
   </script>
