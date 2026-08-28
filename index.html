@@ -1,71 +1,94 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Outlet shopping center</title>
+  <title>مركز الأرباح والخدمات الرقمية</title>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-    body { background-color: #eef4ff; color: #333; display: flex; justify-content: center; min-height: 100vh; }
-    .app-container { width: 100%; max-width: 430px; background: #f4f8ff; position: relative; padding-bottom: 75px; min-height: 100vh; box-shadow: 0 0 20px rgba(0,0,0,0.08); }
+    :root {
+      --bg-main: #f4f7fe;
+      --card-bg: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --accent-blue: #2563eb;
+      --accent-green: #10b981;
+      --border-color: #e2e8f0;
+      --nav-bg: #ffffff;
+    }
+
+    [data-theme="dark"] {
+      --bg-main: #0f172a;
+      --card-bg: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-blue: #3b82f6;
+      --accent-green: #34d399;
+      --border-color: #334155;
+      --nav-bg: #1e293b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; transition: background 0.3s, color 0.3s; }
+    body { background-color: var(--bg-main); color: var(--text-main); display: flex; justify-content: center; min-height: 100vh; }
     
+    .app-container { width: 100%; max-width: 430px; background: var(--bg-main); position: relative; padding-bottom: 80px; min-height: 100vh; }
+
     /* شاشة تسجيل الدخول */
-    .login-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #ffffff; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; z-index: 1000; }
-    .login-card { width: 100%; max-width: 330px; background: #fff; padding: 30px 20px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); text-align: center; }
-    .login-card h2 { margin-bottom: 20px; color: #1e293b; font-size: 20px; }
+    .login-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(5px); display: flex; justify-content: center; align-items: center; padding: 20px; z-index: 1000; }
+    .login-card { width: 100%; max-width: 340px; background: var(--card-bg); padding: 30px 20px; border-radius: 20px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+    .login-card h2 { margin-bottom: 20px; font-size: 20px; }
     .input-group { margin-bottom: 15px; text-align: right; }
-    .input-group label { display: block; font-size: 13px; margin-bottom: 5px; color: #64748b; }
-    .input-group input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; }
-    .login-btn { width: 100%; padding: 12px; background: #3b82f6; color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 15px; margin-top: 10px; }
+    .input-group label { display: block; font-size: 13px; margin-bottom: 5px; color: var(--text-muted); }
+    .input-group input { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 14px; background: var(--bg-main); color: var(--text-main); outline: none; }
+    .login-btn { width: 100%; padding: 12px; background: var(--accent-blue); color: #fff; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; font-size: 15px; margin-top: 10px; }
     .error-msg { color: #ef4444; font-size: 13px; margin-top: 12px; display: none; font-weight: 500; }
 
-    /* الهيدر */
-    .header { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #f4f8ff; }
-    .header .logo-title { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 16px; color: #1e293b; }
-    .header .logo-box { width: 32px; height: 32px; background: #fff; border-radius: 6px; display: flex; align-items: center; justify-content: center; border: 1px solid #e2e8f0; font-size: 16px; }
-    .header .lang-icon { font-size: 20px; color: #3b82f6; cursor: pointer; }
+    /* الهيدر وشريط الأدوات */
+    .header { display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--card-bg); border-bottom: 1px solid var(--border-color); }
+    .logo-box { display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 16px; }
+    .header-actions { display: flex; gap: 12px; align-items: center; }
+    .theme-toggle { background: var(--bg-main); border: 1px solid var(--border-color); padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 14px; color: var(--text-main); }
 
-    /* البانر الإعلاني */
-    .banner { margin: 10px 16px; height: 160px; background: linear-gradient(135deg, #fce7f3, #fed7aa); border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
-    .banner h3 { font-size: 20px; color: #431407; font-weight: 800; }
-    .banner p { font-size: 13px; color: #78350f; margin-top: 4px; }
-    .banner .btn-tag { margin-top: 12px; display: inline-block; background: #f97316; color: #fff; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; width: fit-content; }
+    /* كارت الرصيد والرسم البياني */
+    .balance-card { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #fff; border-radius: 20px; margin: 16px; padding: 20px; box-shadow: 0 8px 20px rgba(37,99,235,0.25); position: relative; overflow: hidden; }
+    .balance-title { font-size: 13px; opacity: 0.9; }
+    .balance-amount { font-size: 32px; font-weight: 800; margin: 8px 0; }
+    .balance-stats { display: flex; justify-content: space-between; margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 12px; }
 
-    /* شبكة الأزرار */
-    .actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 16px; margin-top: 12px; }
-    .action-card { background: #fff; border-radius: 12px; padding: 14px 12px; display: flex; align-items: center; gap: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); cursor: pointer; }
-    .icon-box { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-    .bg-purple { background: #e0e7ff; color: #4338ca; }
-    .bg-orange { background: #ffedd5; color: #c2410c; }
-    .bg-red { background: #ffe4e6; color: #be123c; }
-    .bg-green { background: #dcfce7; color: #15803d; }
-    .action-card span { font-size: 14px; font-weight: 600; color: #334155; }
+    /* الرسم البياني للأرباح (تصويري) */
+    .chart-container { background: var(--card-bg); margin: 0 16px 16px 16px; padding: 16px; border-radius: 16px; border: 1px solid var(--border-color); }
+    .chart-title { font-size: 14px; font-weight: bold; margin-bottom: 12px; display: flex; justify-content: space-between; }
+    .chart-bars { display: flex; justify-content: space-between; align-items: flex-end; height: 80px; padding-top: 10px; }
+    .bar-group { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 12%; }
+    .bar { width: 100%; background: var(--accent-blue); border-radius: 4px; transition: height 0.5s; }
+    .bar-label { font-size: 10px; color: var(--text-muted); }
 
-    /* كارت الرصيد والأرباح */
-    .balance-card { background: #ffffff; border-radius: 16px; margin: 16px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
-    .account-meta { display: flex; justify-content: space-between; font-size: 13px; color: #334155; font-weight: 600; padding-bottom: 12px; border-bottom: 1px solid #f1f5f9; }
-    .balance-main { display: grid; grid-template-columns: 1fr 1fr; margin-top: 12px; }
-    .balance-item .lbl { font-size: 12px; color: #64748b; }
-    .balance-item .currency { font-size: 14px; color: #0f172a; font-weight: bold; }
-    .balance-item .val { font-size: 20px; font-weight: bold; color: #0f172a; margin-top: 2px; }
-    .earnings-row { display: grid; grid-template-columns: 1fr 1fr; margin-top: 15px; padding-top: 12px; border-top: 1px dashed #e2e8f0; }
-    .earnings-item .lbl { font-size: 11px; color: #64748b; }
-    .earnings-item .val { font-size: 13px; font-weight: 600; color: #1e293b; margin-top: 2px; }
+    /* قسم الباقات الاستثمارية */
+    .section-title { font-size: 16px; font-weight: bold; margin: 20px 16px 12px 16px; }
+    .packages-grid { display: flex; flex-direction: column; gap: 12px; padding: 0 16px; }
+    .pkg-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 16px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+    .pkg-info h4 { font-size: 15px; color: var(--text-main); }
+    .pkg-info p { font-size: 12px; color: var(--accent-green); font-weight: bold; margin-top: 4px; }
+    .pkg-info span { font-size: 11px; color: var(--text-muted); }
+    .pkg-btn { background: var(--accent-blue); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 13px; }
 
-    /* شريط التنقل السفلي */
-    .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 430px; background: #fff; display: flex; justify-content: space-around; align-items: center; height: 65px; border-top: 1px solid #e2e8f0; }
-    .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 11px; color: #64748b; gap: 4px; cursor: pointer; }
-    .nav-item.active { color: #3b82f6; font-weight: bold; }
-    .nav-item .icon { font-size: 20px; }
-    .floating-btn { width: 50px; height: 50px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 24px; margin-top: -25px; box-shadow: 0 4px 12px rgba(59,130,246,0.4); border: 3px solid #fff; }
+    /* قسم المهام */
+    .tasks-container { padding: 0 16px; margin-top: 10px; }
+    .task-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+    .task-btn { background: var(--accent-green); color: #fff; border: none; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; }
+    .task-btn:disabled { background: var(--text-muted); cursor: not-allowed; }
+
+    /* شريط التنقل */
+    .bottom-nav { position: fixed; bottom: 0; width: 100%; max-width: 430px; background: var(--nav-bg); display: flex; justify-content: space-around; align-items: center; height: 65px; border-top: 1px solid var(--border-color); }
+    .nav-item { display: flex; flex-direction: column; align-items: center; font-size: 11px; color: var(--text-muted); gap: 4px; cursor: pointer; }
+    .nav-item.active { color: var(--accent-blue); font-weight: bold; }
   </style>
 </head>
 <body>
 
-  <!-- شاشة تسجيل الدخول -->
+  <!-- تسجيل الدخول -->
   <div class="login-overlay" id="loginModal">
     <div class="login-card">
-      <h2>تسجيل الدخول</h2>
+      <h2>تسجيل الدخول للحساب</h2>
       <div class="input-group">
         <label>اسم المستخدم</label>
         <input type="text" id="usernameInput" placeholder="أدخل اسم المستخدم">
@@ -79,134 +102,181 @@
     </div>
   </div>
 
-  <!-- الواجهة الرئيسية للموقع -->
   <div class="app-container">
+    <!-- الهيدر -->
     <div class="header">
-      <div class="logo-title">
-        <div class="logo-box">🛒</div>
-        <span>Outlet shopping center</span>
-      </div>
-      <div class="lang-icon">🌐</div>
-    </div>
-
-    <!-- البانر -->
-    <div class="banner">
-      <h3>Brilliant Gold<br>Jewelry</h3>
-      <p>Exquisite Life</p>
-      <span class="btn-tag">Exquisite Life</span>
-    </div>
-
-    <!-- قائمة الخيارات -->
-    <div class="actions-grid">
-      <div class="action-card" onclick="depositMoney()">
-        <div class="icon-box bg-purple">🐷</div>
-        <span>شحن فوري</span>
-      </div>
-      <div class="action-card">
-        <div class="icon-box bg-orange">💰</div>
-        <span>سرعة استخراج</span>
-      </div>
-      <div class="action-card">
-        <div class="icon-box bg-red">📱</div>
-        <span>تحميل التطبيق</span>
-      </div>
-      <div class="action-card">
-        <div class="icon-box bg-green">👥</div>
-        <span>دعوة الأصدقاء</span>
+      <div class="logo-box">💎 مركز الاستثمار الذكي</div>
+      <div class="header-actions">
+        <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙 ليلي</button>
       </div>
     </div>
 
-    <!-- بطاقة رصيد الحساب والأرباح -->
+    <!-- كارت الرصيد الرئيسي (يبدأ من 0) -->
     <div class="balance-card">
-      <div class="account-meta">
-        <span id="userAccountDisplay">07888189070(VIP0)</span>
-        <span>777754</span>
-      </div>
-      
-      <div class="balance-main">
-        <div class="balance-item">
-          <div class="lbl">رصيد الحساب</div>
-          <div class="currency">IQD</div>
-          <div class="val" id="balanceVal">30000.00</div>
-        </div>
-        <div class="balance-item">
-          <div class="lbl">تجميد المبلغ</div>
-          <div class="currency">IQD</div>
-          <div class="val">0</div>
-        </div>
-      </div>
-
-      <div class="earnings-row">
-        <div class="earnings-item">
-          <div class="lbl">مكاسب اليوم</div>
-          <div class="val" id="todayEarnings">IQD 1000.00</div>
-        </div>
-        <div class="earnings-item">
-          <div class="lbl">مكاسب الأمس</div>
-          <div class="val">IQD 0.00</div>
-        </div>
+      <div class="balance-title">إجمالي رصيد الحساب</div>
+      <div class="balance-amount" id="mainBalance">IQD 0</div>
+      <div class="balance-stats">
+        <div>الباقة النشطة: <strong id="activePkgName">لا يوجد</strong></div>
+        <div>الأرباح اليومية: <strong id="dailyProfitVal">0 IQD</strong></div>
       </div>
     </div>
 
-    <!-- الشريط السفلي -->
+    <!-- الرسم البياني تفاعلي -->
+    <div class="chart-container">
+      <div class="chart-title">
+        <span>مؤشر نمو الأرباح الأسبوعي</span>
+        <span style="color: var(--accent-green); font-size: 12px;">+100%</span>
+      </div>
+      <div class="chart-bars">
+        <div class="bar-group"><div class="bar" style="height: 15%;"></div><div class="bar-label">س</div></div>
+        <div class="bar-group"><div class="bar" style="height: 30%;"></div><div class="bar-label">أح</div></div>
+        <div class="bar-group"><div class="bar" style="height: 45%;"></div><div class="bar-label">ثن</div></div>
+        <div class="bar-group"><div class="bar" style="height: 60%;"></div><div class="bar-label">ثلا</div></div>
+        <div class="bar-group"><div class="bar" style="height: 75%;"></div><div class="bar-label">أرب</div></div>
+        <div class="bar-group"><div class="bar" style="height: 90%;"></div><div class="bar-label">خم</div></div>
+        <div class="bar-group"><div class="bar" style="height: 100%;"></div><div class="bar-label">جم</div></div>
+      </div>
+    </div>
+
+    <!-- قسم المهام اليومية -->
+    <div class="section-title">المهام اليومية المتاحة</div>
+    <div class="tasks-container">
+      <div class="task-card">
+        <div>
+          <strong style="font-size: 13px;">مهمة 1: تقييم المنتجات</strong>
+          <div style="font-size: 11px; color: var(--text-muted);" id="task1Reward">الربح: 0 IQD</div>
+        </div>
+        <button class="task-btn" id="tBtn1" onclick="runTask(1)">تنفيذ المهمة</button>
+      </div>
+      <div class="task-card">
+        <div>
+          <strong style="font-size: 13px;">مهمة 2: تأكيد الطلبات</strong>
+          <div style="font-size: 11px; color: var(--text-muted);" id="task2Reward">الربح: 0 IQD</div>
+        </div>
+        <button class="task-btn" id="tBtn2" onclick="runTask(2)">تنفيذ المهمة</button>
+      </div>
+      <div class="task-card">
+        <div>
+          <strong style="font-size: 13px;">مهمة 3: مراجعة المتجر</strong>
+          <div style="font-size: 11px; color: var(--text-muted);" id="task3Reward">الربح: 0 IQD</div>
+        </div>
+        <button class="task-btn" id="tBtn3" onclick="runTask(3)">تنفيذ المهمة</button>
+      </div>
+    </div>
+
+    <!-- قسم الباقات الاستثمارية -->
+    <div class="section-title">خطط الاستثمار والأرباح (90 يوم)</div>
+    <div class="packages-grid" id="packagesList"></div>
+
+    <!-- شريط التنقل السفلي -->
     <div class="bottom-nav">
-      <div class="nav-item active">
-        <span class="icon">🏠</span>
-        <span>الصفحة الرئيسية</span>
-      </div>
-      <div class="nav-item">
-        <span class="icon">📋</span>
-        <span>أمر</span>
-      </div>
-      <div class="floating-btn">⚡</div>
-      <div class="nav-item">
-        <span class="icon">💬</span>
-        <span>خدمة العملاء</span>
-      </div>
-      <div class="nav-item">
-        <span class="icon">👤</span>
-        <span>ملكي</span>
-      </div>
+      <div class="nav-item active"><span>🏠</span><span>الرئيسية</span></div>
+      <div class="nav-item"><span>📊</span><span>المهام</span></div>
+      <div class="nav-item"><span>💳</span><span>الإيداع</span></div>
+      <div class="nav-item"><span>👤</span><span>حسابي</span></div>
     </div>
   </div>
 
   <script>
-    // القيم المبدئية
-    let currentBalance = 30000.00;
-    const dailyProfitRate = 1000.00; // الأرباح لكل 30 ألف إيداع
+    // بيانات الباقات المطلوبة
+    const packages = [
+      { price: 30000, daily: 10000, days: 90 },
+      { price: 50000, daily: 35000, days: 90 },
+      { price: 75000, daily: 55000, days: 90 },
+      { price: 150000, daily: 80000, days: 90 },
+      { price: 250000, daily: 122000, days: 90 },
+      { price: 750000, daily: 189000, days: 90 },
+      { price: 1000000, daily: 380000, days: 90 }
+    ];
 
-    // التحقق من تسجيل الدخول
+    let userBalance = 0;
+    let activePackage = null;
+
+    // تسجيل الدخول
     function handleLogin() {
-      const userVal = document.getElementById('usernameInput').value.trim();
-      const passVal = document.getElementById('passwordInput').value.trim();
-      const errorElem = document.getElementById('loginError');
-
-      // اسم المستخدم وكلمة المرور المطلوبة
-      if (userVal === "5143617453" && passVal === "5143617453") {
+      const u = document.getElementById('usernameInput').value.trim();
+      const p = document.getElementById('passwordInput').value.trim();
+      if (u === "5143617453" && p === "5143617453") {
         document.getElementById('loginModal').style.display = 'none';
-        document.getElementById('userAccountDisplay').innerText = userVal + "(VIP1)";
-        updateUI();
       } else {
-        errorElem.style.display = 'block';
+        document.getElementById('loginError').style.display = 'block';
       }
     }
 
-    // تحديث الأرقام المعروضة في الشاشة
-    function updateUI() {
-      document.getElementById('balanceVal').innerText = currentBalance.toFixed(2);
-      
-      // احتساب الربح اليومي بناءً على مضاعفات الـ 30 ألف
-      let calculatedProfit = Math.floor(currentBalance / 30000) * dailyProfitRate;
-      document.getElementById('todayEarnings').innerText = "IQD " + calculatedProfit.toFixed(2);
+    // تبديل الوضع الليلي / النهار
+    function toggleTheme() {
+      const html = document.documentElement;
+      const btn = document.getElementById('themeBtn');
+      if (html.getAttribute('data-theme') === 'light') {
+        html.setAttribute('data-theme', 'dark');
+        btn.innerText = '☀️ نهاري';
+      } else {
+        html.setAttribute('data-theme', 'light');
+        btn.innerText = '🌙 ليلي';
+      }
     }
 
-    // وظيفة الشحن التجريبية (إضافة 30 ألف وتكبير الربح تلقائياً)
-    function depositMoney() {
-      currentBalance += 30000;
-      updateUI();
-      alert("تمت إضافة إيداع بقيمة 30,000 دينار بنجاح! زادت أرباحك اليومية بمقدار 1,000 دينار.");
+    // عرض الباقات ديناميكياً
+    function renderPackages() {
+      const container = document.getElementById('packagesList');
+      container.innerHTML = '';
+      packages.forEach((pkg, index) => {
+        container.innerHTML += `
+          <div class="pkg-card">
+            <div class="pkg-info">
+              <h4>إيداع: ${pkg.price.toLocaleString()} IQD</h4>
+              <p>الربح اليومي: ${pkg.daily.toLocaleString()} IQD</p>
+              <span>المدة: ${pkg.days} يوم | الإجمالي: ${(pkg.daily * pkg.days).toLocaleString()} IQD</span>
+            </div>
+            <button class="pkg-btn" onclick="subscribePackage(${index})">اشترك الآن</button>
+          </div>
+        `;
+      });
     }
+
+    // تفعيل باقة
+    function subscribePackage(index) {
+      activePackage = packages[index];
+      document.getElementById('activePkgName').innerText = `${activePackage.price.toLocaleString()} IQD`;
+      document.getElementById('dailyProfitVal').innerText = `${activePackage.daily.toLocaleString()} IQD`;
+      
+      // تقسيم الربح اليومي على المهام الثلاث
+      const taskReward = Math.floor(activePackage.daily / 3);
+      document.getElementById('task1Reward').innerText = `الربح: ${taskReward.toLocaleString()} IQD`;
+      document.getElementById('task2Reward').innerText = `الربح: ${taskReward.toLocaleString()} IQD`;
+      document.getElementById('task3Reward').innerText = `الربح: ${taskReward.toLocaleString()} IQD`;
+
+      // إعادة تفعيل الأزرار
+      for(let i=1; i<=3; i++) {
+        const btn = document.getElementById(`tBtn${i}`);
+        btn.disabled = false;
+        btn.innerText = "تنفيذ المهمة";
+        btn.style.background = "var(--accent-green)";
+      }
+
+      alert(`تم تفعيل باقة ${activePackage.price.toLocaleString()} دينار بنجاح! يمكنك الآن تنفيذ المهام اليومية للحصول على الأرباح.`);
+    }
+
+    // تنفيذ المهمة
+    function runTask(taskNum) {
+      if (!activePackage) {
+        alert("يرجى الاشتراك في إحدى الباقات أولاً لتنفيذ المهام!");
+        return;
+      }
+      const btn = document.getElementById(`tBtn${taskNum}`);
+      btn.innerText = "جاري التنفيذ...";
+      btn.disabled = true;
+
+      setTimeout(() => {
+        const reward = Math.floor(activePackage.daily / 3);
+        userBalance += reward;
+        document.getElementById('mainBalance').innerText = `IQD ${userBalance.toLocaleString()}`;
+        btn.innerText = "تمت بنجاح ✅";
+        btn.style.background = "var(--text-muted)";
+      }, 1500);
+    }
+
+    renderPackages();
   </script>
 </body>
 </html>
-
