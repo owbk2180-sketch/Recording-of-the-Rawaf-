@@ -34,37 +34,8 @@
     .ticker-content { display: inline-block; animation: ticker 25s linear infinite; }
     @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-    /* شاشة تسجيل الدخول */
     .login-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(3, 7, 18, 0.98); backdrop-filter: blur(25px); display: flex; justify-content: center; align-items: center; padding: 20px; z-index: 5000; }
     .login-card { width: 100%; max-width: 370px; background: var(--glass-bg); border: 1px solid var(--card-border); padding: 32px 24px; border-radius: 28px; text-align: center; box-shadow: var(--shadow-lux); position: relative; }
-    
-    /* زر خدمة العملاء في زاوية الشاشة */
-    .login-support-btn {
-      position: absolute;
-      top: 18px;
-      right: 18px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid var(--card-border);
-      color: var(--accent-gold);
-      padding: 8px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 800;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      backdrop-filter: blur(10px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-      z-index: 5001;
-      cursor: pointer;
-    }
-    .login-support-btn:hover {
-      border-color: var(--accent-gold);
-      transform: translateY(-2px);
-      box-shadow: 0 0 12px var(--accent-gold-glow);
-    }
-
     .brand-badge { font-size: 28px; font-weight: 900; letter-spacing: 1px; color: var(--accent-gold); margin-bottom: 4px; text-shadow: 0 0 15px var(--accent-gold-glow); }
     .login-card p { font-size: 12px; color: var(--text-muted); margin-bottom: 22px; }
 
@@ -151,7 +122,9 @@
 
     .section-head { font-size: 16px; font-weight: 900; margin: 24px 16px 14px 16px; display: flex; justify-content: space-between; align-items: center; color: var(--accent-gold); text-shadow: 0 0 10px var(--accent-gold-glow); }
     
+    /* تصميم الباقات الفخم والجذاب جداً */
     .packages-list { display: flex; flex-direction: column; gap: 20px; padding: 0 16px; }
+    
     .package-item {
       background: linear-gradient(145deg, rgba(26, 31, 46, 0.95), rgba(15, 23, 42, 0.98));
       border: 2px solid var(--accent-gold);
@@ -226,12 +199,6 @@
 
   <!-- نافذة تسجيل الدخول -->
   <div class="login-overlay" id="loginModal">
-    <!-- زر خدمة العملاء المباشر في شاشة الدخول -->
-    <a onclick="openTelegramSupport()" class="login-support-btn">
-      <svg class="nav-svg" viewBox="0 0 24 24" style="fill: var(--accent-gold); width:16px; height:16px;"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
-      <span>خدمة العملاء</span>
-    </a>
-
     <div class="login-card">
       <div class="brand-badge">Super Mini</div>
       <p>منصة الاستثمار وحماية الحساب المشفرة</p>
@@ -327,9 +294,9 @@
       
       <div class="slider-wrapper">
         <div class="slides-container" id="slidesTrack">
-          <div class="slide-item"><img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80" alt="Slide 1"><div class="slide-caption"><h3>تداول رقمي احترافي</h3><p>أعلى عوائد استثمارية بخطط 90 يوماً</p></div></div>
-          <div class="slide-item"><img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80" alt="Slide 2"><div class="slide-caption"><h3>نمو الأرباح اليومية</h3><p>عوائد تنزل تلقائياً في محفظتك</p></div></div>
-          <div class="slide-item"><img src="https://images.unsplash.com/photo-1618042164219-62c820f10723?auto=format&fit=crop&w=800&q=80" alt="Slide 3"><div class="slide-caption"><h3>تداول الذهب والأصول</h3><p>إدارة مالية آمنة ومضمونة 100%</p></div></div>
+          <div class="slide-item"><img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>تداول رقمي احترافي</h3><p>أعلى عوائد استثمارية بخطط 90 يوماً</p></div></div>
+          <div class="slide-item"><img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>نمو الأرباح اليومية</h3><p>عوائد تنزل تلقائياً في محفظتك</p></div></div>
+          <div class="slide-item"><img src="https://images.unsplash.com/photo-1618042164219-62c820f10723?auto=format&fit=crop&w=800&q=80"><div class="slide-caption"><h3>تداول الذهب والأصول</h3><p>إدارة مالية آمنة ومضمونة 100%</p></div></div>
         </div>
       </div>
 
@@ -715,9 +682,11 @@
         return;
       }
 
+      // خصم الرصيد
       balances[activeUser] = currentBal - amount;
       saveUserBalances(balances);
 
+      // حفظ العملية في السجل
       const allHistory = getWithdrawHistory();
       if (!allHistory[activeUser]) allHistory[activeUser] = [];
       allHistory[activeUser].unshift({
@@ -732,6 +701,7 @@
 
       updateUserData();
 
+      // إظهار نافذة إشعار الوصول خلال 24 إلى 48 ساعة
       document.getElementById('withdrawAccountNum').value = '';
       document.getElementById('withdrawAmount').value = '';
       document.getElementById('withdrawNoticeModal').style.display = 'flex';
@@ -955,7 +925,6 @@
       document.getElementById('passInput').value = '';
     }
 
-    // حركة السلايدر المتوافقة مع الاتجاه العربي
     let currentSlide = 0;
     const slidesTrack = document.getElementById('slidesTrack');
     setInterval(() => {
@@ -967,4 +936,3 @@
   </script>
 </body>
 </html>
-
